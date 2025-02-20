@@ -1,0 +1,9 @@
+# Ignore machine-specific files
+*_local
+.DS_Store
+*.swp
+*.swo
+
+
+# Ignore backup files
+*.bak
