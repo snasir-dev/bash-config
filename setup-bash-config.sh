@@ -20,7 +20,7 @@ backup_file() {
 
 # Create necessary directories
 echo "Creating directory structure..."
-mkdir -p "$BASH_DIR"/{completions,functions,aliases,scripts,env,@shell}
+mkdir -p "$BASH_DIR"/{@init,completions/{third-party},functions,aliases,scripts,env}
 
 # Backup existing files
 echo "Backing up existing files..."
@@ -29,8 +29,8 @@ backup_file "$HOME/.bash_profile"
 
 # Create symbolic links
 echo "Creating symbolic links..."
-ln -sf "$BASH_DIR/@shell/bashrc" "$HOME/.bashrc"
-ln -sf "$BASH_DIR/@shell/bash_profile" "$HOME/.bash_profile"
+ln -sf "$BASH_DIR/@init/bashrc" "$HOME/.bashrc"
+ln -sf "$BASH_DIR/@init/bash_profile" "$HOME/.bash_profile"
 
 # Create local override files if they don't exist
 echo "Creating local override files. Source local machine-specific settings These settings shouldn't be in version control..."

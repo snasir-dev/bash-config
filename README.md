@@ -6,8 +6,8 @@ Personal bash configuration files and scripts.
 
 ```
 📁 ~/.bash/
-├── 📁 @shell/              # Shell initialization files
-│    ├── main
+├── 📁 @init/               # Shell initialization files
+│    ├── shell-init.sh
 │    ├── bashrc
 │    └── bash_profile
 ├── 📁 completions/         # Completion scripts
@@ -15,15 +15,14 @@ Personal bash configuration files and scripts.
 ├── 📁 aliases/             # Command aliases
 ├── 📁 scripts/             # Standalone shell scripts
 ├── 📁 env/                 # Environment variables
-└── setup-bash-config.sh    # Setup/Installation Script         
-
+└── setup-bash-config.sh    # Setup/Installation Script       
 ```
 
 ## Installation
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/snasir95/bash-configuration ~/.bash
+git clone https://github.com/snasir-dev/bash-configuration ~/.bash
 ```
 
 2. Run the installation script:
