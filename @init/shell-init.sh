@@ -27,6 +27,7 @@ for file in ~/.bash/env/*; do
     [ -f "$file" ] && source "$file"  # source loads the file's contents into current shell
 done
 
+# IMPORTANT: functions must be loaded before aliases because aliases depend on functions
 # Source all function definitions
 # Same pattern as above, but for files in the functions directory
 for file in ~/.bash/functions/*; do

@@ -19,6 +19,8 @@ dirsummary() {
 }
 
 
+#==================================================================
+
 # This defines a Bash function named print_command_output that takes one argument ($1).
 # The function prints the command to be executed in bold blue color, then executes the command, and finally prints a divider.
 
@@ -35,4 +37,3 @@ print_command_output() {
     eval "$1" # eval executes the command passed as an argument ($1). Example: If we call print_command_output "kubectl config get-contexts", it runs kubectl config get-contexts.
     echo -e "\n----------------------------------------"  # Divider. Using echo -e allows us to interpret escape sequences like \n for a new line.
 }
-
