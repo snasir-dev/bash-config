@@ -34,7 +34,10 @@ chmod +x ~/.bash/setup-bash-config.sh  # chmod +x adds execute permissions to th
 
 3. Source the new configuration:
 ```bash
-source ~/.bashrc
+source ~/.bashrc     # Load the new configuration
+# alternatively - we can also use the following aliases we setup: 'src' or 'reload'
+src                  # Quick reload alias
+reload               # Alternative reload alias
 ```
 
 ## Local Customization
