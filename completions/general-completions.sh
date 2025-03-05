@@ -48,7 +48,7 @@ fi
 # Minikube Auto-Completion SCRIPTS     #
 #=======================================
 # Prerequisite - Ensure bash-completion is already installed. 
-# Can install with command: choco install bash-completion
+# Can install on Windows with command: choco install bash-completion
 source <(minikube completion bash)
 
 
@@ -59,4 +59,18 @@ source <(minikube completion bash)
 # This command dynamically generates the auto-completion script for Docker commands.
 # When you type a command like 'docker ru<TAB>', it auto-completes to 'docker run', and similarly for Docker Compose commands 'docker compose exec <will provide all service names running>'.
 # The command 'docker completion bash' outputs a Bash script that defines completions for Docker commands. When you wrap it with eval "$( ... )", the shell immediately evaluates the script and loads the completions
-eval "$(docker completion bash)"
+#eval "$(docker completion bash)" - Eval command might run into security risks, complex scripts might cause quoting issues, and are less efficient for running scripts than source command.
+source <(docker completion bash)
+
+#=============================================================
+# Helm (Kubernetes Package Manager) Auto-Completion SCRIPTS  #
+#=============================================================
+# Official Helm Docs for Helm Completion: https://helm.sh/docs/helm/helm_completion/
+# Enable Helm CLI auto-completion.
+# `helm completion bash` outputs a bash script for helm command completions.
+# Using `source <(...)` loads and executes this script in your current shell.
+# Pre-requisite - Ensure Helm is installed on your system.
+# Can install on Windows with command: choco install kubernetes-helm
+if command -v helm &> /dev/null; then
+    source <(helm completion bash)
+fi
