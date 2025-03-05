@@ -26,12 +26,10 @@ dirsummary() {
 
 # echo -e "\033[1;34m> $1\033[0m"
 
-# echo -e enables interpretation of escape sequences.
+# echo -e enables interpretation of escape sequences. Allows for adding color to text or newlines ("\n").
 # \033[1;34m sets text color to bold blue.
 # > $1 prints the command being executed (e.g., kubectl config current-context).
 # \033[0m resets the text color to default.
-
-
 print_command_output() {
     echo -e "\033[1;34mCommand: $1\033[0m"   # Bold blue command
     eval "$1" # eval executes the command passed as an argument ($1). Example: If we call print_command_output "kubectl config get-contexts", it runs kubectl config get-contexts.

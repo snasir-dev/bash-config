@@ -62,3 +62,12 @@ export PATH="$HOME/.bash/scripts:$PATH"
 if [ -f ~/.bash_local ]; then
     source ~/.bash_local
 fi
+
+# Source Theme Configuration
+# Install and Setup Oh My Posh (Custom Prompt Tool to add themes to the terminal)
+# Check if 'setup-oh-my-posh.sh' file exists. If it does, source it.
+if [ -f ~/.bash/themes/setup-oh-my-posh.sh ]; then
+    source ~/.bash/themes/setup-oh-my-posh.sh
+else
+    echo "Warning: setup-oh-my-posh.sh not found! Please check your installation."
+fi

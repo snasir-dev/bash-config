@@ -4,7 +4,7 @@
 
 # Define the base directory
 BASH_DIR="$HOME/.bash"
-BACKUP_DIR="$HOME/.bash_backup_$(date +%Y%m%d_%H%M%S)"
+BACKUP_DIR="$HOME/.bash/.bash_backup_$(date +%Y%m%d_%H%M%S)"
 echo "BASH_DIR: $BASH_DIR"
 echo "BACKUP_DIR: $BACKUP_DIR"
 
@@ -18,9 +18,9 @@ backup_file() {
     fi
 }
 
-# Create necessary directories
+# Create necessary directories. They should already be created by the git clone command, this is just for redundancy. oh
 echo "Creating directory structure..."
-mkdir -p "$BASH_DIR"/{@init,completions/{third-party},functions,aliases,scripts,env}
+mkdir -p "$BASH_DIR"/{@init,completions/{third-party},functions,aliases,scripts,env,themes}
 
 # Backup existing files
 echo "Backing up existing files..."

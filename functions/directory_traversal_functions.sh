@@ -6,17 +6,11 @@
 # If no argument is provided, it pushes the current directory onto the stack.
 # Example:
 # cd /home/user/projects/TEST # Start in TEST
-
 # push     # Remember path /home/user/projects/TEST
-
 # up 2     # Go up two levels to /home/user
-
 # back     # Go back to /home/user/projects/TEST (note - back is an alias for 'cd -')
-
 # cd /tmp  # Go to /tmp
-
 # pop      # Return to the directory you pushed. Back in /home/user/projects/TEST
-
 # dirs -v  # Check the directory stack (should be fewer entries now)
 
 push() {
