@@ -106,9 +106,12 @@ setup_oh_my_posh() {
     
     # Set Default Theme in Oh My Posh. Theme is specified when initializing the shell.
     # To view popular themes, go to: https://ohmyposh.dev/docs/themes#quick-term
-    THEMES_DIR="$HOME/.bash/themes/config"
-    THEME_LOCAL_PATH="$THEMES_DIR/quick-term-updated.json" # local directory
-    THEME_REMOTE_PATH="https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/lightgreen.omp.json" # remote github directory
+
+    # TODO: Add logic to quick-term-customized.json file to dynamically show different "session" segment information depending on the session type (e.g., SSH, WSL, etc.). Add logic to show different information when using docker (docker context), Kubernetes (k8s context / namespace), or AWS CLI (AWS CLI profile)
+    THEMES_DIR="$HOME/.bash/themes/config"    
+    THEME_NAME="quick-term-customized.json"
+    THEME_LOCAL_PATH="$THEMES_DIR/$THEME_NAME" # local directory
+    # THEME_REMOTE_PATH_URL="https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/lightgreen.omp.json" # remote github directory
 
     # You can export any theme by running command:
     # "oh-my-posh config export --output ./<your-file-name>.json" # current directory
@@ -118,9 +121,9 @@ setup_oh_my_posh() {
     if command -v oh-my-posh &> /dev/null; then
         # eval "$(oh-my-posh init bash)"
         eval "$(oh-my-posh init bash --config $THEME_LOCAL_PATH)"
-        # eval "$(oh-my-posh init bash --config $THEME_REMOTE_PATH)"
+        # eval "$(oh-my-posh init bash --config $THEME_REMOTE_PATH_URL)"
 
-        # echo "Oh My Posh is using Remote URL. THEME_REMOTE_PATH: $THEME_REMOTE_PATH"
+        # echo "Oh My Posh is using Remote URL. THEME_REMOTE_PATH_URL: $THEME_REMOTE_PATH_URL"
 
     fi
 }
