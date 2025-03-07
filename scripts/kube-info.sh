@@ -8,6 +8,7 @@ echo -e "Running script: kube-info.sh \n"
 
 # Print Kube Cluster Information
 echo "Printing Kube Cluster Information"
+print_command_output "kubectl cluster-info"
 print_command_output "kubectl config current-context"
 print_command_output "kubectl config get-clusters"
 print_command_output "kubectl config get-contexts"
