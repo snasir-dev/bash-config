@@ -1,0 +1,6 @@
+# Pre-requisites: Install the EditorConfig extension from the VS Code Marketplace
+# Link: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
+
+# This will Auto-Convert Line Endings to LF (\n) instead of default CRLF (\r\n) for all Shell Scripts (.sh) on Save in VS Code.
+[*.sh]
+end_of_line = lf

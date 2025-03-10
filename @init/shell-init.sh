@@ -1,11 +1,11 @@
-# Main BASH configuration file that will be sourced by the .bashrc file. 
+#!/bin/bash
+# Main BASH configuration file that will be sourced by the .bashrc file.
 # This file acts as the central point for sourcing all custom configurations from ~/.bash directory.
 # The .bashrc file will be very simple, it will only source this file.
 # Example of sourcing main configuration from .bash directory. Only the following lines below will be added to .bashrc file located in the home directory.
 # if [ -f ~/.bash/main ]; then
 #     source ~/.bash/main
 # fi
-
 
 # Check if shell is running interactively
 # $- is a string containing current shell options (i = interactive shell)
@@ -24,7 +24,7 @@ for file in ~/.bash/env/*; do
     # [ -f "$file" ]: test if $file exists and is a regular file
     # "$file" is quoted to handle filenames with spaces
     # && means only execute the next command if this test is true
-    [ -f "$file" ] && source "$file"  # source loads the file's contents into current shell
+    [ -f "$file" ] && source "$file" # source loads the file's contents into current shell
 done
 
 # IMPORTANT: functions must be loaded before aliases because aliases depend on functions

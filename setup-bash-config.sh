@@ -36,6 +36,5 @@ ln -sf "$BASH_DIR/@init/bash_profile" "$HOME/.bash_profile"
 echo "Creating local override files. Source local machine-specific settings These settings shouldn't be in version control..."
 touch "$HOME/.bash_local"
 
-
 echo "Installation complete!"
 echo "Please source your new configuration: source ~/.bashrc"

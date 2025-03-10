@@ -1,3 +1,4 @@
+#!/bin/bash
 # ENV VARIABLES
 #*******************************
 # Sets default editor files as VS Code

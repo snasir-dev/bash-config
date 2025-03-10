@@ -1,3 +1,4 @@
+#!/bin/bash
 # ALIASES - Command Aliases and Shortcuts
 #**************************************************************
 

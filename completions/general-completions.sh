@@ -1,3 +1,4 @@
+#!/bin/bash
 #=======================================
 # BASH GENERAL AUTO COMPLETION SCRIPTS #
 #=======================================
@@ -8,7 +9,7 @@
 # The completion script is usually stored in '/usr/share/bash-completion/bash_completion'.
 
 # General bash-completion script for common commands (e.g., kubectl, Git)
-# Download by running following bash command: 
+# Download by running following bash command:
 #OLD: curl -o ~/.bash_completion https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion
 # curl -L https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion -o ~/.bash_completion
 if [ -f ~/.bash/completions/third-party/.bash_completion ]; then
@@ -17,16 +18,14 @@ else
     echo "Bash completion file not found. Please make sure the file is located at ~/.bash/completions/third-party/.bash_completion"
 fi
 
-
-
 #=======================================
 # Kubectl Auto-Completion SCRIPTS      #
 #=======================================
 # Check if `kubectl` command exists by using `command -v kubectl`.
 # `command -v` checks if `kubectl` is available, and `&> /dev/null` discards output.
 # If `kubectl` is found, the following commands will be executed.
-if command -v kubectl &> /dev/null; then
-    
+if command -v kubectl &>/dev/null; then
+
     # Load the bash completion script for `kubectl` if it exists.
     # `kubectl completion bash` outputs a completion script for bash.
     # `source <(...)` immediately loads this script into the shell session.
@@ -42,15 +41,12 @@ if command -v kubectl &> /dev/null; then
     complete -o default -F __start_kubectl k
 fi
 
-
-
 #=======================================
 # Minikube Auto-Completion SCRIPTS     #
 #=======================================
-# Prerequisite - Ensure bash-completion is already installed. 
+# Prerequisite - Ensure bash-completion is already installed.
 # Can install on Windows with command: choco install bash-completion
 source <(minikube completion bash)
-
 
 #=========================================
 # DOCKER CLI Auto-Completion SCRIPTS     #
@@ -71,6 +67,6 @@ source <(docker completion bash)
 # Using `source <(...)` loads and executes this script in your current shell.
 # Pre-requisite - Ensure Helm is installed on your system.
 # Can install on Windows with command: choco install kubernetes-helm
-if command -v helm &> /dev/null; then
+if command -v helm &>/dev/null; then
     source <(helm completion bash)
 fi

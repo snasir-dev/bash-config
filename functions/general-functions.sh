@@ -1,3 +1,4 @@
+#!/bin/bash
 # Contains all bash general/common function definitions
 
 # List largest files (top 10 by default, customizable). Example:  largest 5: Show top 5 largest files
@@ -18,7 +19,6 @@ dirsummary() {
     echo "Total Size: $(du -sh .)"
 }
 
-
 #==================================================================
 
 # This defines a Bash function named print_command_output that takes one argument ($1).
@@ -31,7 +31,7 @@ dirsummary() {
 # > $1 prints the command being executed (e.g., kubectl config current-context).
 # \033[0m resets the text color to default.
 print_command_output() {
-    echo -e "\033[1;34mCommand: $1\033[0m"   # Bold blue command
-    eval "$1" # eval executes the command passed as an argument ($1). Example: If we call print_command_output "kubectl config get-contexts", it runs kubectl config get-contexts.
-    echo -e "\n----------------------------------------"  # Divider. Using echo -e allows us to interpret escape sequences like \n for a new line.
+    echo -e "\033[1;34mCommand: $1\033[0m"               # Bold blue command
+    eval "$1"                                            # eval executes the command passed as an argument ($1). Example: If we call print_command_output "kubectl config get-contexts", it runs kubectl config get-contexts.
+    echo -e "\n----------------------------------------" # Divider. Using echo -e allows us to interpret escape sequences like \n for a new line.
 }

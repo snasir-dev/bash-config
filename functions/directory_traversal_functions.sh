@@ -1,3 +1,4 @@
+#!/bin/bash
 #===============================================================
 # EASIER DIRECTORY TRAVERSAL                                  #
 #===============================================================
@@ -14,8 +15,8 @@
 # dirs -v  # Check the directory stack (should be fewer entries now)
 
 push() {
-  if [ -z "$1" ]; then  # Check if no argument is provided ($1 is empty)
-    pushd .  # Push the current directory (.) onto the stack
+  if [ -z "$1" ]; then # Check if no argument is provided ($1 is empty)
+    pushd .            # Push the current directory (.) onto the stack
   else
     pushd "$@" # If arguments are provided, pass them to the original pushd command
   fi
@@ -33,7 +34,7 @@ up() {
   else
     levels=$1
     path=""
-    for ((i=1; i<=levels; i++)); do
+    for ((i = 1; i <= levels; i++)); do
       path="../${path}"
     done
     cd "$path"
@@ -53,8 +54,8 @@ popd_at_index() {
   # Scenario 1: No index provided (standard popd behavior)
   if [[ -z "$index" ]]; then
     # Perform standard popd action if stack is not empty
-    if dirs | grep -q .; then  # Check if directory stack is not empty (grep for any line)
-      popd 2>/dev/null # Standard popd - pop top and cd. Suppress stderr in case stack becomes empty.
+    if dirs | grep -q .; then # Check if directory stack is not empty (grep for any line)
+      popd 2>/dev/null        # Standard popd - pop top and cd. Suppress stderr in case stack becomes empty.
       echo "Performed standard popd (top of stack)."
       dirs -v # Optional: Show updated stack
     else
@@ -100,17 +101,15 @@ popd_at_index() {
     # Remove the directory at the specified index from the stack using popd +index
     # TODO: fix an issue where it is not properly removing the correct index from the stack.
     popd "+$index" 2>/dev/null # Suppress stderr
-    
+
     # Show the updated directory stack
-    echo -e "\n" # Add a newline for readability
+    echo -e "\n"                              # Add a newline for readability
     echo -e "\033[1;34mUpdated Stack:\033[0m" # Print 'Updated Stack:' in bold blue
     echo -e "----------------------------------------"
-    dirs -v # View the directory stack with index numbers.
+    dirs -v  # View the directory stack with index numbers.
     return 0 # Successful execution for popd_at_index with index
   fi
 }
-
-
 
 #=======================
 # Allows me to dynamically jump between directories within my current filepath. For example in ~/Documents/@MAIN-WORKSPACE. just do "j <dirname>" so "j manifests" or any directory name "j @main-workspace", if it exists within @MAIN-WORKSPACE will try to go to it. Also added autocompletion.
@@ -119,55 +118,55 @@ declare -A path_mappings
 
 # Function to update path mappings
 update_path_mappings() {
-    local current_path="$PWD"
-    local path_parts
-    
-    # Split the path into parts
-    IFS='/' read -ra path_parts <<< "$current_path"
-    
-    # Clear existing mappings
-    path_mappings=()
-    
-    # Build the path progressively and add mappings
-    local built_path=""
-    for part in "${path_parts[@]}"; do
-        if [[ -n $part ]]; then
-            built_path="$built_path/$part"
-            # Store both lowercase and actual name mappings
-            path_mappings[${part,,}]="$built_path"
-            path_mappings[$part]="$built_path"
-        fi
-    done
+  local current_path="$PWD"
+  local path_parts
+
+  # Split the path into parts
+  IFS='/' read -ra path_parts <<<"$current_path"
+
+  # Clear existing mappings
+  path_mappings=()
+
+  # Build the path progressively and add mappings
+  local built_path=""
+  for part in "${path_parts[@]}"; do
+    if [[ -n $part ]]; then
+      built_path="$built_path/$part"
+      # Store both lowercase and actual name mappings
+      path_mappings[${part,,}]="$built_path"
+      path_mappings[$part]="$built_path"
+    fi
+  done
 }
 
 # Function to jump to directory - To use do j <any-directory-within-filepath> "j @main-workspace" etc
 j() {
-    if [ -z "$1" ]; then
-        echo "Usage: j <directory_name>"
-        return 1
-    fi
-    
-    # Update mappings based on current directory
-    update_path_mappings
-    
-    # Convert input to lowercase for case-insensitive matching
-    local search=${1,,}
-    
-    if [ -n "${path_mappings[$1]}" ]; then
-        cd "${path_mappings[$1]}"
-    elif [ -n "${path_mappings[$search]}" ]; then
-        cd "${path_mappings[$search]}"
-    else
-        echo "No matching directory found for: $1"
-        return 1
-    fi
+  if [ -z "$1" ]; then
+    echo "Usage: j <directory_name>"
+    return 1
+  fi
+
+  # Update mappings based on current directory
+  update_path_mappings
+
+  # Convert input to lowercase for case-insensitive matching
+  local search=${1,,}
+
+  if [ -n "${path_mappings[$1]}" ]; then
+    cd "${path_mappings[$1]}"
+  elif [ -n "${path_mappings[$search]}" ]; then
+    cd "${path_mappings[$search]}"
+  else
+    echo "No matching directory found for: $1"
+    return 1
+  fi
 }
 
-# Add tab completion for j (jump) complete. 
+# Add tab completion for j (jump) complete.
 _j_complete() {
-    local cur=${COMP_WORDS[COMP_CWORD]}
-    update_path_mappings
-    COMPREPLY=($(compgen -W "${!path_mappings[*]}" -- "$cur"))
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  update_path_mappings
+  COMPREPLY=($(compgen -W "${!path_mappings[*]}" -- "$cur"))
 }
 
 complete -F _j_complete j
