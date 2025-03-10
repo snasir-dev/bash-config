@@ -6,8 +6,8 @@
 #====================================================================
 # ls commands
 alias ll="ls -la" # Alias to list files in long format, including hidden files
-alias la="ls -A" # Alias to list all files, including hidden ones
-alias l="ls -CF" # Alias to list files in a multi-column format with file type indicators
+alias la="ls -A"  # Alias to list all files, including hidden ones
+alias l="ls -CF"  # Alias to list files in a multi-column format with file type indicators
 
 # List files with detailed info, sorted by size
 alias ls-size='du -sh * | sort -rh'
@@ -17,14 +17,13 @@ alias filecount='find . -type f | wc -l'
 # Show file type for a given file or directory. Uses 'file' command.
 alias typeof='file'
 
-
 #====================================================================
 # DIRECTORY NAVIGATION ALIASES
 # Aliases to make moving around the filesystem faster and easier.
 #====================================================================
 
 # Go back to the previous directory. Very fast for going back and forth.
-alias back='cd -' # Use 'back' to return to the last directory you were in.  
+alias back='cd -' # Use 'back' to return to the last directory you were in.
 
 # Stack-based directory navigation. Useful for jumping around and returning to previous locations.
 # `pushd`, `popd`, `dirs` (Aliases 'push', 'pop', 'listd'): Stack-based navigation.
@@ -38,14 +37,18 @@ alias back='cd -' # Use 'back' to return to the last directory you were in.
 #    pop        # Go back to /tmp
 #    pop        # Go back to original location before 'push /tmp'
 #alias push='pushd' # Use the push function specified in functions/general-functions.sh.
-alias pop='popd_at_index'   # Return to the directory at the top of the stack (undoes 'pushd'). Calls popd_at_index function in general-functions.sh.
-alias dirs='dirs -v' # View the directory stack with index numbers. Useful to see where you've been with 'pushd'.
-alias listd='dirs -v' # Alternative name for 'dirs -v' - list directory stack
+alias pop='popd_at_index' # Return to the directory at the top of the stack (undoes 'pushd'). Calls popd_at_index function in general-functions.sh.
+alias dirs='dirs -v'      # View the directory stack with index numbers. Useful to see where you've been with 'pushd'.
+alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stack
 
-# Shorter aliases for common directory locations. 
-alias home='cd ~'    # Go directly to your home directory.
-# alias work='cd ~/Documents/Work' # Example: Go to your 'Work' directory.
-alias workspace='cd ~/Documents/@MAIN-WORKSPACE' # Go to my Main Workspace. Just type 'workspace' to go there.
+# Shorter aliases for common directory locations.
+alias home='cd ~' # Go directly to your home directory.
+
+# WORKSPACE_DIR=~/Documents/@MAIN-WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
+WORKSPACE_DIR="$HOME/Documents/@MAIN-WORKSPACE"
+alias "..workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '..workspace' to go there.
+alias "..main-project"='cd $WORKSPACE_DIR/@APPS/fullstack-apps/Fullstack.React.NET.App'
+alias "..bash-project"='cd ~/.bash'
 
 # Visual File Directory - Tree like structure
 # Official "tree" command with git-bash.
@@ -59,7 +62,6 @@ alias treeall='find . -type d | sed -e "s/[^-][^\/]*\//  |/g" -e "s/|\([^ ]\)/|-
 # Will run filetree shell method below. Remember after ft can specify parameters: ft 1 . true
 alias ft="filetree"
 
-
 #==============================================================================
 # COMMAND SHORTCUTS & UTILITIES ALIASES
 # Aliases for frequently used commands or to add extra functionality.
@@ -68,19 +70,17 @@ alias ft="filetree"
 alias mkdir='mkdir -p' # Create directories recursively (including parent directories if they don't exist). Very convenient for nested directories.
 # alias mkd='mkdir -p'  # Shorter version for 'mkdir -p'.
 
-alias rm='rm -i'       # Interactive remove - prompts before deleting files. Prevents accidental deletion, especially with 'rm -rf'.
-alias rmi='rm -i'      
+alias rm='rm -i' # Interactive remove - prompts before deleting files. Prevents accidental deletion, especially with 'rm -rf'.
+alias rmi='rm -i'
 
-alias cp='cp -i -r'       # Interactive copy - prompts before overwriting files.  Prevents accidental overwrites. -r: Recursive mode (needed for copying directories).
-alias cpi='cp -i -r'      # Shorter version for interactive copy.
+alias cp='cp -i -r'  # Interactive copy - prompts before overwriting files.  Prevents accidental overwrites. -r: Recursive mode (needed for copying directories).
+alias cpi='cp -i -r' # Shorter version for interactive copy.
 
-alias mv='mv -i'       # Interactive move - prompts before overwriting files. Prevents accidental overwrites during moves.
-alias mvi='mv -i'      # Shorter version for interactive move.
+alias mv='mv -i'  # Interactive move - prompts before overwriting files. Prevents accidental overwrites during moves.
+alias mvi='mv -i' # Shorter version for interactive move.
 
 alias grep='grep --color=auto' # Grep with color highlighting.  Makes grep output much easier to read.
 # alias g='grep --color=auto'    # Shorter alias for colorized grep.
-
-
 
 #*******************************
 # Git Aliases
