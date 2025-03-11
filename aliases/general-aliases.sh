@@ -83,19 +83,7 @@ alias mvi='mv -i' # Shorter version for interactive move.
 alias grep='grep --color=auto' # Grep with color highlighting.  Makes grep output much easier to read.
 # alias g='grep --color=auto'    # Shorter alias for colorized grep.
 
-#*******************************
-# Git Aliases
-
-alias gs="git status"
-# alias ga="git add"
-# alias gc="git commit -m"
-# alias gp="git push"
-alias gl="git log --oneline --graph --decorate --all"
-
-# Alias for LazyGit - A Terminal User Interface for GIT
-alias lg="lazygit"
-
-#*******************************
+#******************************
 # Kubernetes Aliases
 alias k="kubectl"
 alias kga="k get all,endpoints,ingress,pv,pvc,cm,secrets,nodes -o wide"
