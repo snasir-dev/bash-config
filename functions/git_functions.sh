@@ -47,28 +47,61 @@ git_fsck() {
 
 # MAIN COMMIT MESSAGE FORMAT REMINDER W/ EXAMPLES
 commit_msg() {
-    echo "📝 Commit Message Reminder 📝"
-    echo "--- Commit Structure Template: ---"
+    echo "--- COMMIT MESSAGE STRUCTURE ---"
     echo "  type(scope): subject    Example: feature(auth): add social login"
     echo "  │     │      └─> Concise description (50 chars max), lowercase, no period"
     echo "  │     └─> Optional area of change: users, auth, api, etc."
-    echo "  └─> Required: feature|fix|docs|refactor|test|chore"
+
+    # Make "Required" Bold via printf
+    #     %s is a placeholder in the format string that will be replaced by the next argument.
+    # \e[1m and \e[0m are still the ANSI escape codes for bold start and reset.
+    # \n at the end adds a newline character, just like echo implicitly does.
+    # "Required" is the second argument to printf. This string will be inserted in place of %s in the format string
+    printf "  └─> \e[1m%s\e[0m: feature|fix|docs|refactor|test|chore|performance|build|ci|revert|multi" "Required" # Passing required as a variable in %s  "e[1m%s\e[0m"
+    echo ""
+    echo "--- FORMATTING OPTIONS ---"
+    echo "  • SINGLE TYPE:         feature(auth): Add social login support"
+    echo "                         - [docs] Added function documentation"
+    echo "                         - [style] Fixed indentation"
+    echo ""
+    echo "  • MULTIPLE TYPES:      multi(fix,style,docs): Comprehensive update"
+    echo "                         OR: refactor(docs,style): Reorganize config and improve comments"
+    echo ""
+    echo "  • ALTERNATIVE FORMAT:  refactor/docs/style: Update function documentation and formatting"
+    echo ""
+    echo "--- SPECIAL CASES ---"
+    echo "  • Comments:            Use 'docs' for adding/removing/modifying comments"
+    echo "  • Renaming/Moving:     Use 'refactor' for renaming variables, functions, files, or aliases"
+    echo "  • Mixed Changes:       Use primary type for most significant change + detail others in body"
+    echo ""
     # With separators "|" and Bold Header Row
     {
-        echo "TYPE|DESCRIPTION|EXAMPLE"
-        echo "feature|(New feature - Adds new functionality)|Example: feature(users): User registration"
-        echo "fix|(Bug fix - Corrects an issue)|Example: fix(auth): Password reset bug"
-        echo "docs|(Documentation - Documentation changes only)|Example: docs(api): Update endpoint docs"
-        echo "style|(Formatting - No code change, just style)|Example: style(code): Consistent formatting"
-        echo "refactor|(Code refactor - Code change, no new feature/bug fix)|Example: refactor(payment): Improve logic"
-        echo "chore|(Maintenance - General maintenance tasks)|Example: chore(gitignore): Update ignore files"
-        echo "test|(Testing - Tests related changes)|Example: test(auth): Unit tests for login"
-        echo "performance|(Performance - Improves performance)|Example: performance(db): Optimize query latency"
-        echo "build|(Build system - Build process or dependencies)|Example: build(deps): Update dependencies"
-        echo "ci/cd|(CI/CD - CI configuration changes)|Example: ci(github): Setup CI workflow"
-        echo "revert|(Revert commit - Undoes a previous commit)|Example: revert: Revert 'feature(users): ...'"
-    } | column -t -s "|" -o " | " | sed '1s/.*/'$'\e[1m&\e[0m''/'
+        echo "TYPE|DESCRIPTION|EXAMPLE 1|EXAMPLE 2"
+        echo "feature|(Adds new functionality or capability)|feature(payment): Add PayPal integration|feature(users): User registration"
+        echo "fix|(Corrects a bug or issue)|fix(cart): Prevent total calculation error|fix(auth): Password reset bug"
+        echo "docs|(Documentation changes - comments, README, etc.)|docs(config): Add setup instructions|docs(api): Update endpoint docs"
+        echo "style|(Formatting, indentation, whitespace)|style(css): Apply consistent indentation|style(code): Consistent formatting"
+        echo "refactor|(Code changes that don't add features or fix bugs)|refactor(utils): Simplify error handling|refactor(payment): Improve logic"
+        echo "chore|(Routine tasks, dependency updates, config changes)|chore(deps): Update Node packages|chore(gitignore): Update ignore files"
+        echo "test|(Adding or modifying tests)|test(api): Add unit tests for endpoints|test(auth): Unit tests for login"
+        echo "performance|(Improves speed or resource usage)|performance(queries): Optimize database lookups|performance(db): Optimize query latency"
+        echo "build|(Build system, compilation, packaging)|build(webpack): Update configuration|build(deps): Update dependencies"
+        echo "ci|(Continuous integration pipeline changes)|ci(actions): Set up automated testing|ci(github): Setup CI workflow"
+        echo "revert|(Undoes a previous commit)|revert: Revert 'feature(auth): Add OAuth'|revert: Revert 'feature(users): ...'"
+        echo "multi|(For commits with multiple distinct changes)|multi(fix,style,docs): Comprehensive update|multi(refactor,docs): Code cleanup w/ comments"
+    } | column -t -s "|" -o "     " | sed '1s/.*/'$'\e[1m&\e[0m''/'
+    # | column -t -s "|" -o "  " -> Format output as aligned table:
+    # -t: table format (auto-align columns)
+    # -s "|": input field separator is "|"
+    # -o " | ": output field separator is " | "
+
+    # | sed '1s/.*/'$'\e[1m&\e[0m''/' -> Make the first line (header) bold:
+    # sed: stream editor
+    # '1s/.../.../': substitute command, line 1 only
+    # /.*/: match whole line (any character, any times)
+    # '$'\e[1m&\e[0m'': replacement - bold ANSI escape codes around matched text (& - whole line)
 }
+
 commit_msg_other() {
     other_commit_msg1
     other_commit_msg2
