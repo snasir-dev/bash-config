@@ -48,8 +48,10 @@ alias home='cd ~' # Go directly to your home directory.
 # WORKSPACE_DIR=~/Documents/@MAIN-WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
 WORKSPACE_DIR="$HOME/Documents/@MAIN-WORKSPACE"
 alias "..workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '..workspace' to go there.
-alias "..main-project"='cd $WORKSPACE_DIR/@APPS/fullstack-apps/Fullstack.React.NET.App'
-alias "..bash-project"='cd ~/.bash'
+alias "apps"='cd $WORKSPACE_DIR/@APPS'
+
+alias "..main-repo"='cd $WORKSPACE_DIR/@APPS/fullstack-apps/Fullstack.React.NET.App'
+alias "..bash-repo"='cd ~/.bash'
 
 # Visual File Directory - Tree like structure
 # Official "tree" command with git-bash.
