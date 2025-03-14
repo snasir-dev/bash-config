@@ -18,4 +18,6 @@ export KUBECONFIG=~/.kube/config
 
 # FILEPATHS TO QUICKLY CHANGE BETWEEN
 # For fullstack.react.net.app Devops. To use just do cd $devops
-export devops="/c/Users/Syed/Documents/@MAIN-WORKSPACE/@APPS/fullstack-apps/Fullstack.React.NET.App/DevOps/k8s/manifests"
+export devops="/c/Users/Syed/Documents/@MAIN-WORKSPACE/@REPOS/@APPS/fullstack/Fullstack.React.NET.App/DevOps"
+# For fullstack.react.net.app k8s folder. Ex: cd $k8s
+export k8s="/c/Users/Syed/Documents/@MAIN-WORKSPACE/@REPOS/@APPS/fullstack/Fullstack.React.NET.App/DevOps/k8s"

@@ -46,11 +46,15 @@ alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stac
 alias home='cd ~' # Go directly to your home directory.
 
 # WORKSPACE_DIR=~/Documents/@MAIN-WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
+# Prefix going to specific directories with "." Use ".." to open directories with git repositories initialized.
+# Easy navigation to directories that are not git repositories. Prefix with '.'
 WORKSPACE_DIR="$HOME/Documents/@MAIN-WORKSPACE"
-alias "..workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '..workspace' to go there.
-alias "apps"='cd $WORKSPACE_DIR/@APPS'
+alias ".workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
+alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
 
-alias "..main-repo"='cd $WORKSPACE_DIR/@APPS/fullstack-apps/Fullstack.React.NET.App'
+# Prefix aliases opening repositories with ".."
+alias "..main-repo"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
+alias "..shared-resources"='cd $WORKSPACE_DIR/@REPOS/@SHARED-RESOURCES'
 alias "..bash-repo"='cd ~/.bash'
 
 # Visual File Directory - Tree like structure

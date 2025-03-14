@@ -76,8 +76,8 @@
 					"properties": {
 						"folder_icon": "\u2026",
 						"folder_separator_icon": " <transparent>\ue0b1</> ",
-						"max_depth": 4,
-						"style": "agnoster_full"
+						"max_depth": 7,
+						"style": "agnoster_short"
 					},
 					"template": " {{ .Path }} ",
 					"powerline_symbol": "\ue0b0",

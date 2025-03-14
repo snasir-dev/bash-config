@@ -20,7 +20,7 @@ backup_file() {
 
 # Create necessary directories. They should already be created by the git clone command, this is just for redundancy. oh
 echo "Creating directory structure..."
-mkdir -p "$BASH_DIR"/{@init,completions/{third-party},functions,aliases,scripts,env,themes}
+mkdir -p "$BASH_DIR"/{@init,completions/third-party,functions,aliases,scripts,env,themes}
 
 # Backup existing files
 echo "Backing up existing files..."
