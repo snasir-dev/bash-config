@@ -18,7 +18,7 @@ push() {
   if [ -z "$1" ]; then # Check if no argument is provided ($1 is empty)
     pushd .            # Push the current directory (.) onto the stack
   else
-    pushd "$@" # If arguments are provided, pass them to the original pushd command
+    pushd "$@" || exit # If arguments are provided, pass them to the original pushd command
   fi
 }
 
@@ -37,7 +37,7 @@ up() {
     for ((i = 1; i <= levels; i++)); do
       path="../${path}"
     done
-    cd "$path"
+    cd "$path" || exit
   fi
 }
 

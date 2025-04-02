@@ -50,6 +50,7 @@ alias home='cd ~' # Go directly to your home directory.
 # Easy navigation to directories that are not git repositories. Prefix with '.'
 WORKSPACE_DIR="$HOME/Documents/@MAIN-WORKSPACE"
 alias ".workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
+alias ".repos"='cd $WORKSPACE_DIR/@REPOS'
 alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
 
 # Prefix aliases opening repositories with ".."
