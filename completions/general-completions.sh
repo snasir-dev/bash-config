@@ -70,3 +70,17 @@ source <(docker completion bash)
 if command -v helm &>/dev/null; then
     source <(helm completion bash)
 fi
+
+#=================================================
+# Argo CD Auto-Completion SCRIPTS                #
+#=================================================
+# Official Argo CD Documentation: https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_completion/
+# Enable Argo CD CLI auto-completion for bash.
+# The `argocd completion bash` command generates completion script for Argo CD CLI commands.
+# Using `source <(...)` loads these completions directly into your current shell session.
+# This enables tab completion for argocd commands, subcommands, and available options.
+# Pre-requisite - Ensure Argo CD CLI is installed and available in PATH.
+# Can install on Windows with command: choco install argocd-cli
+if command -v argocd &>/dev/null; then
+    source <(argocd completion bash)
+fi
