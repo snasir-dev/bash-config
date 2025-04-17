@@ -31,12 +31,47 @@ show_nerd_font_instructions() {
     # echo "They recommend installing 'meslo' font. You can do it directory from oh-my-posh command line once oh-my-posh is installed."
 }
 
+# Function to get valid user input
+get_valid_response() {
+    local valid_response=false
+    local user_input=""
+
+    while ! $valid_response; do
+        read -rp "Would you like to install Oh My Posh? (y/n): " user_input
+
+        case "$user_input" in
+        [yY])
+            valid_response=true
+            return 0
+            ;;
+        [nN])
+            valid_response=true
+            return 1
+            ;;
+        *)
+            echo "Invalid input.  Please enter either 'Y', 'y', 'N', or 'n'."
+            ;;
+        esac
+    done
+}
+
 # Function to install Oh My Posh
 install_oh_my_posh() {
     # Check if Oh My Posh is already installed
     if command -v oh-my-posh &>/dev/null; then
         # echo "Oh My Posh is already installed. Skipping installation."
         return 0
+    fi
+
+    # Ask user if they want to install Oh My Posh
+    echo "The 'oh-my-posh' command could not be found."
+
+    # Call the get_valid_response function to get user input
+    if get_valid_response; then
+        echo "Proceeding with Oh-My-Posh installation..."
+    else
+        echo "Oh-My-Posh Installation cancelled."
+        return 1
     fi
 
     # Try installing with winget
@@ -55,8 +90,11 @@ install_oh_my_posh() {
 
     # Try installing with chocolatey
     if command -v choco &>/dev/null; then
-        echo "Installing Oh My Posh via chocolatey..."
-        choco install oh-my-posh
+        echo "" # newline
+        echo "Winget installation failed or not available. Trying to install Oh My Posh via chocolatey..."
+
+        choco install oh-my-posh -y
+
         echo "Oh My Posh installed successfully! However, Be warned! Oh My Posh command might not be immediately available."
         echo "You may need to restart this terminal or source this shell configuration file."
 
@@ -67,42 +105,15 @@ install_oh_my_posh() {
 
     # If neither winget nor chocolatey is available
     echo "Unable to install Oh My Posh. Please install winget or chocolatey."
+
     return 1
 }
 
 # Function to setup Oh My Posh in bash
 setup_oh_my_posh() {
-    #     # Path to save the theme
-    #     THEME_PATH="$THEMES_DIR/custom.omp.json"
-
-    #     # Create a default theme if it doesn't exist
-    #     if [ ! -f "$THEME_PATH" ]; then
-    #         cat > "$THEME_PATH" << EOL
-    # {
-    #     "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-    #     "blocks": [
-    #         {
-    #             "type": "prompt",
-    #             "alignment": "left",
-    #             "segments": [
-    #                 {
-    #                     "type": "path",
-    #                     "style": "plain",
-    #                     "foreground": "blue"
-    #                 },
-    #                 {
-    #                     "type": "git",
-    #                     "style": "plain",
-    #                     "foreground": "green"
-    #                 }
-    #             ]
-    #         }
-    #     ]
-    # }
-    # EOL
-    #     fi
-
     # --- Bash Shell Integration ---
+    # Add the oh-my-posh executable to our $PATH in bash so it properly recognizes the 'oh-my-posh' command. To verify oh-my-posh command is working run command 'oh-m,y-posh version'
+    export PATH="$PATH:/c/Users/Syed/AppData/Local/Programs/oh-my-posh/bin"
 
     # Set Default Theme in Oh My Posh. Theme is specified when initializing the shell.
     # To view popular themes, go to: https://ohmyposh.dev/docs/themes#quick-term
@@ -120,7 +131,7 @@ setup_oh_my_posh() {
     # The 'command -v oh-my-posh &> /dev/null' checks if oh-my-posh command is installed
     if command -v oh-my-posh &>/dev/null; then
         # eval "$(oh-my-posh init bash)"
-        eval "$(oh-my-posh init bash --config $THEME_LOCAL_PATH)"
+        eval "$(oh-my-posh init bash --config "$THEME_LOCAL_PATH")"
         # eval "$(oh-my-posh init bash --config $THEME_REMOTE_PATH_URL)"
 
         # echo "Oh My Posh is using Remote URL. THEME_REMOTE_PATH_URL: $THEME_REMOTE_PATH_URL"
