@@ -84,3 +84,18 @@ fi
 if command -v argocd &>/dev/null; then
     source <(argocd completion bash)
 fi
+
+#===============================================
+# GitHub CLI (gh) Auto-Completion SCRIPTS      #
+#===============================================
+# Official GitHub CLI Completion Docs: https://cli.github.com/manual/gh_completion
+# Enable GitHub CLI auto-completion for bash.
+# `gh completion -s bash` generates completion script for gh CLI.
+# Using `source <(...)` loads completions into the current shell session.
+# This enables tab completion for `gh` commands, subcommands, and flags like `--state`, `--label`, etc.
+# Pre-requisite - Ensure GitHub CLI is installed and available in PATH.
+# Can install on Windows with command: winget install --id GitHub.cli
+if command -v gh &>/dev/null; then
+    source <(gh completion -s bash)
+    # eval "$(gh completion -s bash)"
+fi
