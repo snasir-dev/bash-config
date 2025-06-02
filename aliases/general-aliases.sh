@@ -6,9 +6,10 @@
 # FILE INFORMATION & LISTING & DIRECTORY NAVIGATION ALIASES         #
 #====================================================================
 # ls commands
-alias ll="ls -la" # Alias to list files in long format, including hidden files
-alias la="ls -A"  # Alias to list all files, including hidden ones
-alias l="ls -CF"  # Alias to list files in a multi-column format with file type indicators
+alias ll="ls -la"                                                    # Alias to list files in long format, including hidden files
+alias la="ls -A"                                                     # Alias to list all files, including hidden ones
+alias l="ls -CF"                                                     # Alias to list files in a multi-column format with file type indicators
+alias lr='ls -R --color=auto -F -I "node_modules" -I "bin" -I "obj"' # Recursively list all files with colors and file type indicators, ignoring common build/dependency folders (node_modules, bin, obj)
 
 # List files with detailed info, sorted by size
 alias ls-size='du -sh * | sort -rh'
