@@ -7,6 +7,9 @@
 #     source ~/.bash/main
 # fi
 
+# Enable debug logs (set to false to silence sourcing output)
+DEBUG=true
+
 # Check if shell is running interactively
 # $- is a string containing current shell options (i = interactive shell)
 # != means "not equal to"
@@ -15,36 +18,44 @@
 # return exits the script if shell is non-interactive
 [[ $- != *i* ]] && return
 
-# Iterate through all files in the env directory
-# for file in: starts a loop that will process each matching file
-# ~/.bash/env/*: expands to all files in the env directory
-# do: begins the loop body
-for file in ~/.bash/env/*; do
-    # Check if the current $file is a regular file (not a directory)
-    # [ -f "$file" ]: test if $file exists and is a regular file
-    # "$file" is quoted to handle filenames with spaces
-    # && means only execute the next command if this test is true
-    [ -f "$file" ] && source "$file" # source loads the file's contents into current shell
-done
+# -----------------------------
+# Helper: safely source all '.sh' files under a directory and its sub-directories
+# Arguments:
+#   $1 = label (used for debug messages: env/functions/aliases/completions)
+#   $2 = base directory to search within
+# -----------------------------
+source_sh_files() {
+    local label="$1" # Label used to indicate source type (e.g., "env")
+    local dir="$2"   # Directory path to search for .sh files
 
-# IMPORTANT: functions must be loaded before aliases because aliases depend on functions
-# Source all function definitions
-# Same pattern as above, but for files in the functions directory
-for file in ~/.bash/functions/*; do
-    [ -f "$file" ] && source "$file"
-done
+    # Use `find` to locate all `.sh` files under the directory tree
+    #   -type f      → only files (not directories)
+    #   -name "*.sh" → only files ending with .sh
+    #   -print0      → output null-separated paths (safe for filenames with spaces/newlines)
+    #
+    # `while IFS= read -r -d '' file; do ... done < <(...)` is process substitution:
+    # - IFS=         → disables word splitting, reads the whole line
+    # - -r           → disables backslash escaping
+    # - -d ''        → sets the delimiter to null (for use with `-print0`)
+    # - < <(...)     → process substitution feeds output of `find` into the loop, safely
+    #
+    # This ensures robust and safe reading of file paths, even those with special characters
+    while IFS= read -r -d '' file; do
+        # If debugging is enabled, print the file being sourced
+        [[ $DEBUG == true ]] && echo "Sourcing [$label]: $file"
+        # Source the file into the current shell (not a subshell)
+        source "$file"
+    done < <(find "$dir" -type f -name "*.sh" -print0)
+}
 
-# Source all alias definitions
-# Same pattern as above, but for files in the aliases directory
-for file in ~/.bash/aliases/*; do
-    [ -f "$file" ] && source "$file"
-done
-
-# Source all completion scripts
-# Same pattern as above, but for files in the completions directory
-for file in ~/.bash/completions/*; do
-    [ -f "$file" ] && source "$file"
-done
+# -----------------------------
+# Source scripts in order: env → functions → aliases → completions
+# -----------------------------
+source_sh_files "env" ~/.bash/env
+# !! IMPORTANT: FUNCTIONS MUST BE BE SOURCED BEFORE ALIASES (SOME ALIASES WILL DEPEND ON THEM) !!
+source_sh_files "functions" ~/.bash/functions
+source_sh_files "aliases" ~/.bash/aliases
+source_sh_files "completions" ~/.bash/completions
 
 # Add scripts directory to PATH
 # export makes the variable available to child processes
