@@ -99,3 +99,27 @@ if command -v gh &>/dev/null; then
     source <(gh completion -s bash)
     # eval "$(gh completion -s bash)"
 fi
+
+#=================================================
+# Terraform Auto-Completion SCRIPTS              #
+#=================================================
+# Official Terraform Documentation: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#enable-tab-completion
+# Also See: https://developer.hashicorp.com/terraform/cli/commands#shell-tab-completion
+
+# The `terraform -install-autocomplete` command would normally add the following to .bashrc:
+# complete -C C:\ProgramData\chocolatey\lib\terraform\tools\terraform.exe terraform.exe
+# However, this Windows-style path format doesn't work properly in bash on Windows.
+#
+# To fix this, we need to:
+# 1. Get the correct path format using: 'which terraform'
+# 2. Update the complete command to use Unix-style path format
+# 3. Remove the .exe extension from the command name (use 'terraform' not 'terraform.exe')
+# Final command would look as follows: complete -C /c/ProgramData/chocolatey/bin/terraform.exe terraform
+#
+# This enables tab completion for terraform commands, subcommands, and available options.
+# Pre-requisite - Ensure Terraform is installed and available in PATH.
+# Can install on Windows with command: choco install terraform
+if command -v terraform &>/dev/null; then
+    # Note this path is specific to Chocolatey installation on Windows.
+    complete -C /c/ProgramData/chocolatey/bin/terraform.exe terraform
+fi
