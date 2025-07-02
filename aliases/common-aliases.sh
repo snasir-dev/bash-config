@@ -50,13 +50,13 @@ alias home='cd ~' # Go directly to your home directory.
 # Prefix going to specific directories with "." Use ".." to open directories with git repositories initialized.
 # Easy navigation to directories that are not git repositories. Prefix with '.'
 WORKSPACE_DIR="$HOME/Documents/@MAIN-WORKSPACE"
-alias ".workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
+alias ".main-workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
 alias ".repos"='cd $WORKSPACE_DIR/@REPOS'
 alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
 
 # Prefix aliases opening repositories with ".."
 alias "..main-repo"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
-alias "..shared-resources"='cd $WORKSPACE_DIR/@REPOS/@SHARED-RESOURCES'
+alias "..shared-resources-repo"='cd $WORKSPACE_DIR/@REPOS/@SHARED-RESOURCES-REPO'
 alias "..bash-repo"='cd ~/.bash'
 
 # Visual File Directory - Tree like structure
