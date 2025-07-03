@@ -111,64 +111,174 @@ popd_at_index() {
   fi
 }
 
-#=======================
-# Allows me to dynamically jump between directories within my current filepath. For example in ~/Documents/@MAIN-WORKSPACE. just do "j <dirname>" so "j manifests" or any directory name "j @main-workspace", if it exists within @MAIN-WORKSPACE will try to go to it. Also added autocompletion.
+# ==============================================================================
+# Dynamic Jump (j)
+
+# Allows me to dynamically jump between directories within my current filepath.
+# For example in ~/Documents/@MAIN-WORKSPACE. just do "j <dirname>" so "j manifests" or any directory name "j @main-workspace", if it exists within @MAIN-WORKSPACE will try to go to it. Also added autocompletion. Can do "j <tab>" to see available directories to jump to.
+
 # Create an associative array to store path mappings
-declare -A path_mappings
+#
+# Jumps to a parent directory within the current file path.
+# Works dynamically with any directory you are in.
+#
+# EXAMPLE:
+# If you are in: /c/Users/Syed/Documents/Work/ProjectA/src
+# Running 'j Documents' will take you to: /c/Users/Syed/Documents
+# ===============
 
-# Function to update path mappings
-update_path_mappings() {
+# Declare a global associative array.
+# An associative array lets us store key-value pairs (e.g., 'Documents' -> '/c/Users/Documents').
+# It must be global ('-gA') so that all functions, including the separate
+# autocompletion function, can access and share the same data.
+declare -gA j_path_mappings
+
+# Defines a helper function that parses the current path and builds the map of
+# directory names to their full paths.
+# It's a separate function so it can be reused by both the main `j` command
+# and the `_j_complete` function without duplicating code.
+_j_update_path_mappings() {
+  # Clear the array at the start to ensure we're always working with fresh data
+  # from the current directory, not a previous one.
+  j_path_mappings=()
+
+  # Store the current working directory ('$PWD') in a local variable.
   local current_path="$PWD"
+  # Declare other local variables to be used within this function's scope.
   local path_parts
+  local built_path="" # This will be built up, piece by piece.
 
-  # Split the path into parts
+  # This is the core parsing step.
+  # - 'IFS="/"': Temporarily sets the Internal Field Separator to '/'.
+  # - 'read -ra path_parts': Reads the '$current_path' string, splits it by the
+  #   'IFS', and stores the resulting pieces in an array named 'path_parts'.
   IFS='/' read -ra path_parts <<<"$current_path"
 
-  # Clear existing mappings
-  path_mappings=()
-
-  # Build the path progressively and add mappings
-  local built_path=""
+  # Loop through each directory name that was extracted into the 'path_parts' array.
   for part in "${path_parts[@]}"; do
-    if [[ -n $part ]]; then
-      built_path="$built_path/$part"
-      # Store both lowercase and actual name mappings
-      path_mappings[${part,,}]="$built_path"
-      path_mappings[$part]="$built_path"
+    # '[[ -n "$part" ]]': Proceed only if the 'part' is not an empty string. This
+    # handles the empty element created by a leading '/' in the path.
+    if [[ -n "$part" ]]; then
+      # This block handles a specific edge case for Git Bash on Windows where
+      # the root of a path like '/c/Users' is just a single letter.
+      if [[ -z "$built_path" && ${#part} -eq 1 ]]; then
+        built_path="/$part" # Start the path with '/c'
+      else
+        built_path="$built_path/$part" # Append the next part, e.g., '/c/Users'
+      fi
+
+      # This is the key to making the command work. We create two entries in our map:
+      # 1. The original case: j_path_mappings["Documents"] = "/c/Users/Documents"
+      # 2. The lowercase version: j_path_mappings["documents"] = "/c/Users/Documents"
+      # This allows for case-insensitive matching later on.
+      # Note: If a name appears twice in a path, this logic will map to the deepest one.
+      j_path_mappings["$part"]="$built_path"
+      j_path_mappings["${part,,}"]="$built_path" # '${part,,}' is a bashism for lowercase
     fi
   done
 }
 
-# Function to jump to directory - To use do j <any-directory-within-filepath> "j @main-workspace" etc
+# THE MAIN `j` COMMAND
+# This is the main function that is executed when you type `j <something>`.
 j() {
-  if [ -z "$1" ]; then
-    echo "Usage: j <directory_name>"
-    return 1
+  # STEP 1: Always refresh the path map based on the current location first.
+  _j_update_path_mappings
+
+  # STEP 2: Handle the case where the user just types `j` with no arguments.
+  # '[[ -z "$1" ]]': Checks if the first argument ('$1') is zero-length (empty).
+  if [[ -z "$1" ]]; then
+    echo "Usage: j <parent_directory_name>"
+    echo "Available jump points from your current path:"
+
+    # This pipeline gets all directory names from our map, sorts them, and removes
+    # case-insensitive duplicates to create a clean list for the user.
+    for key in $(printf "%s\n" "${!j_path_mappings[@]}" | sort | uniq -i); do
+      # 'printf' is used here for clean, aligned formatting of the output.
+      printf "  %-25s -> %s\n" "$key" "${j_path_mappings[$key]}"
+    done
+    return 1 # Exit the function with an error code.
   fi
 
-  # Update mappings based on current directory
-  update_path_mappings
+  # Store the user's input in variables for easy access.
+  local search_term_orig="$1"
+  local search_term_lower="${1,,}" # The lowercase version of the input.
 
-  # Convert input to lowercase for case-insensitive matching
-  local search=${1,,}
-
-  if [ -n "${path_mappings[$1]}" ]; then
-    cd "${path_mappings[$1]}"
-  elif [ -n "${path_mappings[$search]}" ]; then
-    cd "${path_mappings[$search]}"
+  # STEP 3: Find the path and change directory.
+  # '[[ -v "key" ]]': This is the correct way to check if a key *exists*
+  # in an associative array.
+  # We check for the original case first.
+  if [[ -v "j_path_mappings[$search_term_orig]" ]]; then
+    cd "${j_path_mappings[$search_term_orig]}"
+  # If the original case fails, we check for the lowercase version.
+  elif [[ -v "j_path_mappings[$search_term_lower]" ]]; then
+    cd "${j_path_mappings[$search_term_lower]}"
+  # If neither key exists, inform the user and exit.
   else
-    echo "No matching directory found for: $1"
+    echo "❌ Error: Directory '$search_term_orig' not found in your current path."
     return 1
   fi
 }
 
-# Add tab completion for j (jump) complete.
+# # Autocompletion function for 'j'. This will PROPERLY show tab completion for directories. No more duplicates. But instead, you must type the correct case for it to auto complete. For example for path '/c/Users/Syed/Documents/@MAIN-WORKSPACE' if we do "j u" will not work must do "j U" and it will auto complete to "j User" and will go there.
+# # This function provides the logic for tab completion.
+# # It is automatically called by Bash when you press Tab after typing `j `.
+# # This version creates a clean list of completions without duplicates.
+# _j_complete() {
+#   # 'COMP_WORDS' is a Bash array holding the words on the current command line.
+#   # 'COMP_CWORD' is the index of the word the cursor is currently on.
+#   # 'cur' will therefore hold the word we are trying to complete (e.g., "Doc").
+#   local cur="${COMP_WORDS[COMP_CWORD]}"
+#   local path_parts
+#   local unique_completions
+
+#   # As before, we split the current path into its component parts.
+#   IFS='/' read -ra path_parts <<<"$PWD"
+
+#   # This pipeline generates a clean list of unique directory names for completion.
+#   # - 'printf "%s\n"': Prints each array element on a new line.
+#   # - 'grep .': Removes any blank lines from the output.
+#   # - 'sort -u': Sorts the lines and removes duplicates, leaving original casing.
+#   # 'mapfile -t ... < <(...)': Reads this clean output into the 'unique_completions' array.
+#   mapfile -t unique_completions < <(printf "%s\n" "${path_parts[@]}" | grep . | sort -u)
+
+#   # 'COMPREPLY' is the special Bash array that holds the possible completion suggestions.
+#   # 'compgen -W "..." -- "$cur"': This command tells Bash to generate completions
+#   # from the Word list ('-W') provided, based on the current word ('$cur').
+#   COMPREPLY=($(compgen -W "${unique_completions[*]}" -- "$cur"))
+# }
+
+# BASH AUTOCOMPLETION SETUP for "j()"
+# Autocompletion function for 'j'. This give yous ability to tab complete REGARDLESS of the case-sensitivity of the directory names. if you have '/c/Users/Syed/Documents/@MAIN-WORKSPACE' can do "j u" and it will auto complete "j user" and will go there.
+# Minor downside is when you see tab results, it will show duplicates due to case-sensitivity but convenience outweighs the negative.
+
+# This function provides the logic for Bash's programmable tab completion.
+# It is automatically triggered by Bash when you press the Tab key after
+# typing the `j` command. This version enables case-insensitive completion
+# at the cost of showing duplicate suggestions in the list.
 _j_complete() {
-  local cur=${COMP_WORDS[COMP_CWORD]}
-  update_path_mappings
-  COMPREPLY=($(compgen -W "${!path_mappings[*]}" -- "$cur"))
+  # First, call the helper function to parse the current directory (`$PWD`) and
+  # populate the `j_path_mappings` associative array. This ensures the
+  # completion suggestions are always relevant to your current location.
+  _j_update_path_mappings
+
+  # Bash provides special variables for completion functions.
+  # - `COMP_WORDS`: An array containing all individual words on the current command line.
+  # - `COMP_CWORD`: The index number of the word the cursor is currently on.
+  # This line gets the word you are currently trying to complete (e.g., "Doc").
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+
+  # This is the final command that generates and assigns the suggestions.
+  # - `COMPREPLY`: The special array variable that Bash uses to display completion options.
+  # - `compgen -W "..."`: A Bash built-in that generates completions from a given Word list (`-W`).
+  # - `${!j_path_mappings[*]}`: This expands to a list of all *keys* in our associative array.
+  #   Since our map contains both "Documents" and "documents", both are included in this list.
+  # - `-- "$cur"`: This tells `compgen` to only suggest words from the list that start
+  #   with the current word under the cursor.
+  COMPREPLY=($(compgen -W "${!j_path_mappings[*]}" -- "$cur"))
 }
 
+# Register the completion function to work with the 'j' command.
 complete -F _j_complete j
-# End j (jump)
-#=======================
+
+# End of j (jump) function and autocompletion setup.
+# ==============================================================================
