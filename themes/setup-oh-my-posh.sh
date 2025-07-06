@@ -112,7 +112,7 @@ install_oh_my_posh() {
 # Function to setup Oh My Posh in bash
 setup_oh_my_posh() {
     # --- Bash Shell Integration ---
-    # Add the oh-my-posh executable to our $PATH in bash so it properly recognizes the 'oh-my-posh' command. To verify oh-my-posh command is working run command 'oh-m,y-posh version'
+    # Add the oh-my-posh executable to our $PATH in bash so it properly recognizes the 'oh-my-posh' command. To verify oh-my-posh command is working run command 'oh-my-posh version'
     export PATH="$PATH:/c/Users/Syed/AppData/Local/Programs/oh-my-posh/bin"
 
     # Set Default Theme in Oh My Posh. Theme is specified when initializing the shell.

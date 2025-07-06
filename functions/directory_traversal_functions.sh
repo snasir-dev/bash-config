@@ -136,7 +136,7 @@ declare -gA j_path_mappings
 # Defines a helper function that parses the current path and builds the map of
 # directory names to their full paths.
 # It's a separate function so it can be reused by both the main `j` command
-# and the `_j_complete` function without duplicating code.
+# and the `_j_tab_complete` function without duplicating code.
 _j_update_path_mappings() {
   # Clear the array at the start to ensure we're always working with fresh data
   # from the current directory, not a previous one.
@@ -223,7 +223,7 @@ j() {
 # # This function provides the logic for tab completion.
 # # It is automatically called by Bash when you press Tab after typing `j `.
 # # This version creates a clean list of completions without duplicates.
-# _j_complete() {
+# _j_tab_complete() {
 #   # 'COMP_WORDS' is a Bash array holding the words on the current command line.
 #   # 'COMP_CWORD' is the index of the word the cursor is currently on.
 #   # 'cur' will therefore hold the word we are trying to complete (e.g., "Doc").
@@ -255,7 +255,7 @@ j() {
 # It is automatically triggered by Bash when you press the Tab key after
 # typing the `j` command. This version enables case-insensitive completion
 # at the cost of showing duplicate suggestions in the list.
-_j_complete() {
+_j_tab_complete() {
   # First, call the helper function to parse the current directory (`$PWD`) and
   # populate the `j_path_mappings` associative array. This ensures the
   # completion suggestions are always relevant to your current location.
@@ -278,7 +278,7 @@ _j_complete() {
 }
 
 # Register the completion function to work with the 'j' command.
-complete -F _j_complete j
+complete -F _j_tab_complete j
 
 # End of j (jump) function and autocompletion setup.
 # ==============================================================================

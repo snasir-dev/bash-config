@@ -60,7 +60,7 @@ source_sh_files "completions" ~/.bash/completions
 # Add scripts directory to PATH
 # export makes the variable available to child processes
 # PATH is the system variable that defines where to look for executables
-# $HOME expands to your home directory
+# $HOME expands to our home directory
 # : is the path separator in PATH
 # $PATH appends the existing PATH value
 export PATH="$HOME/.bash/scripts:$PATH"

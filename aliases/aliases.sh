@@ -68,7 +68,9 @@ alias tree='tree.com'
 alias tree2='find . -maxdepth 2 -type d | sed -e "s/[^-][^\/]*\//  |/g" -e "s/|\([^ ]\)/|-\1/"'
 alias treeall='find . -type d | sed -e "s/[^-][^\/]*\//  |/g" -e "s/|\([^ ]\)/|-\1/"'
 
-# Will run filetree shell method below. Remember after ft can specify parameters: ft 1 . true
+# (IMPORTANT) Filetree - Custom function to display a tree-like structure of files and directories.
+# Will run filetree shell method below. Remember after ft can specify parameters:
+# Example: ft 3 false ~/Documents/@MAIN-WORKSPACE
 alias ft="filetree"
 
 #==============================================================================

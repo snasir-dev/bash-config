@@ -1,7 +1,8 @@
 #!/bin/bash
-#=======================================
-# BASH GENERAL AUTO COMPLETION SCRIPTS #
-#=======================================
+#==========================================
+# BASH GENERAL AUTO COMPLETION SCRIPTS    #
+# MOSTLY FOR THIRD-PARTY TOOLS & SERVICES #
+#==========================================
 
 # This section enables general bash completion features.
 # Bash completion allows the shell to suggest and auto-complete commands and options.
