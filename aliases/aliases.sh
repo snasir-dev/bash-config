@@ -55,9 +55,9 @@ alias ".repos"='cd $WORKSPACE_DIR/@REPOS'
 alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
 
 # Prefix aliases opening repositories with ".."
-alias "..main-repo"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
-alias "..shared-resources-repo"='cd $WORKSPACE_DIR/@REPOS/@SHARED-RESOURCES-REPO'
-alias "..bash-repo"='cd ~/.bash'
+alias "..fullstack-react-net-app__REPO"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
+alias "..shared-resources-repo__REPO"='cd $WORKSPACE_DIR/@REPOS/@SHARED-RESOURCES-REPO'
+alias "..bash__REPO"='cd ~/.bash'
 
 # Visual File Directory - Tree like structure
 # Official "tree" command with git-bash.
