@@ -58,6 +58,7 @@ alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
 alias "..fullstack-react-net-app__REPO"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
 alias "..shared-resources-repo__REPO"='cd $WORKSPACE_DIR/@REPOS/@SHARED-RESOURCES-REPO'
 alias "..bash__REPO"='cd ~/.bash'
+alias "..orbz-cli__REPO"='cd $WORKSPACE_DIR/@REPOS/SHELLS_AND_CLI_TOOLS/CLI_TOOLS/orbz-cli'
 
 # Visual File Directory - Tree like structure
 # Official "tree" command with git-bash.
