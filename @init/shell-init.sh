@@ -28,6 +28,10 @@ source_sh_files() {
     local label="$1" # Label used to indicate source type (e.g., "env")
     local dir="$2"   # Directory path to search for .sh files
 
+    # Define exclusion lists (filenames and directory names to skip)
+    local EXCLUDE_FILES=("aws.sh" "docker.sh")      # filenames to exclude
+    local EXCLUDE_DIRS=("text-processing" "system")            # directory names to exclude (anywhere in path)
+
     # Use `find` to locate all `.sh` files under the directory tree
     #   -type f      → only files (not directories)
     #   -name "*.sh" → only files ending with .sh
@@ -41,8 +45,24 @@ source_sh_files() {
     #
     # This ensures robust and safe reading of file paths, even those with special characters
     while IFS= read -r -d '' file; do
+        local filename
+        filename=$(basename "$file") # Extract just the filename from full path (e.g., aws.sh)
+
+        local folder
+        folder=$(basename "$(dirname "$file")") # Extract immediate parent folder name, e.g., plugins
+
+        # Check if the file should be excluded by filename
+        for exclude_file in "${EXCLUDE_FILES[@]}"; do
+            [[ "$filename" == "$exclude_file" ]] && continue 2
+        done
+
+        # Check if any part of the file path matches excluded directories
+        for exclude_dir in "${EXCLUDE_DIRS[@]}"; do
+            [[ "$file" == *"/$exclude_dir/"* ]] && continue 2
+        done
+
         # If debugging is enabled, print the file being sourced
-        [[ $DEBUG == true ]] && echo "Sourcing [$label]: $file"
+        [[ $DEBUG == true ]] && echo "Sourcing [${label} (${folder}/${filename})]: $file"
         # Source the file into the current shell (not a subshell)
         source "$file"
     done < <(find "$dir" -type f -name "*.sh" -print0)
@@ -82,3 +102,6 @@ if [ -f ~/.bash/themes/setup-oh-my-posh.sh ]; then
 else
     echo "Warning: setup-oh-my-posh.sh not found! Please check your installation."
 fi
+
+
+source_sh_files "Plugins/Tools/Modules/Packages" ~/.bash/plugins

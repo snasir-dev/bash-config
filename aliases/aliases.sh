@@ -116,5 +116,11 @@ alias kube-info="~/.bash/scripts/kube-info.sh"
 
 #*******************************
 # Source Alias
-alias src="source ~/.bashrc"
-alias reload="source ~/.bashrc"
+# alias src="source ~/.bashrc"
+# alias reload="source ~/.bashrc"
+# alias refresh="source ~/.bashrc"
+# alias r="source ~/.bashrc"
+
+# shellcheck disable=SC2139
+# Brace expansion {lg,LG,Lg} generates three separate aliases (lg, LG, Lg) in a single command. Bash processes this during startup with no runtime performance difference
+alias {src,reload,refresh,r}="source ~/.bashrc"
