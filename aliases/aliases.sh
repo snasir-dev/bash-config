@@ -56,7 +56,7 @@ alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
 
 # Prefix aliases opening repositories with ".."
 alias "..fullstack-react-net-app__REPO"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
-alias "..shared-resources-repo__REPO"='cd $WORKSPACE_DIR/@REPOS/@SHARED-RESOURCES-REPO'
+alias "..shared-resources-repo__REPO"='cd $WORKSPACE_DIR/@REPOS/@SHARED_RESOURCES_REPO'
 alias "..bash__REPO"='cd ~/.bash'
 alias "..orbz-cli__REPO"='cd $WORKSPACE_DIR/@REPOS/SHELLS_AND_CLI_TOOLS/CLI_TOOLS/orbz-cli'
 
