@@ -115,7 +115,7 @@ popd_at_index() {
 # Dynamic Jump (j)
 
 # Allows me to dynamically jump between directories within my current filepath.
-# For example in ~/Documents/@MAIN-WORKSPACE. just do "j <dirname>" so "j manifests" or any directory name "j @main-workspace", if it exists within @MAIN-WORKSPACE will try to go to it. Also added autocompletion. Can do "j <tab>" to see available directories to jump to.
+# For example in ~/Documents/@MAIN_WORKSPACE. just do "j <dirname>" so "j manifests" or any directory name "j @MAIN_WORKSPACE", if it exists within @MAIN_WORKSPACE will try to go to it. Also added autocompletion. Can do "j <tab>" to see available directories to jump to.
 
 # Create an associative array to store path mappings
 #
@@ -219,7 +219,7 @@ j() {
   fi
 }
 
-# # Autocompletion function for 'j'. This will PROPERLY show tab completion for directories. No more duplicates. But instead, you must type the correct case for it to auto complete. For example for path '/c/Users/Syed/Documents/@MAIN-WORKSPACE' if we do "j u" will not work must do "j U" and it will auto complete to "j User" and will go there.
+# # Autocompletion function for 'j'. This will PROPERLY show tab completion for directories. No more duplicates. But instead, you must type the correct case for it to auto complete. For example for path '/c/Users/Syed/Documents/@MAIN_WORKSPACE' if we do "j u" will not work must do "j U" and it will auto complete to "j User" and will go there.
 # # This function provides the logic for tab completion.
 # # It is automatically called by Bash when you press Tab after typing `j `.
 # # This version creates a clean list of completions without duplicates.
@@ -248,7 +248,7 @@ j() {
 # }
 
 # BASH AUTOCOMPLETION SETUP for "j()"
-# Autocompletion function for 'j'. This give yous ability to tab complete REGARDLESS of the case-sensitivity of the directory names. if you have '/c/Users/Syed/Documents/@MAIN-WORKSPACE' can do "j u" and it will auto complete "j user" and will go there.
+# Autocompletion function for 'j'. This give yous ability to tab complete REGARDLESS of the case-sensitivity of the directory names. if you have '/c/Users/Syed/Documents/@MAIN_WORKSPACE' can do "j u" and it will auto complete "j user" and will go there.
 # Minor downside is when you see tab results, it will show duplicates due to case-sensitivity but convenience outweighs the negative.
 
 # This function provides the logic for Bash's programmable tab completion.

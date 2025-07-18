@@ -24,8 +24,8 @@
 #   2. Show the current directory up to 2 levels deep, including hidden files:
 #      filetree 2 true
 #
-#   3. Show the '~/Documents/@MAIN-WORKSPACE' directory up to 4 levels deep, without hidden files:
-#      filetree 4 false ~/Documents/@MAIN-WORKSPACE
+#   3. Show the '~/Documents/@MAIN_WORKSPACE' directory up to 4 levels deep, without hidden files:
+#      filetree 4 false ~/Documents/@MAIN_WORKSPACE
 
 # REFERENCE EXAMPLE OF HOW IT PRINTS DIRECTORIES:
 # 📁 Observability/

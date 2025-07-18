@@ -46,11 +46,11 @@ alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stac
 # Shorter aliases for common directory locations.
 alias home='cd ~' # Go directly to your home directory.
 
-# WORKSPACE_DIR=~/Documents/@MAIN-WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
+# WORKSPACE_DIR=~/Documents/@MAIN_WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
 # Prefix going to specific directories with "." Use ".." to open directories with git repositories initialized.
 # Easy navigation to directories that are not git repositories. Prefix with '.'
-WORKSPACE_DIR="$HOME/Documents/@MAIN-WORKSPACE"
-alias ".main-workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
+WORKSPACE_DIR="$HOME/Documents/@MAIN_WORKSPACE"
+alias ".main_workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
 alias ".repos"='cd $WORKSPACE_DIR/@REPOS'
 alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
 
@@ -71,7 +71,7 @@ alias treeall='find . -type d | sed -e "s/[^-][^\/]*\//  |/g" -e "s/|\([^ ]\)/|-
 
 # (IMPORTANT) Filetree - Custom function to display a tree-like structure of files and directories.
 # Will run filetree shell method below. Remember after ft can specify parameters:
-# Example: ft 3 false ~/Documents/@MAIN-WORKSPACE
+# Example: ft 3 false ~/Documents/@MAIN_WORKSPACE
 alias ft="filetree"
 
 #==============================================================================
