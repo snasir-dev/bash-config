@@ -31,8 +31,8 @@ source_sh_files() {
     # Define exclusion lists (filenames and directory names to skip)
     local EXCLUDE_FILES=("")              # filenames to exclude
     # local EXCLUDE_FILES=("aws.sh" "docker.sh")              # filenames to exclude
-    # local EXCLUDE_DIRS=("text-processing" "system")         # directory names to exclude (anywhere in path)
-    local EXCLUDE_DIRS=("")         # directory names to exclude (anywhere in path)
+    local EXCLUDE_DIRS=("text-processing" "system" "containers" "cloud")         # directory names to exclude (anywhere in path)
+    # local EXCLUDE_DIRS=("")         # directory names to exclude (anywhere in path)
 
     # Use `find` to locate all `.sh` files under the directory tree
     #   -type f      → only files (not directories)
