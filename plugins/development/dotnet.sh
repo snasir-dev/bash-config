@@ -59,6 +59,31 @@ fi
 
 
 
+# --- FUNCTIONS ---
+# Create a new solution and add a minimal API project to it
+# Usage: newapi MyAwesomeApi
+# newapi() {
+#     if [ -z "$1" ]; then
+#         echo "Usage: newapi <ProjectName>"
+#         return 1
+#     fi
+
+#     local project_name="$1"
+#     local solution_name="${project_name}Sln"
+
+#     # Create solution and project
+#     dotnet new sln -n "$solution_name"
+#     dotnet new webapi -minimal -o "$project_name"
+
+#     # Add project to solution
+#     dotnet sln "$solution_name.sln" add "$project_name"
+
+#     echo "✅ Created solution '$solution_name' with Minimal API project '$project_name'."
+# }
+
+
+
+
 # --- ALIASES ---
 alias dn='dotnet'
 alias dnb='dotnet build'
@@ -67,27 +92,7 @@ alias dnw='dotnet watch'
 alias dnt='dotnet test'
 alias dnef='dotnet ef' # For Entity Framework
 
-# --- FUNCTIONS ---
-# Create a new solution and add a minimal API project to it
-# Usage: newapi MyAwesomeApi
-newapi() {
-    if [ -z "$1" ]; then
-        echo "Usage: newapi <ProjectName>"
-        return 1
-    fi
 
-    local project_name="$1"
-    local solution_name="${project_name}Sln"
-
-    # Create solution and project
-    dotnet new sln -n "$solution_name"
-    dotnet new webapi -minimal -o "$project_name"
-
-    # Add project to solution
-    dotnet sln "$solution_name.sln" add "$project_name"
-
-    echo "✅ Created solution '$solution_name' with Minimal API project '$project_name'."
-}
 
 
 # --- COMPLETIONS ---
@@ -100,16 +105,7 @@ newapi() {
 # You can install .NET on Windows with: winget install Microsoft.DotNet.SDK.8
 # Completion script is built into the CLI via `dotnet complete`
 
-# You can test the results without enabling tab completion by sending something directly to the dotnet complete command. Example: dotnet complete "dotnet a"
-
-# if command -v dotnet &>/dev/null; then
-#     source <(dotnet complete)
-#     # Alternatively: eval "$(dotnet complete)"
-# fi
-
-
-# bash parameter completion for the dotnet CLI
-
+# bash parameter completion for the dotnet CLI - Copied directly from the link above
 function _dotnet_bash_complete()
 {
 #   local cur="${COMP_WORDS[COMP_CWORD]}" IFS=$'\n' # On Windows you may need to use use IFS=$'\r\n'
@@ -122,12 +118,3 @@ function _dotnet_bash_complete()
 }
 
 complete -f -F _dotnet_bash_complete dotnet
-
-
-# Enable .NET CLI tab completion. The script must be registered once.
-# This is an example; check the official .NET docs for the latest method.
-# To register: dotnet complete --install
-# This sourcing logic activates it if it's installed.
-# if command -v register-completions >/dev/null 2>&1; then
-#     register-completions dotnet
-# fi
