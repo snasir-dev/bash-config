@@ -1,0 +1,29 @@
+# The .gitattributes file is used to control how Git handles file attributes, such as line endings, diff behavior, and file handling in merges. It is useful for ensuring consistency across different environments and improving Git operations for specific file types.
+
+#==============
+# EXAMPLES   #
+#==============
+# # Set line endings for text files to LF in the repository (prevents CRLF issues on Windows)
+# *.txt text eol=lf
+
+# # Ensure shell scripts use LF line endings (important for execution on Linux/macOS)
+# *.sh text eol=lf
+# # Prevent Git from automatically merging large data files (avoid merge conflicts)
+# *.csv merge=ours
+
+# # Treat JSON files as text for better diff readability
+# *.json diff
+
+# # Mark binary files so Git doesn’t try to diff them
+# *.png binary
+# *.jpg binary
+
+# # Force normalization of Windows executables to prevent unwanted changes
+# *.exe binary
+#================================
+
+# This file tells Git how to handle line endings for specific file patterns
+# .gitattributes allows you to define line ending rules (and other attributes) on a file-by-file or pattern-based basis, which is much more precise than using git config global settings
+
+# Force LF line endings for shell scripts (.sh files)
+*.sh text eol=lf
