@@ -18,19 +18,21 @@ DEBUG=true
 # return exits the script if shell is non-interactive
 [[ $- != *i* ]] && return
 
-# -----------------------------
+# =====================================================================================
 # Helper: safely source all '.sh' files under a directory and its sub-directories
 # Arguments:
 #   $1 = label (used for debug messages: env/functions/aliases/completions)
 #   $2 = base directory to search within
-# -----------------------------
+# =====================================================================================
 source_sh_files() {
     local label="$1" # Label used to indicate source type (e.g., "env")
     local dir="$2"   # Directory path to search for .sh files
 
     # Define exclusion lists (filenames and directory names to skip)
-    local EXCLUDE_FILES=("aws.sh" "docker.sh")      # filenames to exclude
-    local EXCLUDE_DIRS=("text-processing" "system")            # directory names to exclude (anywhere in path)
+    local EXCLUDE_FILES=("")              # filenames to exclude
+    # local EXCLUDE_FILES=("aws.sh" "docker.sh")              # filenames to exclude
+    # local EXCLUDE_DIRS=("text-processing" "system")         # directory names to exclude (anywhere in path)
+    local EXCLUDE_DIRS=("")         # directory names to exclude (anywhere in path)
 
     # Use `find` to locate all `.sh` files under the directory tree
     #   -type f      → only files (not directories)
@@ -45,11 +47,30 @@ source_sh_files() {
     #
     # This ensures robust and safe reading of file paths, even those with special characters
     while IFS= read -r -d '' file; do
-        local filename
-        filename=$(basename "$file") # Extract just the filename from full path (e.g., aws.sh)
+        
+        # Pure Bash way to get the filename
+        # ${file##*/} → Remove everything up to and including the last `/`
+        # Example:
+        #   file="/home/user/.bash/functions/aws.sh"
+        #   filename="${file##*/}" → "aws.sh"
+        # Equivalent to: basename "$file" — but faster!
+        local filename="${file##*/}"
 
-        local folder
-        folder=$(basename "$(dirname "$file")") # Extract immediate parent folder name, e.g., plugins
+
+        # Extract just the immediate parent directory
+        # ${file%/*} → Remove the shortest match of '/*' from the end (the filename part)
+        # Example:
+        #   file="/home/user/.bash/functions/aws.sh"
+        #   parent_dir="${file%/*}" → "/home/user/.bash/functions"
+        local parent_dir="${file%/*}"             # Strip filename → gives directory path
+        # ${parent_dir##*/} → Remove everything up to and including the last `/`
+        # Example:
+        #   parent_dir="/home/user/.bash/functions"
+        #   folder="${parent_dir##*/}" → "functions"
+        # This gives you just the last folder in the path
+        # Equivalent to: basename "$(dirname "$file")" — but much faster!
+        local folder="${parent_dir##*/}"          # Strip everything up to last slash → parent dir
+
 
         # Check if the file should be excluded by filename
         for exclude_file in "${EXCLUDE_FILES[@]}"; do
@@ -68,9 +89,9 @@ source_sh_files() {
     done < <(find "$dir" -type f -name "*.sh" -print0)
 }
 
-# -----------------------------
-# Source scripts in order: env → functions → aliases → completions
-# -----------------------------
+# ============================================================================================================
+# Source scripts in order: env → functions → aliases → completions | (except excluded files or directories)
+# ============================================================================================================
 source_sh_files "env" ~/.bash/env
 # !! IMPORTANT: FUNCTIONS MUST BE BE SOURCED BEFORE ALIASES (SOME ALIASES WILL DEPEND ON THEM) !!
 source_sh_files "functions" ~/.bash/functions
@@ -104,4 +125,8 @@ else
 fi
 
 
-source_sh_files "Plugins/Tools/Modules/Packages" ~/.bash/plugins
+
+# ======================================================================
+# Source all scripts in plugins (except excluded files or directories)
+# ======================================================================
+source_sh_files "Plugin/Tool/Module/Package" ~/.bash/plugins
