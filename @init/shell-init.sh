@@ -21,7 +21,7 @@ DEBUG=true
 # =====================================================================================
 # Helper: safely source all '.sh' files under a directory and its sub-directories
 # Arguments:
-#   $1 = label (used for debug messages: env/functions/aliases/completions)
+#   $1 = label (used for debug messages: env/functions/aliases/completions/plugins)
 #   $2 = base directory to search within
 # =====================================================================================
 source_sh_files() {
@@ -29,16 +29,19 @@ source_sh_files() {
     local dir="$2"   # Directory path to search for .sh files
 
     # Define exclusion lists (filenames and directory names to skip)
-    local EXCLUDE_FILES=("")              # filenames to exclude
+    local EXCLUDE_FILES=("")              # filenames to exclude. This will exclude irrespective of the directory, unlike EXCLUDE_FILES_BY_DIR
     # local EXCLUDE_FILES=("aws.sh" "docker.sh")              # filenames to exclude
-    local EXCLUDE_DIRS=("text-processing" "system" "containers" "cloud")         # directory names to exclude (anywhere in path)
-    # local EXCLUDE_DIRS=("")         # directory names to exclude (anywhere in path)
+    
+    local EXCLUDE_DIRS=("text-processing" "system" "cloud")         # DIRECTORY/FOLDER names to exclude (anywhere in path)
 
-    # Use `find` to locate all `.sh` files under the directory tree
-    #   -type f      → only files (not directories)
-    #   -name "*.sh" → only files ending with .sh
-    #   -print0      → output null-separated paths (safe for filenames with spaces/newlines)
-    #
+    # === ASSOCIATIVE ARRAY: key = folder name, value = filenames to exclude within that folder only ===
+    # This only excludes files (values) in specific directories (keys)
+    # e.g., EXCLUDE_FILES_BY_DIR["dev"]="local.sh secrets.sh"
+    declare -A EXCLUDE_FILES_BY_DIR
+    # EXCLUDE_FILES_BY_DIR["containers"]="docker.sh kubernetes.sh"
+    # EXCLUDE_FILES_BY_DIR["file-management"]="ripgrep.sh"
+   
+    
     # `while IFS= read -r -d '' file; do ... done < <(...)` is process substitution:
     # - IFS=         → disables word splitting, reads the whole line
     # - -r           → disables backslash escaping
@@ -73,8 +76,8 @@ source_sh_files() {
 
 
         # Check if the file should be excluded by filename
-        for exclude_file in "${EXCLUDE_FILES[@]}"; do
-            [[ "$filename" == "$exclude_file" ]] && continue 2
+        for excluded_file in "${EXCLUDE_FILES[@]}"; do
+            [[ "$filename" == "$excluded_file" ]] && continue 2
         done
 
         # Check if any part of the file path matches excluded directories
@@ -82,10 +85,41 @@ source_sh_files() {
             [[ "$file" == *"/$exclude_dir/"* ]] && continue 2
         done
 
+
+        # === Skip specific files from certain directories ===
+        # This allows you to specify, for example:
+        #   EXCLUDE_FILES_BY_DIR["development"]="local.sh secrets.sh"
+        # So that only those files are excluded in the 'development' folder, but NOT in other folders.
+
+        # Check if the current folder has any file-specific exclusions
+        # - `-n` tests whether the value is non-empty (i.e., there are exclusions defined for this folder)
+        # - `${EXCLUDE_FILES_BY_DIR[$folder]}` retrieves the space-separated list of filenames to exclude for that folder
+        if [[ -n "${EXCLUDE_FILES_BY_DIR[$folder]}" ]]; then
+
+            # Loop over each filename specified for exclusion in that specific folder
+            # - `excluded_file` takes each file name in the list (e.g., "local.sh", "secrets.sh")
+            # - `${EXCLUDE_FILES_BY_DIR[$folder]}` is split into individual filenames automatically
+            for excluded_file in ${EXCLUDE_FILES_BY_DIR[$folder]}; do
+
+                # If the current file’s name matches any excluded_file filename, skip the outer loop iteration
+                # - `continue 2` tells Bash to skip this file and jump back to the next iteration of the *outer* loop (not just this inner loop)
+                [[ "$filename" == "$excluded_file" ]] && continue 2
+
+            done
+        fi
+
+
         # If debugging is enabled, print the file being sourced
         [[ $DEBUG == true ]] && echo "Sourcing [${label} (${folder}/${filename})]: $file"
+        
         # Source the file into the current shell (not a subshell)
+        # shellcheck disable=SC1090
         source "$file"
+    
+    # Use `find` to locate all `.sh` files under the directory tree
+    #   -type f      → only files (not directories)
+    #   -name "*.sh" → only files ending with .sh
+    #   -print0      → output null-separated paths (safe for filenames with spaces/newlines)
     done < <(find "$dir" -type f -name "*.sh" -print0)
 }
 

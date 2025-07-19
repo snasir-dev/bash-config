@@ -122,5 +122,5 @@ alias kube-info="~/.bash/scripts/kube-info.sh"
 # alias r="source ~/.bashrc"
 
 # shellcheck disable=SC2139
-# Brace expansion {lg,LG,Lg} generates three separate aliases (lg, LG, Lg) in a single command. Bash processes this during startup with no runtime performance difference
+# Brace expansion {src,reload,refresh,r} generates four separate aliases (src, reload, refresh, r) in a single command. Bash processes this during startup with no runtime performance difference
 alias {src,reload,refresh,r}="source ~/.bashrc"
