@@ -8,7 +8,12 @@
 # fi
 
 # Enable debug logs (set to false to silence sourcing output)
-DEBUG=true
+# If DEBUG is unset or null, default to 'true'. Otherwise, keep its existing value.
+# Value of $DEBUG is set with "reload_shell()" when we 
+: "${DEBUG:=true}"
+if [[ $DEBUG == true ]]; then
+    echo "🐞🐞🐞 Debug mode enabled Sourcing main configuration file: ~/.bash/main 🐞🐞🐞"
+fi
 
 # Check if shell is running interactively
 # $- is a string containing current shell options (i = interactive shell)

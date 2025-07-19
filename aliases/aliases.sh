@@ -121,6 +121,35 @@ alias kube-info="~/.bash/scripts/kube-info.sh"
 # alias refresh="source ~/.bashrc"
 # alias r="source ~/.bashrc"
 
+# Function to reload the shell, with an option for setting debug output
+# Optionally takes a single argument: 'true' to enable debug output. If no value is provided, defaults to 'false'.
+# Usage: reload_shell [-d|--d|--debug|--verbose|true]
+
+reload_shell() {
+  local arg="$1"
+
+  # Match any of the debug-like inputs (-d, --d, -debug, --debug, -v, --verbose, true)
+  # If any of these are provided, enable debug mode.
+  case "$arg" in
+    -d|--d|-debug|--debug|-v|--verbose|true)
+      echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+      export DEBUG=true
+      ;;
+    *)
+      export DEBUG=false
+      ;;
+  esac
+
+  # Source the .bashrc file to apply changes
+  source ~/.bashrc
+
+  # Unset DEBUG after sourcing to clean up the environment
+  unset DEBUG
+}
+
+
+
 # shellcheck disable=SC2139
 # Brace expansion {src,reload,refresh,r} generates four separate aliases (src, reload, refresh, r) in a single command. Bash processes this during startup with no runtime performance difference
-alias {src,reload,refresh,r}="source ~/.bashrc"
+# alias {src,reload,refresh,r}="source ~/.bashrc"  # NORMALLY HOW WE SOURCE .bashrc
+alias {src,reload,refresh,r}="reload_shell" # Use the reload_shell function to source .bashrc with options
