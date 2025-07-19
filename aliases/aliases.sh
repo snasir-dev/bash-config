@@ -128,19 +128,32 @@ alias kube-info="~/.bash/scripts/kube-info.sh"
 reload_shell() {
   local arg="$1"
 
-  # Match any of the debug-like inputs (-d, --d, -debug, --debug, -v, --verbose, true)
-  # If any of these are provided, enable debug mode.
+  # Default to DEBUG=true, unless we specify any of these arguments (false, -s, --silent, -q, --quiet)
   case "$arg" in
-    -d|--d|-debug|--debug|-v|--verbose|true)
-      # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
-      # echo "🐞🐞🐞 Debug mode enabled Sourcing main configuration file: ~/.bash/main 🐞🐞🐞"
-
-      export DEBUG=true
-      ;;
-    *)
+    # If the argument matches any of these "off" patterns, disable debug mode.
+    false|-s|--silent|-q|--quiet)
       export DEBUG=false
       ;;
+    # For any other argument, OR if NO argument is provided, enable debug mode.
+    *)  
+       # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+      export DEBUG=true
+      ;;
   esac
+
+  # INVERSE CONDITION ABOVE. Since we want to enable debug mode by default, we are providing silent flags instead of debug flags. Belows is reference to reverse the logic.
+  # Match any of the debug-like inputs (-d, --d, -debug, --debug, -v, --verbose, true)
+  # If any of these are provided, enable debug mode.
+  # case "$arg" in
+  #   -d|--d|-debug|--debug|-v|--verbose|true)
+  #     # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+
+  #     export DEBUG=true
+  #     ;;
+  #   *)
+  #     export DEBUG=false
+  #     ;;
+  # esac
 
   # Source the .bashrc file to apply changes
   source ~/.bashrc

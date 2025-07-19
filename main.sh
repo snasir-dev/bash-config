@@ -12,7 +12,8 @@
 # Value of $DEBUG is set with "reload_shell()" when we 
 : "${DEBUG:=true}"
 if [[ $DEBUG == true ]]; then
-    echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+    # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+    echo "🐞🐞🐞 Debug mode enabled. Sourcing main bash file: ~/.bash/main.sh 🐞🐞🐞"
 fi
 
 # Check if shell is running interactively
