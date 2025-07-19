@@ -157,12 +157,12 @@ fi
 
 # Source Theme Configuration
 # Install and Setup Oh My Posh (Custom Prompt Tool to add themes to the terminal)
-# Check if 'setup-oh-my-posh.sh' file exists. If it does, source it.
-if [ -f ~/.bash/themes/setup-oh-my-posh.sh ]; then
+# Check if 'setup_oh_my_posh.sh' file exists. If it does, source it.
+if [ -f ~/.bash/themes/setup_oh_my_posh.sh ]; then
     # shellcheck disable=SC1090
-    source ~/.bash/themes/setup-oh-my-posh.sh
+    source ~/.bash/themes/setup_oh_my_posh.sh
 else
-    echo "Warning: setup-oh-my-posh.sh not found! Please check your installation."
+    echo "Warning: setup_oh_my_posh.sh not found! Please check your installation."
 fi
 
 

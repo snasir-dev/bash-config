@@ -118,9 +118,9 @@ setup_oh_my_posh() {
     # Set Default Theme in Oh My Posh. Theme is specified when initializing the shell.
     # To view popular themes, go to: https://ohmyposh.dev/docs/themes#quick-term
 
-    # TODO: Add logic to quick-term-main-theme.json file to dynamically show different "session" segment information depending on the session type (e.g., SSH, WSL, etc.). Add logic to show different information when using docker (docker context), Kubernetes (k8s context / namespace), or AWS CLI (AWS CLI profile)
+    # TODO: Add logic to quick_term_main_theme.json file to dynamically show different "session" segment information depending on the session type (e.g., SSH, WSL, etc.). Add logic to show different information when using docker (docker context), Kubernetes (k8s context / namespace), or AWS CLI (AWS CLI profile)
     THEMES_DIR="$HOME/.bash/themes/config"
-    THEME_NAME="quick-term-main-theme.json"
+    THEME_NAME="quick_term_main_theme.json"
     THEME_LOCAL_PATH="$THEMES_DIR/$THEME_NAME" # local directory
     # THEME_REMOTE_PATH_URL="https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/lightgreen.omp.json" # remote github directory
 
