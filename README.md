@@ -6,33 +6,39 @@ Personal bash configuration files and scripts.
 
 ```
 📁 ~/.bash/
-├── 📁 @init/               # Shell initialization files
-│    ├── shell-init.sh
-│    ├── bashrc
-│    └── bash_profile
-├── 📁 completions/         # Completion scripts
-├── 📁 functions/           # Custom function definitions
-├── 📁 aliases/             # Command aliases
-├── 📁 scripts/             # Standalone shell scripts
-├── 📁 env/                 # Environment variables
-└── setup-bash-config.sh    # Setup/Installation Script       
+├── 📁 aliases/
+├── 📁 completions/
+│   └── 📁 third-party/
+├── 📁 env/
+├── 📁 functions/
+├── 📁 plugins/
+├── 📁 scripts/
+├── 📁 themes/
+├── 📁 setup/
+│   ├── 📄 bashrc              # Symlinked to ~/.bashrc (updated by setup_bash_config.sh)
+│   └── 📄 bash_profile        # Symlinked to ~/.bash_profile (updated by setup_bash_config.sh)
+├── 📄 main.sh                 # Entrypoint: main file to source
+└── 📄 setup_bash_config.sh    # Setup/Installation Script
 ```
 
 ## Installation
 
 1. Clone this repository:
+
 ```bash
 git clone https://github.com/snasir-dev/bash-configuration ~/.bash
 ```
 
 2. Run the installation script:
+
 ```bash
 cd ~/.bash
-chmod +x ~/.bash/setup-bash-config.sh  # chmod +x adds execute permissions to the setup-bash-config.sh file.
-./setup-bash-config.sh
+chmod +x ~/.bash/setup_bash_config.sh  # chmod +x adds execute permissions to the setup_bash_config.sh file.
+./setup_bash_config.sh
 ```
 
 3. Source the new configuration:
+
 ```bash
 source ~/.bashrc     # Load the new configuration
 # alternatively - we can also use the following aliases we setup: 'src' or 'reload'
@@ -43,6 +49,7 @@ reload               # Alternative reload alias
 ## Local Customization
 
 Create or modify `~/.bash_local` file for machine-specific settings:
+
 <!-- - `~/.bash/env/variables_local`
 - `~/.bash/aliases/aliases_local` -->
 

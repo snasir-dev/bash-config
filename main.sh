@@ -3,8 +3,8 @@
 # This file acts as the central point for sourcing all custom configurations from ~/.bash directory.
 # The .bashrc file will be very simple, it will only source this file.
 # Example of sourcing main configuration from .bash directory. Only the following lines below will be added to .bashrc file located in the home directory.
-# if [ -f ~/.bash/main ]; then
-#     source ~/.bash/main
+# if [ -f ~/.bash/main.sh ]; then
+#     source ~/.bash/main.sh
 # fi
 
 # Enable debug logs (set to false to silence sourcing output)
@@ -12,7 +12,7 @@
 # Value of $DEBUG is set with "reload_shell()" when we 
 : "${DEBUG:=true}"
 if [[ $DEBUG == true ]]; then
-    echo "🐞🐞🐞 Debug mode enabled Sourcing main configuration file: ~/.bash/main 🐞🐞🐞"
+    echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
 fi
 
 # Check if shell is running interactively
@@ -151,6 +151,7 @@ export PATH="$HOME/.bash/scripts:$PATH"
 # then: begins the block of code to execute if the test is true
 # fi: ends the if block
 if [ -f ~/.bash_local ]; then
+    # shellcheck disable=SC1090
     source ~/.bash_local
 fi
 
@@ -158,6 +159,7 @@ fi
 # Install and Setup Oh My Posh (Custom Prompt Tool to add themes to the terminal)
 # Check if 'setup-oh-my-posh.sh' file exists. If it does, source it.
 if [ -f ~/.bash/themes/setup-oh-my-posh.sh ]; then
+    # shellcheck disable=SC1090
     source ~/.bash/themes/setup-oh-my-posh.sh
 else
     echo "Warning: setup-oh-my-posh.sh not found! Please check your installation."

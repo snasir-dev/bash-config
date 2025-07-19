@@ -132,7 +132,9 @@ reload_shell() {
   # If any of these are provided, enable debug mode.
   case "$arg" in
     -d|--d|-debug|--debug|-v|--verbose|true)
-      echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+      # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+      # echo "🐞🐞🐞 Debug mode enabled Sourcing main configuration file: ~/.bash/main 🐞🐞🐞"
+
       export DEBUG=true
       ;;
     *)

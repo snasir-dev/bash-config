@@ -3,6 +3,6 @@
 # This is because these are the specific locations where Bash looks for these files by default during startup, and this behavior is not configurable without modifying the Bash source code.
 
 # shellcheck source=/dev/null
-if [ -f ~/.bash/@init/shell-init.sh ]; then
-    source ~/.bash/@init/shell-init.sh
+if [ -f ~/.bash/main.sh ]; then
+    source ~/.bash/main.sh
 fi
