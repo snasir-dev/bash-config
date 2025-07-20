@@ -9,6 +9,8 @@ Personal bash configuration files and scripts.
 ├── 📁 aliases/
 ├── 📁 completions/
 │   └── 📁 third-party/
+├── 📁 config/
+│   └── 📄 keybinds.sh        # Custom keybindings for Bash
 ├── 📁 env/
 ├── 📁 functions/
 ├── 📁 plugins/
