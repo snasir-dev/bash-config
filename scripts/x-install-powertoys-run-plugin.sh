@@ -80,9 +80,10 @@ SHORTCUT="$APPDATA/Microsoft/Windows/Start Menu/Programs/PowerToys.lnk"
 # PowerToys Executable Path (Target path the Shortcut Points to): C:\Users\Syed\AppData\Local\PowerToys\WinUI3Apps\PowerToys.Settings.exe
 EXECUTABLE="$LOCALAPPDATA/PowerToys/WinUI3Apps/PowerToys.Settings.exe"
 
-echo "⏳ Waiting 10 seconds before restarting PowerToys..."
+SLEEP_TIME=7
+echo "⏳ Waiting $SLEEP_TIME seconds before restarting PowerToys..."
 echo "   This gives time to ensure clean shutdown and proper plugin registration..."
-sleep 10
+sleep $SLEEP_TIME
 
 # Check if PowerToys is already running
 if tasklist | grep -qi "PowerToys.Settings.exe"; then

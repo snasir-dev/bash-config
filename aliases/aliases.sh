@@ -12,6 +12,13 @@
 # shellcheck disable=SC2139
 alias {wpwd,pwdw}='pwd | cygpath -w --file -'
 
+#====================
+# SCRIPT ALIASES    #
+#====================
+# Specify the path to your scripts directory
+SCRIPTS_DIR="$HOME/.bash/scripts"
+alias scripts='$SCRIPTS_DIR/x-script-selector.sh'
+
 #====================================================================
 # FILE INFORMATION & LISTING & DIRECTORY NAVIGATION ALIASES         #
 #====================================================================
@@ -112,8 +119,9 @@ alias mvi='mv -i' # Shorter version for interactive move.
 alias grep='grep --color=auto' # Grep with color highlighting.  Makes grep output much easier to read.
 # alias g='grep --color=auto'    # Shorter alias for colorized grep.
 
-#******************************
-# Kubernetes Aliases
+#===========================
+# KUBERNETES ALIASES       #
+#===========================
 alias k="kubectl"
 alias kga="k get all,endpoints,ingress,pv,pvc,cm,secrets,nodes -o wide"
 # Get Current Active Namespace
@@ -123,17 +131,20 @@ alias "kgns"="kubectl config view --minify | grep namespace"
 # alias kns="kubectl config set-context --current --namespace"
 
 # Note - must have script kube-info.sh in the scripts directory to run this alias.
-alias kube-info="~/.bash/scripts/kube-info.sh"
+# I have added all scripts to PATH. Can directly call the script by just stating "kube-info". No need for alias
+# alias kube-info="~/.bash/scripts/kube-info.sh"
 
-#*******************************
-# grep + Search Aliases
+#===========================
+# GREP + SEARCH ALIASES    #
+#===========================
 # alias grep="grep --color=auto"
 # alias fgrep="fgrep --color=auto"
 # alias egrep="egrep --color=auto"
 # alias findtxt="find . -type f -name '*.txt'"
 
-#*******************************
-# Source Alias
+#======================
+# SOURCE ALIASES      #
+#======================
 # alias src="source ~/.bashrc"
 # alias reload="source ~/.bashrc"
 # alias refresh="source ~/.bashrc"
@@ -179,7 +190,6 @@ reload_shell() {
   # Unset DEBUG after sourcing to clean up the environment
   unset DEBUG
 }
-
 
 
 # shellcheck disable=SC2139
