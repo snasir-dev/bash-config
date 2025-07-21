@@ -60,8 +60,8 @@ alias home='cd ~' # Go directly to your home directory.
 alias downloads='cd ~/Downloads' # Go directly to your Downloads directory.
 alias desktop='cd ~/Desktop' # Go directly to your Desktop directory.
 alias documents='cd ~/Documents' # Go directly to your Documents directory.
-alias pictures='cd ~/Pictures' # Go directly to your Pictures directory.
-alias videos='cd ~/Videos' # Go directly to your Videos directory.
+alias pictures='cd $USERPROFILE/Pictures' # Go directly to your Pictures directory.
+alias videos='cd $USERPROFILE/Videos' # Go directly to your Videos directory.
 
 
 # WORKSPACE_DIR=~/Documents/@MAIN_WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.

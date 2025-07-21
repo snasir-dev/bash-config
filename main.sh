@@ -116,7 +116,8 @@ source_sh_files() {
 
 
         # If debugging is enabled, print the file being sourced
-        [[ $DEBUG == true ]] && echo "Sourcing [${label} (${folder}/${filename})]: $file"
+        # [[ $DEBUG == true ]] && echo "Sourcing [${label} (${folder}/${filename})]: $file"
+        [[ $DEBUG == true ]] && printf "Sourcing [%s (%s/%s)]: %s\n" "$label" "$folder" "$filename" "$file"
         
         # Source the file into the current shell (not a subshell)
         # shellcheck disable=SC1090
@@ -129,14 +130,29 @@ source_sh_files() {
     done < <(find "$dir" -type f -name "*.sh" -print0)
 }
 
-# ============================================================================================================
-# Source scripts in order: env → functions → aliases → completions | (except excluded files or directories)
-# ============================================================================================================
+
+# ======================================================================
+# Source all scripts in config (custom keybinds, etc.)
+# ======================================================================
+source_sh_files "Config (Custom Keybinds)" ~/.bash/config
+echo ""
+
+# ===================================================================
+# Source scripts in order (except excluded files or directories): 
+# Order: env → functions → aliases → completions → plugins
+# ===================================================================
 source_sh_files "env" ~/.bash/env
+echo ""
+
 # !! IMPORTANT: FUNCTIONS MUST BE BE SOURCED BEFORE ALIASES (SOME ALIASES WILL DEPEND ON THEM) !!
 source_sh_files "functions" ~/.bash/functions
+echo ""
+
 source_sh_files "aliases" ~/.bash/aliases
+echo ""
+
 source_sh_files "completions" ~/.bash/completions
+echo ""
 
 # Add scripts directory to PATH
 # export makes the variable available to child processes
@@ -172,3 +188,4 @@ fi
 # Source all scripts in plugins (except excluded files or directories)
 # ======================================================================
 source_sh_files "Plugin/Tool/Module/Package" ~/.bash/plugins
+echo ""
