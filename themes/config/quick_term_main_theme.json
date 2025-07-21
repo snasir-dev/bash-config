@@ -13,9 +13,9 @@
 
 		"GIT-DEFAULT-BACKGROUND": "#00c8ff",
 		"GIT_MODIFIED": "#00ffaa",
-		"GIT-DIVERGED": "#dc6a68",
-		"GIT-AHEAD": "#00c8ff",
-		"GIT-BEHIND": "#eeee00",
+		"GIT-DIVERGED": "#eeee00",
+		"GIT-AHEAD": "#f9b300",
+		"GIT-BEHIND": "#dc6a68",
 
 		"HOST_MACHINE_NAME_COLOR": "#282828",
 		"FILEPATH_COLOR": "#fefefe",
@@ -54,7 +54,8 @@
 						"opensuse": "\uf314",
 						"raspbian": "\uf315",
 						"ubuntu": "\uf31c",
-						"windows": "\ue70f"
+						"windows": "\ue70f",
+						"ADMIN_SHIELD_ICON": "\uF132"
 					},
 					"type": "os",
 					"leading_diamond": "\u256d\u2500\ue0b2",
@@ -147,8 +148,9 @@
 			"alignment": "left",
 			"segments": [
 				{
+					"//": "COMMENT: Using Nerd Font icon '\uF132' (nf-fa-shield) for the admin prompt",
 					"type": "text",
-					"template": "\u2570\u2500 {{ if .Root }}#{{else}}${{end}}",
+					"template": "\u2570\u2500 {{ if .Root }}\uF132  (ADMIN):{{else}}${{end}}",
 					"foreground": "p:CURVED_LINE_COLOR",
 					"style": "plain"
 				}
