@@ -2,6 +2,16 @@
 # ALIASES - Command Aliases and Shortcuts
 #**************************************************************
 
+#==================
+# PATH ALIASES    #
+#==================
+
+# ALIAS TO PRINT THE CURRENT WORKING DIRECTORY AS A WINDOWS PATH
+# pwd - Prints the current working directory in Unix format
+# cygpath -w --file: This runs the converter. The --file - (or -f -) part is important; it tells cygpath to read the path from the standard input (which is coming from the pipe) instead of from a command-line argument.
+# shellcheck disable=SC2139
+alias {wpwd,pwdw}='pwd | cygpath -w --file -'
+
 #====================================================================
 # FILE INFORMATION & LISTING & DIRECTORY NAVIGATION ALIASES         #
 #====================================================================
@@ -44,7 +54,15 @@ alias dirs='dirs -v'      # View the directory stack with index numbers. Useful 
 alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stack
 
 # Shorter aliases for common directory locations.
+alias {cdrive,"c:"}='cd /c/' # Alias to go to the C: root directory
+alias temp='cd /c/temp' # Alias to go to C:/temp
 alias home='cd ~' # Go directly to your home directory.
+alias downloads='cd ~/Downloads' # Go directly to your Downloads directory.
+alias desktop='cd ~/Desktop' # Go directly to your Desktop directory.
+alias documents='cd ~/Documents' # Go directly to your Documents directory.
+alias pictures='cd ~/Pictures' # Go directly to your Pictures directory.
+alias videos='cd ~/Videos' # Go directly to your Videos directory.
+
 
 # WORKSPACE_DIR=~/Documents/@MAIN_WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
 # Prefix going to specific directories with "." Use ".." to open directories with git repositories initialized.
