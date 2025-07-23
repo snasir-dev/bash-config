@@ -10,6 +10,71 @@ PLUGIN_DIR="$LOCALAPPDATA/Microsoft/PowerToys/PowerToys Run/Plugins"
 # Define Downloads folder
 DOWNLOADS="$USERPROFILE/Downloads"
 
+#-------------------------------------------------------------
+# Step 0: (Optional) Download plugin from GitHub release
+# NOTE: THIS REQUIRES gh CLI (from github)
+# It also requires you to be logged in to GitHub CLI using `gh auth login`
+#-------------------------------------------------------------
+# If a GitHub URL is provided as first arg, try to pull latest x64.zip release
+
+#--------------------------------------------------------
+# Step 0: (Optional) Download plugin from GitHub release
+#--------------------------------------------------------
+
+echo
+echo "🌐 Optional (CAN LEAVE BLANK): Enter GitHub repository URL to auto-download the latest x64 plugin release."
+echo "   Format: https://github.com/<owner>/<repo>"
+echo "   Example 1: https://github.com/TBM13/BrowserSearch"
+echo "   Example 2: https://github.com/CCcat8059/FastWeb"
+echo "   ⚠️  IF LEFT BLANK, you'll be prompted to manually select a .zip file from your DOWNLOADS folder.⚠️" 
+echo
+echo "⚠️  Requires GitHub CLI (gh) to be installed and authenticated (One time only, if login required will prompt you):"
+echo "   Run: gh auth login"
+echo
+
+
+read -rp "🔗 GitHub Repo URL (optional): " GITHUB_URL
+
+if [[ -n "$GITHUB_URL" && "$GITHUB_URL" =~ github\.com/([^/]+)/([^/]+) ]]; then
+  REPO="${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
+  echo "🔍 Checking GitHub repo: $REPO"
+
+  if ! command -v gh &>/dev/null; then
+    echo "❌ GitHub CLI ('gh') is not installed. Please install it from https://cli.github.com/"
+    exit 1
+  fi
+
+  if ! gh auth status &>/dev/null; then
+    echo "❌ GitHub CLI is not authenticated. Run: gh auth login"
+    exit 1
+  fi
+
+  if ! gh repo view "$REPO" &>/dev/null; then
+    echo "❌ Invalid GitHub repository: $REPO"
+    exit 1
+  fi
+
+  echo "📦 Checking latest release for $REPO..."
+
+  if ! gh release view -R "$REPO" &>/dev/null; then
+    echo "❌ No releases found for $REPO"
+    exit 1
+  fi
+
+  echo "⬇️  Downloading latest *x64.zip to Downloads folder..."
+  cd "$USERPROFILE/Downloads"
+  
+
+  if ! gh release download -R "$REPO" --pattern "*x64.zip" --clobber; then
+    echo "❌ Failed to download x64.zip from the latest release."
+    exit 1
+  fi
+
+  echo "✅ Download complete. Continuing with plugin installation..."
+
+  echo -e "===============================\n" # Adds a separator and 2 new lines for better readability
+fi
+
 #--------------------------------------------------------
 # Step 1: Find latest zip file in Downloads using fd + fzf
 #--------------------------------------------------------
