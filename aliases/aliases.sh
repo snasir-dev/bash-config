@@ -17,7 +17,7 @@ alias {wpwd,pwdw}='pwd | cygpath -w --file -'
 #====================
 # Specify the path to your scripts directory
 SCRIPTS_DIR="$HOME/.bash/scripts"
-alias scripts='$SCRIPTS_DIR/x-script-selector.sh'
+alias {scripts,x}='$SCRIPTS_DIR/x-script-selector.sh'
 
 #====================================================================
 # FILE INFORMATION & LISTING & DIRECTORY NAVIGATION ALIASES         #

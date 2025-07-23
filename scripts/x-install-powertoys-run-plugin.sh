@@ -14,7 +14,7 @@ DOWNLOADS="$USERPROFILE/Downloads"
 # Step 1: Find latest zip file in Downloads using fd + fzf
 #--------------------------------------------------------
 echo "🔍 Select plugin .zip file (sorted by most recent):"
-ZIP_FILE=$(fd --extension zip . "$DOWNLOADS" --type f --exec stat -c '%Y %n' {} \; 2>/dev/null | sort -nr | cut -d' ' -f2- | fzf)
+ZIP_FILE=$(fd --extension zip . "$DOWNLOADS" --type f --exec stat -c '%Y %n' {} \; 2>/dev/null | sort -nr | cut -d' ' -f2- | fzf --reverse)
 
 if [[ -z "$ZIP_FILE" ]]; then
   echo "❌ No zip file selected. Exiting."
@@ -64,7 +64,11 @@ fi
 PLUGIN_NAME=$(basename "$PLUGIN_SRC")
 
 # Move to Plugins directory, overwrite if exists
-DEST="$PLUGIN_DIR/$PLUGIN_NAME"
+# DEST="$PLUGIN_DIR/$PLUGIN_NAME"
+DEST=$(cygpath -w "$PLUGIN_DIR\\$PLUGIN_NAME") # Convert to Windows path format with BACKWARD SLASHES (so we can easily copy paste the path from the output to FILE EXPLORER). Otherwise it was printing $PLUGIN_DIR with BACKSLASHES and then printing $PLUGIN_NAME with FORWARD SLASHES, which was causing issues.
+
+# OUTPUT OF DEST: C:\Users\Syed\AppData\Local\Microsoft\PowerToys\PowerToys Run\Plugins\Weather
+
 rm -rf "$DEST"
 mv "$PLUGIN_SRC" "$DEST"
 
