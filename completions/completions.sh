@@ -11,13 +11,43 @@
 
 # General bash-completion script for common commands (e.g., kubectl, Git)
 # Download by running following bash command:
-#OLD: curl -o ~/.bash_completion https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion
-# curl -L https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion -o ~/.bash_completion
+
+# THIS PULLS THE LATEST VERSION OF BASH COMPLETION FROM GITHUB - WAS NOT COMPATIBLE WITH BASH VERSION 4.4.23(1)-release (x86_64-pc-msys)
+
+# RUN THIS COMMAND AFTER UPDATING GIT + BASH
+# To Update GIT + BASH DO 'git update-git-for-windows'
+# See notes in Notion "UPDATE GIT + GIT BASH FOR WINDOWS" in the "Package Managers Command" Note.
+
+# THIS WAS GENERATED ON 7/24/25 for
+# git --version: git version 2.50.1.windows.1
+# bash --version: GNU bash, version 5.2.37(1)-release (x86_64-pc-msys)
+
+# COMMAND TO GENERATE BASH COMPLETION SCRIPT (LATEST VERSION):
+# curl -Lo ~/.bash/completions/packages/.bash_completion https://raw.githubusercontent.com/scop/bash-completion/main/bash_completion
+
+# =====================================================
+
+# FOR REFERENCE ONLY, if you want to PULL a SPECIFIC VERSION OF BASH COMPLETION do below
+# This was a PRETTY STABLE version that worked with BASH VERSION 4.4.23(1)-release (x86_64-pc-msys)
+# Installs the 2.11 BASH_COMPLETION SCRIPT
+# curl -Lo ~/.bash/completions/packages/.bash_completion https://raw.githubusercontent.com/scop/bash-completion/2.11/bash_completion 
+
+# ABOVE 2.11 SCRIPT IS REFERENCE COMMAND ONLY, DO NOT USE. 
+# =====================================================
+
 if [ -f ~/.bash/completions/packages/.bash_completion ]; then
     source ~/.bash/completions/packages/.bash_completion
 else
     echo "Bash completion file not found. Please make sure the file is located at ~/.bash/completions/packages/.bash_completion"
 fi
+
+# # Corrected script: Note the '.sh' has been removed
+# if [ -f ~/.bash/completions/packages/.bash_completion ]; then
+#     echo "✅ DEBUG: Found the script. Sourcing it now..."
+#     source ~/.bash/completions/packages/.bash_completion
+# else
+#     echo "❌ DEBUG: FAILED to find ~/.bash/completions/packages/.bash_completion"
+# fi
 
 #=======================================
 # Kubectl Auto-Completion SCRIPTS      #

@@ -30,6 +30,6 @@
 # Can install on Windows with command: choco install eza -y
 
 # -f ~/.bash/completions/eza.bash checks if the file exists before sourcing it.
-if command -v eza &>/dev/null && [[ -f ~/.bash/completions/eza.bash ]]; then    
+if command -v eza &>/dev/null && [[ -f ~/.bash/completions/packages/eza.bash ]]; then    
     source ~/.bash/completions/packages/eza.bash
 fi
