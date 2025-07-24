@@ -4,11 +4,11 @@ Personal bash configuration files and scripts.
 
 ## Directory Structure
 
-```
+```text
 📁 ~/.bash/
 ├── 📁 aliases/
 ├── 📁 completions/
-│   └── 📁 third-party/
+│   └── 📁 packages/
 ├── 📁 config/
 │   └── 📄 keybinds.sh        # Custom keybindings for Bash
 ├── 📁 env/
@@ -27,26 +27,26 @@ Personal bash configuration files and scripts.
 
 1. Clone this repository:
 
-```bash
-git clone https://github.com/snasir-dev/bash-configuration ~/.bash
-```
+   ```bash
+   git clone https://github.com/snasir-dev/bash-configuration ~/.bash
+   ```
 
 2. Run the installation script:
 
-```bash
-cd ~/.bash
-chmod +x ~/.bash/setup_bash_config.sh  # chmod +x adds execute permissions to the setup_bash_config.sh file.
-./setup_bash_config.sh
-```
+   ```bash
+   cd ~/.bash
+   chmod +x ~/.bash/setup_bash_config.sh  # chmod +x adds execute permissions to the setup_bash_config.sh file.
+   ./setup_bash_config.sh
+   ```
 
 3. Source the new configuration:
 
-```bash
-source ~/.bashrc     # Load the new configuration
-# alternatively - we can also use the following aliases we setup: 'src' or 'reload'
-src                  # Quick reload alias
-reload               # Alternative reload alias
-```
+   ```bash
+   source ~/.bashrc     # Load the new configuration
+   # alternatively - we can also use the following aliases we setup: 'src' or 'reload'
+   src                  # Quick reload alias
+   reload               # Alternative reload alias
+   ```
 
 ## Local Customization
 

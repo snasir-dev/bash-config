@@ -188,7 +188,6 @@ alias fdsrc='fd -e c -e cpp -e h -e hpp -e cs -e js -e ts -e py -e java'
 # This loads `fd` auto-completion in Bash if it's installed and in PATH.
 
 if command -v fd &>/dev/null; then
-    # shellcheck disable=SC1090
     source <(fd --gen-completions bash)
 fi
 

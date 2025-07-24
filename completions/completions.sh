@@ -1,7 +1,7 @@
 #!/bin/bash
 #==========================================
 # BASH GENERAL AUTO COMPLETION SCRIPTS    #
-# MOSTLY FOR THIRD-PARTY TOOLS & SERVICES #
+# MOSTLY FOR packages TOOLS & SERVICES #
 #==========================================
 
 # This section enables general bash completion features.
@@ -13,10 +13,10 @@
 # Download by running following bash command:
 #OLD: curl -o ~/.bash_completion https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion
 # curl -L https://raw.githubusercontent.com/scop/bash-completion/master/bash_completion -o ~/.bash_completion
-if [ -f ~/.bash/completions/third-party/.bash_completion ]; then
-    source ~/.bash/completions/third-party/.bash_completion
+if [ -f ~/.bash/completions/packages/.bash_completion ]; then
+    source ~/.bash/completions/packages/.bash_completion
 else
-    echo "Bash completion file not found. Please make sure the file is located at ~/.bash/completions/third-party/.bash_completion"
+    echo "Bash completion file not found. Please make sure the file is located at ~/.bash/completions/packages/.bash_completion"
 fi
 
 #=======================================

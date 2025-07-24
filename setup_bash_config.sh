@@ -21,7 +21,7 @@ backup_file() {
 # Create necessary directories. They should already be created by the git clone command, this is just for redundancy. 
 # Should not be necessary. Cloning Repo should take care of this step.
 # echo "Creating directory structure..."
-# mkdir -p "$BASH_DIR"/{setup,completions/third-party,functions,aliases,scripts,env,themes,plugins}
+# mkdir -p "$BASH_DIR"/{setup,completions/packages,functions,aliases,scripts,env,themes,plugins}
 
 # Backup existing files
 echo "Backing up existing .bashrc and .bash_profile files..."

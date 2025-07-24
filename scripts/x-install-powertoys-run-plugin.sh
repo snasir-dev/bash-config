@@ -62,6 +62,7 @@ if [[ -n "$GITHUB_URL" && "$GITHUB_URL" =~ github\.com/([^/]+)/([^/]+) ]]; then
   fi
 
   echo "⬇️  Downloading latest *x64.zip to Downloads folder..."
+  # shellcheck disable=SC2164
   cd "$USERPROFILE/Downloads"
   
 

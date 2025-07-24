@@ -120,7 +120,6 @@ source_sh_files() {
         [[ $DEBUG == true ]] && printf "Sourcing [%s (%s/%s)]: %s\n" "$label" "$folder" "$filename" "$file"
         
         # Source the file into the current shell (not a subshell)
-        # shellcheck disable=SC1090
         source "$file"
     
     # Use `find` to locate all `.sh` files under the directory tree
@@ -168,7 +167,6 @@ export PATH="$HOME/.bash/scripts:$PATH"
 # then: begins the block of code to execute if the test is true
 # fi: ends the if block
 if [ -f ~/.bash_local ]; then
-    # shellcheck disable=SC1090
     source ~/.bash_local
 fi
 
@@ -176,7 +174,6 @@ fi
 # Install and Setup Oh My Posh (Custom Prompt Tool to add themes to the terminal)
 # Check if 'setup_oh_my_posh.sh' file exists. If it does, source it.
 if [ -f ~/.bash/themes/setup_oh_my_posh.sh ]; then
-    # shellcheck disable=SC1090
     source ~/.bash/themes/setup_oh_my_posh.sh
 else
     echo "Warning: setup_oh_my_posh.sh not found! Please check your installation."
