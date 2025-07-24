@@ -10,7 +10,7 @@
 # pwd - Prints the current working directory in Unix format
 # cygpath -w --file: This runs the converter. The --file - (or -f -) part is important; it tells cygpath to read the path from the standard input (which is coming from the pipe) instead of from a command-line argument.
 # shellcheck disable=SC2139
-alias {wpwd,pwdw}='pwd | cygpath -w --file -'
+# alias {wpwd,pwdw}='pwd | cygpath -w --file -'
 
 #====================
 # SCRIPT ALIASES    #
@@ -118,6 +118,15 @@ alias mvi='mv -i' # Shorter version for interactive move.
 
 alias grep='grep --color=auto' # Grep with color highlighting.  Makes grep output much easier to read.
 # alias g='grep --color=auto'    # Shorter alias for colorized grep.
+
+#==================================
+# CLIPBOARD UTILITIES             #
+#==================================
+
+# Creates a shorter, convenient alias for the copy_output function 
+alias copy="copy_output"
+
+
 
 #===========================
 # KUBERNETES ALIASES       #
