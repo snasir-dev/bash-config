@@ -1,6 +1,37 @@
 # Pre-requisites: Install the EditorConfig extension from the VS Code Marketplace
 # Link: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
 
+# What is an editorconfig file?: https://editorconfig.org/
+
 # This will Auto-Convert Line Endings to LF (\n) instead of default CRLF (\r\n) for all Shell Scripts (.sh) on Save in VS Code.
 [*.sh]
 end_of_line = lf
+
+indent_style = space # Use spaces for indentation
+indent_size = 4
+insert_final_newline = true 
+trim_trailing_whitespace = true # Remove trailing whitespace on save
+
+
+# shfmt-specific options
+# These are interpreted by shfmt directly
+# See: https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd#examples
+# Or run: `shfmt -h` for flags
+
+
+shell_variant = bash
+binary_next_line = true  # forces &&, ||, | to next line
+switch_case_indent = true # Switch Case Statement Indent Each Case
+space_redirects = true  # `> file` over `>file`
+keep_padding = true  # Preserve existing horizontal spacing between tokens (e.g., for aligning comments or columns).
+# function_next_line = true  # Would make the "{" start on a new line for any function
+# simplify_binary = true   # simplifies [[ $x == "" ]] → [ -z "$x" ]
+
+
+# Optional: ignore vendor or third_party scripts
+# Ignore the entire "third_party" directory when calling shfmt on directories,
+# such as "shfmt -l -w .". When formatting files directly,
+# like "shfmt -w third_party/foo.sh" or "shfmt --filename=third_party/foo.sh",
+# the ignore logic is applied only when the --apply-ignore flag is given.
+# [third_party/**]
+# ignore = true

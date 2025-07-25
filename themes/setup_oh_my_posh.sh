@@ -40,17 +40,17 @@ get_valid_response() {
         read -rp "Would you like to install Oh My Posh? (y/n): " user_input
 
         case "$user_input" in
-        [yY])
-            valid_response=true
-            return 0
-            ;;
-        [nN])
-            valid_response=true
-            return 1
-            ;;
-        *)
-            echo "Invalid input.  Please enter either 'Y', 'y', 'N', or 'n'."
-            ;;
+            [yY])
+                valid_response=true
+                return 0
+                ;;
+            [nN])
+                valid_response=true
+                return 1
+                ;;
+            *)
+                echo "Invalid input.  Please enter either 'Y', 'y', 'N', or 'n'."
+                ;;
         esac
     done
 }
@@ -58,7 +58,7 @@ get_valid_response() {
 # Function to install Oh My Posh
 install_oh_my_posh() {
     # Check if Oh My Posh is already installed
-    if command -v oh-my-posh &>/dev/null; then
+    if command -v oh-my-posh &> /dev/null; then
         # echo "Oh My Posh is already installed. Skipping installation."
         return 0
     fi
@@ -75,7 +75,7 @@ install_oh_my_posh() {
     fi
 
     # Try installing with winget
-    if command -v winget &>/dev/null; then
+    if command -v winget &> /dev/null; then
         echo "Installing Oh My Posh via winget..."
 
         winget install JanDeDobbeleer.OhMyPosh -s winget
@@ -89,7 +89,7 @@ install_oh_my_posh() {
     fi
 
     # Try installing with chocolatey
-    if command -v choco &>/dev/null; then
+    if command -v choco &> /dev/null; then
         echo "" # newline
         echo "Winget installation failed or not available. Trying to install Oh My Posh via chocolatey..."
 
@@ -129,7 +129,7 @@ setup_oh_my_posh() {
     # oh-my-posh config export --output ~/.bash/themes/config/<name>.json
 
     # The 'command -v oh-my-posh &> /dev/null' checks if oh-my-posh command is installed
-    if command -v oh-my-posh &>/dev/null; then
+    if command -v oh-my-posh &> /dev/null; then
         # eval "$(oh-my-posh init bash)"
         eval "$(oh-my-posh init bash --config "$THEME_LOCAL_PATH")"
         # eval "$(oh-my-posh init bash --config $THEME_REMOTE_PATH_URL)"

@@ -9,7 +9,7 @@
 
 # Enable debug logs (set to false to silence sourcing output)
 # If DEBUG is unset or null, default to 'true'. Otherwise, keep its existing value.
-# Value of $DEBUG is set with "reload_shell()" when we 
+# Value of $DEBUG is set with "reload_shell()" when we
 : "${DEBUG:=true}"
 if [[ $DEBUG == true ]]; then
     # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
@@ -37,7 +37,7 @@ source_sh_files() {
     # Define exclusion lists (filenames and directory names to skip)
     local EXCLUDE_FILES=("")              # filenames to exclude. This will exclude irrespective of the directory, unlike EXCLUDE_FILES_BY_DIR
     # local EXCLUDE_FILES=("aws.sh" "docker.sh")              # filenames to exclude
-    
+
     local EXCLUDE_DIRS=("text-processing" "system" "cloud")         # DIRECTORY/FOLDER names to exclude (anywhere in path)
 
     # === ASSOCIATIVE ARRAY: key = folder name, value = filenames to exclude within that folder only ===
@@ -46,8 +46,7 @@ source_sh_files() {
     declare -A EXCLUDE_FILES_BY_DIR
     # EXCLUDE_FILES_BY_DIR["containers"]="docker.sh kubernetes.sh"
     # EXCLUDE_FILES_BY_DIR["file-management"]="ripgrep.sh"
-   
-    
+
     # `while IFS= read -r -d '' file; do ... done < <(...)` is process substitution:
     # - IFS=         → disables word splitting, reads the whole line
     # - -r           → disables backslash escaping
@@ -56,7 +55,7 @@ source_sh_files() {
     #
     # This ensures robust and safe reading of file paths, even those with special characters
     while IFS= read -r -d '' file; do
-        
+
         # Pure Bash way to get the filename
         # ${file##*/} → Remove everything up to and including the last `/`
         # Example:
@@ -64,7 +63,6 @@ source_sh_files() {
         #   filename="${file##*/}" → "aws.sh"
         # Equivalent to: basename "$file" — but faster!
         local filename="${file##*/}"
-
 
         # Extract just the immediate parent directory
         # ${file%/*} → Remove the shortest match of '/*' from the end (the filename part)
@@ -80,7 +78,6 @@ source_sh_files() {
         # Equivalent to: basename "$(dirname "$file")" — but much faster!
         local folder="${parent_dir##*/}"          # Strip everything up to last slash → parent dir
 
-
         # Check if the file should be excluded by filename
         for excluded_file in "${EXCLUDE_FILES[@]}"; do
             [[ "$filename" == "$excluded_file" ]] && continue 2
@@ -90,7 +87,6 @@ source_sh_files() {
         for exclude_dir in "${EXCLUDE_DIRS[@]}"; do
             [[ "$file" == *"/$exclude_dir/"* ]] && continue 2
         done
-
 
         # === Skip specific files from certain directories ===
         # This allows you to specify, for example:
@@ -114,21 +110,19 @@ source_sh_files() {
             done
         fi
 
-
         # If debugging is enabled, print the file being sourced
         # [[ $DEBUG == true ]] && echo "Sourcing [${label} (${folder}/${filename})]: $file"
         [[ $DEBUG == true ]] && printf "Sourcing [%s (%s/%s)]: %s\n" "$label" "$folder" "$filename" "$file"
-        
+
         # Source the file into the current shell (not a subshell)
         source "$file"
-    
-    # Use `find` to locate all `.sh` files under the directory tree
-    #   -type f      → only files (not directories)
-    #   -name "*.sh" → only files ending with .sh
-    #   -print0      → output null-separated paths (safe for filenames with spaces/newlines)
+
+        # Use `find` to locate all `.sh` files under the directory tree
+        #   -type f      → only files (not directories)
+        #   -name "*.sh" → only files ending with .sh
+        #   -print0      → output null-separated paths (safe for filenames with spaces/newlines)
     done < <(find "$dir" -type f -name "*.sh" -print0)
 }
-
 
 # ======================================================================
 # Source all scripts in config (custom keybinds, etc.)
@@ -137,7 +131,7 @@ source_sh_files "Config (Custom Keybinds)" ~/.bash/config
 echo ""
 
 # ===================================================================
-# Source scripts in order (except excluded files or directories): 
+# Source scripts in order (except excluded files or directories):
 # Order: env → functions → aliases → completions → plugins
 # ===================================================================
 source_sh_files "env" ~/.bash/env
@@ -178,8 +172,6 @@ if [ -f ~/.bash/themes/setup_oh_my_posh.sh ]; then
 else
     echo "Warning: setup_oh_my_posh.sh not found! Please check your installation."
 fi
-
-
 
 # ======================================================================
 # Source all scripts in plugins (except excluded files or directories)

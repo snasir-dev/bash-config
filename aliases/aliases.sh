@@ -70,7 +70,6 @@ alias documents='cd ~/Documents' # Go directly to your Documents directory.
 alias pictures='cd $USERPROFILE/Pictures' # Go directly to your Pictures directory.
 alias videos='cd $USERPROFILE/Videos' # Go directly to your Videos directory.
 
-
 # WORKSPACE_DIR=~/Documents/@MAIN_WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
 # Prefix going to specific directories with "." Use ".." to open directories with git repositories initialized.
 # Easy navigation to directories that are not git repositories. Prefix with '.'
@@ -123,10 +122,8 @@ alias grep='grep --color=auto' # Grep with color highlighting.  Makes grep outpu
 # CLIPBOARD UTILITIES             #
 #==================================
 
-# Creates a shorter, convenient alias for the copy function 
+# Creates a shorter, convenient alias for the copy function
 alias copy="copy"
-
-
 
 #===========================
 # KUBERNETES ALIASES       #
@@ -164,42 +161,41 @@ alias "kgns"="kubectl config view --minify | grep namespace"
 # Usage: reload_shell [-d|--d|--debug|--verbose|true]
 
 reload_shell() {
-  local arg="$1"
+    local arg="$1"
 
-  # Default to DEBUG=true, unless we specify any of these arguments (false, -s, --silent, -q, --quiet)
-  case "$arg" in
-    # If the argument matches any of these "off" patterns, disable debug mode.
-    false|-s|--silent|-q|--quiet)
-      export DEBUG=false
-      ;;
-    # For any other argument, OR if NO argument is provided, enable debug mode.
-    *)  
-       # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
-      export DEBUG=true
-      ;;
-  esac
+    # Default to DEBUG=true, unless we specify any of these arguments (false, -s, --silent, -q, --quiet)
+    case "$arg" in
+        # If the argument matches any of these "off" patterns, disable debug mode.
+        false | -s | --silent | -q | --quiet)
+            export DEBUG=false
+            ;;
+        # For any other argument, OR if NO argument is provided, enable debug mode.
+        *)
+            # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+            export DEBUG=true
+            ;;
+    esac
 
-  # INVERSE CONDITION ABOVE. Since we want to enable debug mode by default, we are providing silent flags instead of debug flags. Belows is reference to reverse the logic.
-  # Match any of the debug-like inputs (-d, --d, -debug, --debug, -v, --verbose, true)
-  # If any of these are provided, enable debug mode.
-  # case "$arg" in
-  #   -d|--d|-debug|--debug|-v|--verbose|true)
-  #     # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
+    # INVERSE CONDITION ABOVE. Since we want to enable debug mode by default, we are providing silent flags instead of debug flags. Belows is reference to reverse the logic.
+    # Match any of the debug-like inputs (-d, --d, -debug, --debug, -v, --verbose, true)
+    # If any of these are provided, enable debug mode.
+    # case "$arg" in
+    #   -d|--d|-debug|--debug|-v|--verbose|true)
+    #     # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
 
-  #     export DEBUG=true
-  #     ;;
-  #   *)
-  #     export DEBUG=false
-  #     ;;
-  # esac
+    #     export DEBUG=true
+    #     ;;
+    #   *)
+    #     export DEBUG=false
+    #     ;;
+    # esac
 
-  # Source the .bashrc file to apply changes
-  source ~/.bashrc
+    # Source the .bashrc file to apply changes
+    source ~/.bashrc
 
-  # Unset DEBUG after sourcing to clean up the environment
-  unset DEBUG
+    # Unset DEBUG after sourcing to clean up the environment
+    unset DEBUG
 }
-
 
 # shellcheck disable=SC2139
 # Brace expansion {src,reload,refresh,r} generates four separate aliases (src, reload, refresh, r) in a single command. Bash processes this during startup with no runtime performance difference

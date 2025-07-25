@@ -36,12 +36,11 @@ print_command_output() {
     echo -e "\n----------------------------------------" # Divider. Using echo -e allows us to interpret escape sequences like \n for a new line.
 }
 
-
 # Convert Unix path to Windows path with backslashes
 # Usable in File Explorer (e.g., C:\Users\...)
 pwdw() {
     # Convert 'pwd' output via stdin; '--file -' tells cygpath to read paths from stdins
-    pwd | cygpath -w --file -  
+    pwd | cygpath -w --file -
 }
 
 # Optional alias-style wrapper for backslash version
@@ -57,7 +56,6 @@ pwdwf() {
     pwd | cygpath -m --file -  # '-m' gives FORWARD slashes; '--file -' reads piped input (from 'pwd') via stdin
 }
 
-
 # Function to execute a command (including aliases) and copy its stdout
 copy() {
 
@@ -72,8 +70,6 @@ copy() {
     fi
 }
 
-
-
 # Function prints out both the command and its output (up to 50 characters)
 copy_detailed() {
     local output
@@ -81,7 +77,7 @@ copy_detailed() {
 
     # Capture the command's standard output into a variable.
     # We also capture its exit code to check for success or failure.
-    output=$( "$@" )
+    output=$( "$@")
     exit_code=$?
 
     # Check if the command was successful AND produced output.
