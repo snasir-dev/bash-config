@@ -204,4 +204,4 @@ reload_shell() {
 # shellcheck disable=SC2139
 # Brace expansion {src,reload,refresh,r} generates four separate aliases (src, reload, refresh, r) in a single command. Bash processes this during startup with no runtime performance difference
 # alias {src,reload,refresh,r}="source ~/.bashrc"  # NORMALLY HOW WE SOURCE .bashrc
-alias {src,reload,refresh,r}="reload_shell" # Use the reload_shell function to source .bashrc with options
+alias {src,reload,refresh,r,R}="reload_shell" # Use the reload_shell function to source .bashrc with options
