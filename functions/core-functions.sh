@@ -91,14 +91,28 @@ copy_detailed() {
 
         # Prepare a display version of the output, truncated if needed.
         local display_output
-        if [[ ${#output} -gt 50 ]]; then
-            display_output="${output:0:50}..."
+        local max_length=500  # Maximum length for display output
+        if [[ ${#output} -gt $max_length ]]; then
+            display_output="${output:0:$max_length}..."
         else
             display_output="$output"
         fi
 
-        # Print the new, detailed success message using printf for clean formatting.
-        printf "✅ Command: '%s'\n📋 Copied:  \"%s\"\n" "$*" "$display_output"
+        # --- Explanation of the Original printf command ---
+        # printf "✅ Command: '%s'\n📋 Copied:  \"%s\"\n" "$*" "$display_output"
+        #
+        # printf            -> The command to print formatted text.
+        # "..."             -> The format string defining the output template.
+        # %s                -> A placeholder for a string argument.
+        # \n                -> A newline character.
+        # \"                -> An escaped double-quote, which prints a literal " character.
+        # "$*"              -> The first argument to printf (matches first %s): all function arguments as a single string (e.g., "ls -la").
+        # "$display_output" -> The second argument (matches second %s): the variable containing the command's output.
+
+        # Print formatted detailed success message. (%s indicates where the variable passed will be inserted)
+        printf "📋 Command Copied: '%s'\n========= OUTPUT COPIED =========\n%s\n" "$*" "$display_output"
+        # printf "✅ Command: '%s'\n📋 Copied:  \"%s\"\n" "$*" "$display_output"
+        echo "========= OUTPUT END ========="
 
     elif [[ $exit_code -eq 0 ]]; then
         # Handle case where command ran but had no output.

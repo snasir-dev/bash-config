@@ -123,8 +123,8 @@ alias grep='grep --color=auto' # Grep with color highlighting.  Makes grep outpu
 # CLIPBOARD UTILITIES             #
 #==================================
 
-# Creates a shorter, convenient alias for the copy_output function 
-alias copy="copy_output"
+# Creates a shorter, convenient alias for the copy function 
+alias copy="copy"
 
 
 
