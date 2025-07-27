@@ -11,7 +11,7 @@ x-test-script() {
     # You can add more commands here as needed
     echo "x-test.sh completed successfully."
 
-    POWERTOYS_PLUGIN_DEST_PATH="$LOCALAPPDATA/Microsoft/PowerToys/PowerToys Run/Plugins"
+    # POWERTOYS_PLUGIN_DEST_PATH="$LOCALAPPDATA/Microsoft/PowerToys/PowerToys Run/Plugins"
     # WINDOWS_PLUGIN_DEST_PATH=$(cygpath -w "$POWERTOYS_PLUGIN_DEST_PATH")
     WINDOWS_PLUGIN_DEST_PATH="$(cygpath -w "$LOCALAPPDATA/Microsoft/PowerToys/PowerToys Run/Plugins")"
 
@@ -23,4 +23,4 @@ x-test-script() {
 
 x-test-script "$@"
 
-# DO NOT NEED TO USE FUNCTIONS CAN JUST PUT INFORMATION DIRECTLY. See 'x-install-powertoys-run-plugin.sh' for example.
+# DO NOT NEED TO USE FUNCTIONS CAN JUST PUT INFORMATION DIRECTLY. See 'x-powertoys-run-install-plugin.sh' for example.
