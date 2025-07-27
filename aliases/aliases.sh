@@ -55,8 +55,8 @@ alias back='cd -' # Use 'back' to return to the last directory you were in.
 #    dirs       # Shows stack, e.g., 0 /var 1 /tmp ...
 #    pop        # Go back to /tmp
 #    pop        # Go back to original location before 'push /tmp'
-#alias push='pushd' # Use the push function specified in functions/general-functions.sh.
-alias pop='popd_at_index' # Return to the directory at the top of the stack (undoes 'pushd'). Calls popd_at_index function in general-functions.sh.
+#alias push='pushd' # Use the push function specified in functions/core-functions.sh.
+alias pop='popd_at_index' # Return to the directory at the top of the stack (undoes 'pushd'). Calls popd_at_index function in core-functions.sh.
 alias dirs='dirs -v'      # View the directory stack with index numbers. Useful to see where you've been with 'pushd'.
 alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stack
 
@@ -136,9 +136,9 @@ alias "kgns"="kubectl config view --minify | grep namespace"
 # alias kctx="kubectl config use-context"
 # alias kns="kubectl config set-context --current --namespace"
 
-# Note - must have script kube-info.sh in the scripts directory to run this alias.
-# I have added all scripts to PATH. Can directly call the script by just stating "kube-info". No need for alias
-# alias kube-info="~/.bash/scripts/kube-info.sh"
+# Note - must have script x-k8s-kube-info.sh in the scripts directory to run this alias.
+# I have added all scripts to PATH. Can directly call the script by just stating "x-k8s-kube-info". No need for alias
+# alias x-k8s-kube-info="~/.bash/scripts/x-k8s-kube-info.sh"
 
 #===========================
 # GREP + SEARCH ALIASES    #
