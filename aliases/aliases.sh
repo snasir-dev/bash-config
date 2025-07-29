@@ -22,6 +22,9 @@ alias {scripts,x}='$SCRIPTS_DIR/x-script-selector.sh'
 #====================================================================
 # FILE INFORMATION & LISTING & DIRECTORY NAVIGATION ALIASES         #
 #====================================================================
+# NOTE: using eza now instead of ls. ls command now points to eza. See plugins/file-management/eza.sh for more details.
+
+
 # ls commands
 alias ll="ls -la"                                                    # Alias to list files in long format, including hidden files
 alias la="ls -A"                                                     # Alias to list all files, including hidden ones

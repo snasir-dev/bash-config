@@ -23,9 +23,9 @@ shell_variant = bash
 binary_next_line = true  # forces &&, ||, | to next line
 switch_case_indent = true # Switch Case Statement Indent Each Case
 space_redirects = true  # `> file` over `>file`
-keep_padding = true  # Preserve existing horizontal spacing between tokens (e.g., for aligning comments or columns).
+# keep_padding = true  # Preserve existing horizontal spacing between tokens (e.g., for aligning comments or columns).
 # function_next_line = true  # Would make the "{" start on a new line for any function
-# simplify_binary = true   # simplifies [[ $x == "" ]] → [ -z "$x" ]
+simplify_binary = true   # simplifies [[ $x == "" ]] → [ -z "$x" ]
 
 
 # Optional: ignore vendor or third_party scripts

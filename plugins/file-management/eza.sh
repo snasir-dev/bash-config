@@ -7,12 +7,22 @@
 
 # --- ENVIRONMENT VARIABLES ---
 
-
 # --- FUNCTIONS ---
-
 
 # --- ALIASES ---
 
+# ---- Eza (better ls) -----
+# Use eza as a drop-in replacement for ls.
+
+# --color=always       → force color output even when piped
+# --long               → use long listing format (like 'ls -l')
+# --git                → show Git status for each file
+# --no-filesize        → hide file size column
+# --icons=always       → always show icons (requires Nerd Font)
+# --no-time            → hide modification time column
+# --no-user            → hide user/owner column
+# --no-permissions     → hide permission bits column
+alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
 
 # --- COMPLETIONS ---
 
@@ -30,6 +40,6 @@
 # Can install on Windows with command: choco install eza -y
 
 # -f ~/.bash/completions/eza.bash checks if the file exists before sourcing it.
-if command -v eza &>/dev/null && [[ -f ~/.bash/completions/packages/eza.bash ]]; then    
+if command -v eza &> /dev/null && [[ -f ~/.bash/completions/packages/eza.bash ]]; then
     source ~/.bash/completions/packages/eza.bash
 fi
