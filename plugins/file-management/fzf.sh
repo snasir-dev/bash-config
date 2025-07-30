@@ -6,6 +6,11 @@
 # FZF THEME PLAYGROUND (webpage where you can interactively create fzf themes): https://vitormv.github.io/fzf-themes/
 
 LINE_SELECTION_COLOR="#FFA500" # Orange color for line selection within fzf.
+LIGHT_GREEN="#00ffaa"          # Color for matched text.
+RED_COLOR="#dc6a68"
+LIGHT_BLUE="#4ed9ef"
+ORANGE_COLOR="#FFA500"
+
 # fg="#CBE0F0"
 # bg="#011628"
 # bg_highlight="#143652"
@@ -46,6 +51,10 @@ export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
 # It will also add keybinds where any file you have selected, if you press ctrl+o it will open in VS Code, or will copy FULL WINDOWS Path to clipboard if you press ctrl+a.
 # Default keybinds of preview is shift up/down. We are adjusting HOW FAST it will scroll up or down. Here each 'preview-up' or 'preview-down' equals 1 line. So doing it 5 times will scroll 3 lines at once.
 
+# color= hl: Sets the color for matched characters on normal lines.
+# hl+: Sets the color for matched characters on the currently selected line.
+
+# IMPORTANT - ALL OF THESE OPTIONS ARE INHERITED BY FZF_CTRL_T_OPTS, FZF_CTRL_R_OPTS, FZF_ALT_C_OPTS
 export FZF_DEFAULT_OPTS="
 --preview 'if [ -d {} ]; then eza --tree --icons=always --color=always {} | head -200; else bat --style=full --color=always {}; fi'
 --preview-window '~4' # Number of lines that will always show, will not scroll down.
@@ -53,9 +62,12 @@ export FZF_DEFAULT_OPTS="
 --bind 'ctrl-a:execute-silent(readlink -f {} | cygpath -m -f - | clip)'
 --bind 'shift-up:preview-up+preview-up+preview-up'
 --bind 'shift-down:preview-down+preview-down+preview-down'
---header 'ctrl-o: Open in VSCode, ctrl-a: Copy Full Windows Path | shift-up/down: Scroll Preview'
---color=header:$LINE_SELECTION_COLOR
---reverse
+--bind 'ctrl-/:change-preview-window(down|left|hidden|50%)'
+--header 'CTRL-O: Open in VSCode | CTRL-A: Copy Full Windows Path | SHIFT-UP/DOWN: Scroll Preview | CTRL-/: Change Preview Window Position (down|left|hidden)'
+--color header:$LINE_SELECTION_COLOR::bold
+--color=bg+:-1,fg+:$ORANGE_COLOR,hl:$LIGHT_GREEN,hl+:$LIGHT_GREEN
+--layout reverse-list
+--prompt '(FZF: Fuzzy Finder) > '
 "
 
 # What happens in fzf when we press Ctrl+T. It will be the same as FZF_DEFAULT_COMMAND.
@@ -71,13 +83,24 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # This will also set up a preview window that shows the first 500 lines of the file or a file tree showing only first 200 lines of the directory.
 # It will also add keybinds where any file you have selected, if you press ctrl+o it will open in VS Code, or will copy FULL WINDOWS Path to clipboard if you press ctrl+a.
+# IMPORTANT - THE CTRL+T COMMAND WILL INHERIT ALL OF FZF_DEFAULT_OPTS AS WELL AS UNIQUE ONES WE SPECIFY HERE. IT WILL OVERRIDE ANYTHING WE PLACE HERE.
+
 export FZF_CTRL_T_OPTS="
---preview 'if [ -d {} ]; then eza --tree --icons=always --color=always {} | head -200; else bat -n --color=always --line-range :${LIMIT_FILE_LINES} {}; fi'
---bind 'ctrl-o:execute(code {})+abort'
---bind 'ctrl-a:execute-silent(readlink -f {} | cygpath -m -f - | clip)'
---header 'ctrl-o: Open in VSCode, ctrl-a: Copy Full Windows Path'
---color=header:$LINE_SELECTION_COLOR
+--prompt '(CTRL+T: Paste the selected files and directories onto the command-line) > '
+--preview-window='right:50%:noborder'
+--height=40%
 "
+
+# FZF CTRL-R Keybind - Paste the selected command from history onto the command-line
+# Note
+# CTRL-a to copy the command into clipboard and then abort fzf.
+export FZF_CTRL_R_OPTS="
+  --preview-window=hidden
+  --bind 'ctrl-a:execute-silent(echo -n {2..} | clip)+abort'
+  --prompt '(CTRL+R: Paste the selected command from history onto the command-line) > '
+  --header 'CTRL-A: Copy Command to Clipboard and Abort fzf'
+
+  "
 
 # ALT+C by default searches for ONLY directories starting from current directory in fzf.
 # Adding 'fd --type=d' will ensure it only lists directories.
@@ -86,11 +109,9 @@ export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git
 # export FZF_ALT_C_OPTS="--preview 'eza --tree --icons=always --color=always {} | head -200'"
 # Similar to FZF_CTRL_T_OPTS, only difference is that it doesn't need condition to check if it is a file or directory as this command only lists directories. 'color=header sets the color of the header in fzf.'
 export FZF_ALT_C_OPTS="
+--preview-window='right:50%:noborder'
 --preview 'eza --tree --icons=always --color=always {} | head -200'
---bind 'ctrl-o:execute(code {})+abort'
---bind 'ctrl-a:execute-silent(readlink -f {} | cygpath -m -f - | clip)'
---header 'ctrl-o: Open in VSCode, ctrl-a: Copy Full Windows Path'
---color=header:$LINE_SELECTION_COLOR
+--prompt '(ALT+C: cd into the selected directory) > '
 "
 
 # --- FUNCTIONS ---
