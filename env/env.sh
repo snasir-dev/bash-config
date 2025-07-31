@@ -2,15 +2,9 @@
 # ENV VARIABLES
 #*******************************
 
-# EXAMPLE OF ADDING COMMANDS TO PATH
-# export PATH="$PATH:/path/to/your/command"
-# Example: export PATH="$PATH:/c/Program Files/Git/bin"
-
-# ========= MY EXAMPLE =============
-# My Example:
-# Add the oh-my-posh executable to our $PATH in bash so it properly recognizes the 'oh-my-posh' command. To verify oh-my-posh command is working run command 'oh-my-posh version'
-# export PATH="$PATH:/c/Users/Syed/AppData/Local/Programs/oh-my-posh/bin"
-# ===================================
+# USE CASE OF ENV VARIABLES. Do $VARIABLE_NAME to TRIGGER
+# Ex: cd $devops -> Goes to devops
+# Ex2: cd $k8s -> Goes to k8s folder specified below.
 
 # Sets default editor files as VS Code
 export EDITOR="code --wait"

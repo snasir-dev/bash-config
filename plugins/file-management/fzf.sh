@@ -54,16 +54,22 @@ export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
 # color= hl: Sets the color for matched characters on normal lines.
 # hl+: Sets the color for matched characters on the currently selected line.
 
+# Define a multi-line header using $'...' to process the \n newline character
+# MULTI_LINE_HEADER=$'CTRL-O: Open | CTRL-A: Copy Item | CTRL-X: Copy Full Path\nSHIFT-UP/DOWN: Scroll | CTRL-/: Change Preview Window'
+
+MULTI_LINE_HEADER=$'CTRL-O: Open in VSCode | CTRL-A: Copy Selected Item to Clipboard | CTRL-X: Copy Full Windows Path \nSHIFT-UP/DOWN: Scroll Preview | CTRL-/: Change Preview Window Position (down|left|hidden)'
+
 # IMPORTANT - ALL OF THESE OPTIONS ARE INHERITED BY FZF_CTRL_T_OPTS, FZF_CTRL_R_OPTS, FZF_ALT_C_OPTS
 export FZF_DEFAULT_OPTS="
 --preview 'if [ -d {} ]; then eza --tree --icons=always --color=always {} | head -200; else bat --style=full --color=always {}; fi'
---preview-window '~4' # Number of lines that will always show, will not scroll down.
+--preview-window '~4,wrap' # Number of lines that will always show, will not scroll down.
 --bind 'ctrl-o:execute(code {})+abort'
---bind 'ctrl-a:execute-silent(readlink -f {} | cygpath -m -f - | clip)'
+--bind 'ctrl-a:execute-silent(echo -n {} | clip)'
+--bind 'ctrl-x:execute-silent(readlink -f {} | cygpath -m -f - | clip)'
 --bind 'shift-up:preview-up+preview-up+preview-up'
 --bind 'shift-down:preview-down+preview-down+preview-down'
 --bind 'ctrl-/:change-preview-window(down|left|hidden|50%)'
---header 'CTRL-O: Open in VSCode | CTRL-A: Copy Full Windows Path | SHIFT-UP/DOWN: Scroll Preview | CTRL-/: Change Preview Window Position (down|left|hidden)'
+--header \"$MULTI_LINE_HEADER\"
 --color header:$LINE_SELECTION_COLOR::bold
 --color=bg+:-1,fg+:$ORANGE_COLOR,hl:$LIGHT_GREEN,hl+:$LIGHT_GREEN
 --layout reverse-list
