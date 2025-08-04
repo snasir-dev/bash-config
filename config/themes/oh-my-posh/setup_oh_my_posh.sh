@@ -113,20 +113,25 @@ install_oh_my_posh() {
 setup_oh_my_posh() {
     # --- Bash Shell Integration ---
     # Add the oh-my-posh executable to our $PATH in bash so it properly recognizes the 'oh-my-posh' command. To verify oh-my-posh command is working run command 'oh-my-posh version'
-    export PATH="$PATH:/c/Users/Syed/AppData/Local/Programs/oh-my-posh/bin"
+    # export PATH="$PATH:/c/Users/Syed/AppData/Local/Programs/oh-my-posh/bin"
+
+    if command -v oh-my-posh > /dev/null; then
+        OMP_BIN_DIR=$(dirname "$(command -v oh-my-posh)")
+        export PATH="$PATH:$OMP_BIN_DIR"
+    fi
 
     # Set Default Theme in Oh My Posh. Theme is specified when initializing the shell.
     # To view popular themes, go to: https://ohmyposh.dev/docs/themes#quick-term
 
     # TODO: Add logic to quick_term_main_theme.json file to dynamically show different "session" segment information depending on the session type (e.g., SSH, WSL, etc.). Add logic to show different information when using docker (docker context), Kubernetes (k8s context / namespace), or AWS CLI (AWS CLI profile)
-    THEMES_DIR="$HOME/.bash/themes/config"
-    THEME_NAME="quick_term_main_theme.json"
-    THEME_LOCAL_PATH="$THEMES_DIR/$THEME_NAME" # local directory
+    THEMES_DIR="$HOME/.bash/config/themes/oh-my-posh/templates"
+    SELECTED_THEME_TEMPLATE_NAME="quick_term_main_theme.json"
+    THEME_LOCAL_PATH="$THEMES_DIR/$SELECTED_THEME_TEMPLATE_NAME" # local directory
     # THEME_REMOTE_PATH_URL="https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/lightgreen.omp.json" # remote github directory
 
     # You can export any theme by running command:
     # "oh-my-posh config export --output ./<your-file-name>.json" # current directory
-    # oh-my-posh config export --output ~/.bash/themes/config/<name>.json
+    # oh-my-posh config export --output ~/.bash/config/themes/oh-my-posh/templates/<name>.json
 
     # The 'command -v oh-my-posh &> /dev/null' checks if oh-my-posh command is installed
     if command -v oh-my-posh &> /dev/null; then

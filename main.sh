@@ -35,10 +35,10 @@ source_sh_files() {
     local dir="$2"   # Directory path to search for .sh files
 
     # Define exclusion lists (filenames and directory names to skip)
-    local EXCLUDE_FILES=("")              # filenames to exclude. This will exclude irrespective of the directory, unlike EXCLUDE_FILES_BY_DIR
+    local EXCLUDE_FILES=("") # filenames to exclude. This will exclude irrespective of the directory, unlike EXCLUDE_FILES_BY_DIR
     # local EXCLUDE_FILES=("aws.sh" "docker.sh")              # filenames to exclude
 
-    local EXCLUDE_DIRS=("text-processing" "system" "cloud")         # DIRECTORY/FOLDER names to exclude (anywhere in path)
+    local EXCLUDE_DIRS=("text-processing" "system" "cloud") # DIRECTORY/FOLDER names to exclude (anywhere in path)
 
     # === ASSOCIATIVE ARRAY: key = folder name, value = filenames to exclude within that folder only ===
     # This only excludes files (values) in specific directories (keys)
@@ -69,14 +69,14 @@ source_sh_files() {
         # Example:
         #   file="/home/user/.bash/functions/aws.sh"
         #   parent_dir="${file%/*}" → "/home/user/.bash/functions"
-        local parent_dir="${file%/*}"             # Strip filename → gives directory path
+        local parent_dir="${file%/*}" # Strip filename → gives directory path
         # ${parent_dir##*/} → Remove everything up to and including the last `/`
         # Example:
         #   parent_dir="/home/user/.bash/functions"
         #   folder="${parent_dir##*/}" → "functions"
         # This gives you just the last folder in the path
         # Equivalent to: basename "$(dirname "$file")" — but much faster!
-        local folder="${parent_dir##*/}"          # Strip everything up to last slash → parent dir
+        local folder="${parent_dir##*/}" # Strip everything up to last slash → parent dir
 
         # Check if the file should be excluded by filename
         for excluded_file in "${EXCLUDE_FILES[@]}"; do
@@ -167,10 +167,13 @@ fi
 # Source Theme Configuration
 # Install and Setup Oh My Posh (Custom Prompt Tool to add themes to the terminal)
 # Check if 'setup_oh_my_posh.sh' file exists. If it does, source it.
-if [ -f ~/.bash/themes/setup_oh_my_posh.sh ]; then
-    source ~/.bash/themes/setup_oh_my_posh.sh
+SETUP_THEME_SCRIPT="$HOME/.bash/config/themes/oh-my-posh/setup_oh_my_posh.sh"
+if [ -f "$SETUP_THEME_SCRIPT" ]; then
+    source "$SETUP_THEME_SCRIPT"
 else
-    echo "Warning: setup_oh_my_posh.sh not found! Please check your installation."
+    # echo -e "⚠️ Warning: '$SETUP_THEME_SCRIPT' not found! Please check your installation.\n"
+    #\e[31 - sets text to red color. \e[0m resets the color to default
+    echo -e "\e[31m⚠️  Warning: '$SETUP_THEME_SCRIPT' not found! Please check your installation.\e[0m ⚠️\n"
 fi
 
 # ======================================================================

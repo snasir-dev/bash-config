@@ -10,17 +10,17 @@ Personal bash configuration files and scripts.
 ├── 📁 completions/
 │   └── 📁 packages/
 ├── 📁 config/
-│   └── 📄 keybinds.sh        # Custom keybindings for Bash
+│   ├── 📄 keybinds.sh        # Custom keybindings for Bash
+│   ├── 📁 themes/
+│   └── 📁 setup/
+│       ├── 📄 .bashrc              # Symlinked to ~/.bashrc (in setup_bash.sh)
+│       └── 📄 .bash_profile        # Symlinked to ~/.bash_profile (in setup_bash.sh)
 ├── 📁 env/
 ├── 📁 functions/
 ├── 📁 plugins/
 ├── 📁 scripts/
-├── 📁 themes/
-├── 📁 setup/
-│   ├── 📄 bashrc              # Symlinked to ~/.bashrc (updated by setup_bash_config.sh)
-│   └── 📄 bash_profile        # Symlinked to ~/.bash_profile (updated by setup_bash_config.sh)
 ├── 📄 main.sh                 # Entrypoint: main file to source
-└── 📄 setup_bash_config.sh    # Setup/Installation Script
+└── 📄 setup_bash.sh    # Setup/Installation Script
 ```
 
 ## Installation
@@ -35,8 +35,8 @@ Personal bash configuration files and scripts.
 
    ```bash
    cd ~/.bash
-   chmod +x ~/.bash/setup_bash_config.sh  # chmod +x adds execute permissions to the setup_bash_config.sh file.
-   ./setup_bash_config.sh
+   chmod +x ~/.bash/setup_bash.sh  # chmod +x adds execute permissions to the setup_bash.sh file.
+   ./setup_bash.sh
    ```
 
 3. Source the new configuration:
