@@ -24,7 +24,6 @@ alias {scripts,x}='$SCRIPTS_DIR/x-script-selector.sh'
 #====================================================================
 # NOTE: using eza now instead of ls. ls command now points to eza. See plugins/file-management/eza.sh for more details.
 
-
 # ls commands
 alias ll="ls -la"                                                    # Alias to list files in long format, including hidden files
 alias la="ls -A"                                                     # Alias to list all files, including hidden ones
@@ -64,14 +63,15 @@ alias dirs='dirs -v'      # View the directory stack with index numbers. Useful 
 alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stack
 
 # Shorter aliases for common directory locations.
-alias {cdrive,"c:"}='cd /c/' # Alias to go to the C: root directory
-alias temp='cd /c/temp' # Alias to go to C:/temp
-alias home='cd ~' # Go directly to your home directory.
-alias downloads='cd ~/Downloads' # Go directly to your Downloads directory.
-alias desktop='cd ~/Desktop' # Go directly to your Desktop directory.
-alias documents='cd ~/Documents' # Go directly to your Documents directory.
-alias pictures='cd $USERPROFILE/Pictures' # Go directly to your Pictures directory.
-alias videos='cd $USERPROFILE/Videos' # Go directly to your Videos directory.
+alias {cdrive,"c:"}='cd /c/'                                     # Alias to go to the C: root directory
+alias temp='cd /c/temp'                                          # Alias to go to C:/temp
+alias home='cd ~'                                                # Go directly to your home directory.
+alias downloads='cd ~/Downloads'                                 # Go directly to your Downloads directory.
+alias desktop='cd ~/Desktop'                                     # Go directly to your Desktop directory.
+alias documents='cd ~/Documents'                                 # Go directly to your Documents directory.
+alias pictures='cd $USERPROFILE/Pictures'                        # Go directly to your Pictures directory.
+alias videos='cd $USERPROFILE/Videos'                            # Go directly to your Videos directory.
+alias obsidian='cd $USERPROFILE/Documents/@OBSIDIAN/@MAIN_VAULT' # Go directly to main Obsidian vault.
 
 # WORKSPACE_DIR=~/Documents/@MAIN_WORKSPACE # Cannot use quotes, will treat "~" as literal string. No Quotes or using $HOME env variable works.
 # Prefix going to specific directories with "." Use ".." to open directories with git repositories initialized.
