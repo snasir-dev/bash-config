@@ -181,3 +181,9 @@ fi
 # ======================================================================
 source_sh_files "Plugin/Tool/Module/Package" ~/.bash/plugins
 echo ""
+
+# Run fastfetch when a new interactive shell starts
+if command -v fastfetch > /dev/null 2>&1; then
+    fastfetch
+    echo ""
+fi
