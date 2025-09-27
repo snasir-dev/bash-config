@@ -2,27 +2,6 @@
 
 Personal bash configuration files and scripts.
 
-## Directory Structure
-
-```text
-📁 ~/.bash/
-├── 📁 aliases/
-├── 📁 completions/
-│   └── 📁 packages/
-├── 📁 config/
-│   ├── 📄 keybinds.sh        # Custom keybindings for Bash
-│   ├── 📁 themes/
-│   └── 📁 setup/
-│       ├── 📄 .bashrc              # Symlinked to ~/.bashrc (in setup_bash.sh)
-│       └── 📄 .bash_profile        # Symlinked to ~/.bash_profile (in setup_bash.sh)
-├── 📁 env/
-├── 📁 functions/
-├── 📁 plugins/
-├── 📁 scripts/
-├── 📄 main.sh                 # Entrypoint: main file to source
-└── 📄 setup_bash.sh    # Setup/Installation Script
-```
-
 ## Installation
 
 1. Clone this repository:
@@ -59,7 +38,7 @@ These files are ignored by Git and won't be overwritten during updates.
 
 ## Updating
 
-To update your configuration:
+To update configuration:
 
 ```bash
 cd ~/.bash
