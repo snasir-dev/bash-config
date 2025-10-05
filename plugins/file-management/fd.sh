@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# --- ENVIRONMENT VARIABLES ---
+# What is fd? A modern alternative to 'find' command, it is faster, has more user-friendly syntax and sensible defaults (IMPORTANT: it respects .gitignore by default).
 
+# --- ENVIRONMENT VARIABLES ---
 
 # --- FUNCTIONS ---
 
@@ -18,10 +19,10 @@ BASIC USAGE:
   fd <pattern>                    # Find files/dirs matching pattern
   fd -i <pattern>                 # Case-insensitive search
   fd -g <pattern>                 # Glob pattern (exact match)
-  
+
 FILE TYPE FILTERS:
   fd -t f <pattern>               # Files only
-  fd -t d <pattern>               # Directories only  
+  fd -t d <pattern>               # Directories only
   fd -t x <pattern>               # Executable files only
   fd -t l <pattern>               # Symlinks only
 
@@ -60,6 +61,10 @@ POPULAR REAL-WORLD EXAMPLES:
   fd -e log --change-newer-than 1day  # Find recent log files
   fd '' -t f -S +10M              # Find files larger than 10MB
   fd -H -t f '^\.'                # Find hidden files (dotfiles)
+
+ADVANCED COMMANDS:
+fd -t d --hidden --glob '.git' ~/Documents/\@MAIN_WORKSPACE/\@REPOS/ -E 'Git' -E '**/android/**' -x dirname {} | sort | sed 's#.*/Documents/@MAIN_WORKSPACE/##'  				# Find all Git Repositories ('.git') dirs in @REPOS folder, exclude 'Git' folder in @REPOS and ANY 'android' folder in any subdirectories, outputs the directory names, sort alphabetically, shortens the url path to start from @REPOS folder.
+
 EOF
 }
 
@@ -91,7 +96,6 @@ WINDOWS SPECIFIC:
   fd -e bat -e cmd                # Find batch files
 EOF
 }
-
 
 # --- ALIASES ---
 
@@ -177,8 +181,6 @@ alias fdconfig='fd -e json -e xml -e yaml -e yml -e toml -e ini'
 # Find source code files
 alias fdsrc='fd -e c -e cpp -e h -e hpp -e cs -e js -e ts -e py -e java'
 
-
-
 # --- COMPLETIONS ---
 #===============================================
 # fd (Rust-based Find) Auto-Completion SCRIPT   #
@@ -187,7 +189,7 @@ alias fdsrc='fd -e c -e cpp -e h -e hpp -e cs -e js -e ts -e py -e java'
 # Bash completion is supported via: `fd --completion bash`
 # This loads `fd` auto-completion in Bash if it's installed and in PATH.
 
-if command -v fd &>/dev/null; then
+if command -v fd &> /dev/null; then
     source <(fd --gen-completions bash)
 fi
 
