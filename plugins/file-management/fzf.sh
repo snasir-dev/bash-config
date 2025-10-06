@@ -5,11 +5,53 @@
 #=======================================
 # FZF THEME PLAYGROUND (webpage where you can interactively create fzf themes): https://vitormv.github.io/fzf-themes/
 
-LINE_SELECTION_COLOR="#FFA500" # Orange color for line selection within fzf.
-LIGHT_GREEN="#00ffaa"          # Color for matched text.
+LIGHT_YELLOW="#fbf1c7"
+DARK_GREY="#1B1A1A"
+DARK_GREY2="#191919"
+LIGHT_GREEN="#00ffaa" # Color for matched text.
 RED_COLOR="#dc6a68"
 LIGHT_BLUE="#4ed9ef"
-ORANGE_COLOR="#FFA500"
+ORANGE_COLOR="#f9b300"
+PURPLE_COLOR="#B388FF"
+
+HEADER_LINE_SELECTION_COLOR=$LIGHT_YELLOW # Orange color for line selection within fzf. This is for the message that shows up (Giving helpful tips like shortcut info right above where you type the input)
+INPUT_TEXT_COLOR=$ORANGE_COLOR            # query -> text color when typing in FZF.
+
+BACKGROUND_COLOR_SELECTED_LINE=$DARK_GREY           #bg+ (-1 = default terminal background color)
+SELECTED_LINE_COLOR=$ORANGE_COLOR                   #fg+ (Foreground (text) color of the CURRENTLY SELECTED LINE)
+POINTER_COLOR=$ORANGE_COLOR                         # pointer (Color of the pointer '>' on the current line - This is the mark on the LEFT of the Selected Line)
+MATCHED_TEXT_COLOR_NON_SELECTED_LINES=$LIGHT_YELLOW #hl (Color of the matched characters on NON SELECTED lines)
+MATCHED_TEXT_COLOR_SELECTED_LINES=$LIGHT_YELLOW     #hl+ (Color of the matched characters on the SELECTED LINES)
+
+MARKER_COLOR_FOR_MULTISELECTED_ITEMS=$LIGHT_YELLOW # marker (This also shows to the left, but for MULTI SELECTED ITEMS (when you press tab to select items) - Default was purple)
+
+# Summary of Your Color Options - YOU SEE this in the '--color' option in fzf
+# Option	Description												 Value in Your Config
+# bg+	    Background color of the currently selected line.		 -1 (default terminal bg)
+# fg+	    Foreground (text) color of the currently selected line.	 $ORANGE_COLOR
+# hl	    Color of the matched characters on non-selected lines.	 $MATCHED_TEXT_COLOR
+# hl+	    Color of the matched characters on the selected line.	 $MATCHED_TEXT_COLOR
+# header	Color of the header line.	                           $LINE_SELECTION_COLOR::bold
+
+# Summary of FZF Color Options - A complete reference for the '--color' flag.
+# Option      Description                                                         Example
+# -----------------------------------------------------------------------------------------
+# fg          Default foreground (text) color.                                    #d8dee9
+# bg          Default background color.                                           -1
+# fg+         Foreground color for the currently selected line.                   #d08770
+# bg+         Background color for the currently selected line.                   #434c5e
+# hl          Color for matched characters on non-selected lines.                 #ebcb8b
+# hl+         Color for matched characters on the selected line.                  #ebcb8b::bold
+# query       Color of the text you type in the prompt.                           #88c0d0
+# prompt      Color of the static prompt string (e.g., '> ').                     #a3be8c
+# pointer     Color of the pointer '>' on the current line.                       #bf616a
+# marker      Color of the marker for multi-selected items.                       #ebcb8b
+# spinner     Color of the loading spinner animation.                             #b48ead
+# header      Color of the header text (line count, etc.).                        #81a1c1
+# info        Color of the info line (when fzf is not running).                   #5e81ac
+# border      Color of the border around windows.                                 #4c566a
+# label       Color of the preview window label.                                  #b48ead
+# separator   Color of the line separating window sections.                       #4c566a
 
 # fg="#CBE0F0"
 # bg="#011628"
@@ -70,9 +112,10 @@ export FZF_DEFAULT_OPTS="
 --bind 'shift-down:preview-down+preview-down+preview-down'
 --bind 'ctrl-/:change-preview-window(down|left|hidden|50%)'
 --header \"$MULTI_LINE_HEADER\"
---color header:$LINE_SELECTION_COLOR::bold
---color=bg+:-1,fg+:$ORANGE_COLOR,hl:$LIGHT_GREEN,hl+:$LIGHT_GREEN
+--color header:$HEADER_LINE_SELECTION_COLOR::bold
+--color=bg+:$BACKGROUND_COLOR_SELECTED_LINE,fg+:$SELECTED_LINE_COLOR::bold,hl:$MATCHED_TEXT_COLOR_NON_SELECTED_LINES::bold,hl+:$MATCHED_TEXT_COLOR_SELECTED_LINES::bold,query:$INPUT_TEXT_COLOR::bold,pointer:$POINTER_COLOR,marker:$MARKER_COLOR_FOR_MULTISELECTED_ITEMS
 --layout reverse-list
+--height 50%
 --prompt '(FZF: Fuzzy Finder) > '
 "
 
