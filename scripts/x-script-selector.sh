@@ -25,13 +25,27 @@ x-script-selector() {
     # Old Logic: $(find "$scripts_dir" -maxdepth 1 -type f -executable | fzf)
     # Old fd logic: $(fd --max-depth 1 --extension sh . "$scripts_dir" | fzf)
     # Adding '--base-directory' instead of "." (fd --base-directory "$scripts_dir") Will show relative path based on the path specified instead of full path. But will cause issues with preview.
-    selected_script=$(fd . "$scripts_dir" \
-        --max-depth 1 \
-        --extension sh \
-        --exclude '*x-script-selector*' | fzf \
-        --height 50% \
-        --border=rounded \
-        --prompt="Select a script to run from (SCRIPTS_DIR:$scripts_dir) > ")
+    selected_script=$(
+        # awk - Prepend number of slashes to each line. This adds a numeric value like depth 5 before each line. We sort it based off that value then remove these numbers with 'cut'. This makes it so we SORT THE FD RESULTS BY FOLDER DEPTH, SO THAT SCRIPTS IN FEWER NESTED DIRECTORIES (CLOSER TO THE ROOT) APPEAR AT THE TOP
+        fd . "$scripts_dir" \
+            --max-depth 5 \
+            --extension sh \
+            --exclude '*x-script-selector*' \
+            | awk -F'/' '{ print NF-1, $0 }' \
+            | sort -n \
+            | cut -d' ' -f2- \
+            | fzf \
+                --height 50% \
+                --border=rounded \
+                --prompt="Select a script to run from (SCRIPTS_DIR:$scripts_dir) > "
+    )
+    # selected_script=$(fd . "$scripts_dir" \
+    #     --max-depth 5 \
+    #     --extension sh \
+    #     --exclude '*x-script-selector*' | fzf \
+    #     --height 50% \
+    #     --border=rounded \
+    #     --prompt="Select a script to run from (SCRIPTS_DIR:$scripts_dir) > ")
 
     # 4. If a script was selected, execute it
     if [[ -n "$selected_script" ]]; then
