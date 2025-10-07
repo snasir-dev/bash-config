@@ -103,6 +103,13 @@ git_fsck() {
 #*************************************
 
 # MAIN COMMIT MESSAGE FORMAT REMINDER W/ EXAMPLES
+
+# Set the color code for orange and a code to reset to default
+ORANGE='\033[38;2;249;179;0m'
+# Add "1;" to the start of the color code to make it bold
+BOLD_ORANGE='\033[1;38;2;249;179;0m'
+RESET='\033[0m'
+
 commit_msg() {
     echo "--- COMMIT MESSAGE STRUCTURE ---"
     echo "  type(scope): subject    Example: feature(auth): add social login"
@@ -134,15 +141,15 @@ commit_msg() {
     # With separators "|" and Bold Header Row
     {
         echo "TYPE|DESCRIPTION|EXAMPLE 1|EXAMPLE 2"
-        echo "feature|(Adds new functionality or capability)|feature(payment): Add PayPal integration|feature(users): User registration"
-        echo "fix|(Corrects a bug or issue)|fix(cart): Prevent total calculation error|fix(auth): Password reset bug"
-        echo "docs|(Documentation changes - comments, README, etc.)|docs(config): Add setup instructions|docs(api): Update endpoint docs"
-        echo "style|(Formatting, indentation, whitespace)|style(css): Apply consistent indentation|style(code): Consistent formatting"
-        echo "refactor|(Code changes that don't add features or fix bugs)|refactor(utils): Simplify error handling|refactor(payment): Improve logic"
+        echo -e "${BOLD_ORANGE}feature${RESET}|(Adds new functionality or capability)|feature(payment): Add PayPal integration|feature(users): User registration"
+        echo -e "${BOLD_ORANGE}fix${RESET}|(Corrects a bug or issue)|fix(cart): Prevent total calculation error|fix(auth): Password reset bug"
+        echo -e "${BOLD_ORANGE}docs${RESET}|(Documentation changes - comments, README, etc.)|docs(config): Add setup instructions|docs(api): Update endpoint docs"
+        echo -e "${BOLD_ORANGE}style${RESET}|(Formatting, indentation, whitespace)|style(css): Apply consistent indentation|style(code): Consistent formatting"
+        echo -e "${BOLD_ORANGE}refactor${RESET}|(Code changes that don't add features or fix bugs)|refactor(utils): Simplify error handling|refactor(payment): Improve logic"
+        echo -e "${BOLD_ORANGE}chore${RESET}|(Reorganize File Structure, dependency updates, config changes)|chore(deps): Update Node packages|chore(gitignore): Update ignore files"
         echo "enhance|(Makes improvements to existing code or features)|enhance(search): Improve search result relevance|enhance(api): Reduce response time by 40%"
         # echo "enhance|(Improves code structure, UX, maintainability)|enhance(ui): Improve dark mode contrast|enhance(logs): Add context to log output"
         # echo "enhance|(Optimizes performance, UX, or code quality)|enhance(api): Reduce response time by 40%|enhance(forms): Add better input validation feedback"
-        echo "chore|(Routine tasks, dependency updates, config changes)|chore(deps): Update Node packages|chore(gitignore): Update ignore files"
         echo "test|(Adding or modifying tests)|test(api): Add unit tests for endpoints|test(auth): Unit tests for login"
         echo "performance|(Improves speed or resource usage)|performance(queries): Optimize database lookups|performance(db): Optimize query latency"
         echo "build|(Build system, compilation, packaging)|build(webpack): Update configuration|build(deps): Update dependencies"
