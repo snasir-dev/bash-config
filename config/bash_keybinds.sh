@@ -6,26 +6,25 @@
 
 # Copy Current Terminal Prompt Source Reference: https://askubuntu.com/questions/413436/copy-current-terminal-prompt-to-clipboard
 
-copy_line_to_win_clipboard () {
-  printf %s "$READLINE_LINE" | clip.exe
+copy_line_to_win_clipboard() {
+    printf %s "$READLINE_LINE" | clip.exe
 }
 
 # Bind CTRL+A to copy the current line to Windows clipboard. It DOES NOT clear the line.
-bind -x '"\C-a": copy_line_to_win_clipboard'   # Bind to Ctrl+A
+bind -x '"\C-a": copy_line_to_win_clipboard' # Bind to Ctrl+A
+# bind -x '"\C-y": copy_line_to_win_clipboard'   # Bind to Ctrl+Y
 # bind -x '"\ec": copy_line_to_win_clipboard'  # Bind to ALT+C
 
-copy_and_clear_line () {
-  # Copy current input line to clipboard
-  printf %s "$READLINE_LINE" | clip.exe
+copy_and_clear_line() {
+    # Copy current input line to clipboard
+    printf %s "$READLINE_LINE" | clip.exe
 
-  # Clear the current line
-  READLINE_LINE=""
-  READLINE_POINT=0
+    # Clear the current line
+    READLINE_LINE=""
+    READLINE_POINT=0
 }
 
 # Bind Alt+U to copy the current line to Windows clipboard AND clear the line
-bind -x '"\eu": copy_and_clear_line'            # Bind to Alt+U
-
-
+bind -x '"\eu": copy_and_clear_line' # Bind to Alt+U
 
 #=====================================================================
