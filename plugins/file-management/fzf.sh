@@ -99,7 +99,7 @@ export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
 # Define a multi-line header using $'...' to process the \n newline character
 # MULTI_LINE_HEADER=$'CTRL-O: Open | CTRL-A: Copy Item | CTRL-X: Copy Full Path\nSHIFT-UP/DOWN: Scroll | CTRL-/: Change Preview Window'
 
-MULTI_LINE_HEADER=$'CTRL-O: Open in VSCode | CTRL-A: Copy Selected Item to Clipboard | CTRL-X: Copy Full Windows Path \nSHIFT-UP/DOWN: Scroll Preview | CTRL-/: Change Preview Window Position (down|left|hidden)'
+MULTI_LINE_HEADER=$'CTRL-T: Switch between Files/Directories | CTRL-R: Reset to DEFAULT \nCTRL-O: Open in VSCode | CTRL-A: Copy Selected Item to Clipboard | CTRL-X: Copy Full Windows Path \nSHIFT-UP/DOWN: Scroll Preview | CTRL-/: Change Preview Window Position (down|left|hidden)'
 
 # IMPORTANT - ALL OF THESE OPTIONS ARE INHERITED BY FZF_CTRL_T_OPTS, FZF_CTRL_R_OPTS, FZF_ALT_C_OPTS
 export FZF_DEFAULT_OPTS="
@@ -110,12 +110,17 @@ export FZF_DEFAULT_OPTS="
 --bind 'ctrl-x:execute-silent(readlink -f {} | cygpath -m -f - | clip)'
 --bind 'shift-up:preview-up+preview-up+preview-up'
 --bind 'shift-down:preview-down+preview-down+preview-down'
+# ctrl-t comments: # \" escape quotes Also \$FZF_PROMPT passes LITERAL STRING not VALUE as prior to sourcing will always be EMPTY.
+--bind 'ctrl-t:transform:[[ ! \$FZF_PROMPT =~ Files ]] &&
+              echo \"change-prompt(Files> )+reload(fd --type file)\" ||
+              echo \"change-prompt(Directories> )+reload(fd --type directory)\"'
+--bind 'ctrl-r:change-prompt(All (FZF_DEFAULT_COMMAND)> )+reload(eval $FZF_DEFAULT_COMMAND)'
 --bind 'ctrl-/:change-preview-window(down|left|hidden|50%)'
 --header \"$MULTI_LINE_HEADER\"
 --color header:$HEADER_LINE_SELECTION_COLOR::bold
 --color=bg+:$BACKGROUND_COLOR_SELECTED_LINE,fg+:$SELECTED_LINE_COLOR::bold,hl:$MATCHED_TEXT_COLOR_NON_SELECTED_LINES::bold,hl+:$MATCHED_TEXT_COLOR_SELECTED_LINES::bold,query:$INPUT_TEXT_COLOR::bold,pointer:$POINTER_COLOR,marker:$MARKER_COLOR_FOR_MULTISELECTED_ITEMS
 --layout reverse-list
---height 50%
+--height 100%
 --prompt '(FZF: Fuzzy Finder) > '
 "
 
@@ -170,6 +175,7 @@ export FZF_ALT_C_OPTS="
 # This is for the ** fzf COMPLETION when looking for files and directories.
 # Used by fzf to list file and dir candidates for path completions (e.g., vim **<TAB>)
 # Good explanation of the function: https://youtu.be/mmqDYw9C30I?t=301
+# Official Docs: https://github.com/junegunn/fzf/tree/master?tab=readme-ov-file#customizing-completion-source-for-paths-and-directories
 _fzf_compgen_path() {
     fd --hidden --follow --exclude .git . "$1"
 }
