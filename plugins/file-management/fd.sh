@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# What is fd? A modern alternative to 'find' command, it is faster, has more user-friendly syntax and sensible defaults (IMPORTANT: it respects .gitignore by default).
+# fd is used for Finding files and directories. What is fd? A modern alternative to 'find' command, it is faster, has more user-friendly syntax and sensible defaults (IMPORTANT: it respects .gitignore by default).
 
 # --- ENVIRONMENT VARIABLES ---
 
