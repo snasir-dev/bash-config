@@ -10,7 +10,7 @@
 # ==============================================================================
 
 # Exit immediately if a command exits with a non-zero status
-# set -e
+set -e
 
 # Exit if we try to use an unset variable
 set -u
@@ -57,7 +57,7 @@ echo ""
 
 SELECTED_REPO=$(fd -t d --hidden --glob '.git' "$REPOS_DIR" \
     -E 'Git' -E '**/android/**' -x dirname {} | sort \
-    | fzf --prompt '(Choose REPOSITORY to COPY FILES to) >')
+    | fzf --prompt '(Choose REPOSITORY to COPY FILES to) >' --height 50%)
 
 # Check if user cancelled (pressed Esc or Ctrl+C)
 if [ -z "$SELECTED_REPO" ]; then
@@ -77,10 +77,11 @@ echo "Current directory: $LAUNCH_DIR"
 echo "Use TAB to multi-select, ENTER to confirm"
 echo ""
 
-# -n 1 reads a single character
-# -r prevents backslashes from being interpreted
-read -p "Select files/folders to copy. This will open fzf. Begin selecting files? [Yes] to continue, Any other key to Cancel " -n 1 -r
-echo # move to a new line
+# -r: prevents backslashes from being interpreted. what the user types is taken literally, including any \ like \n or \t.
+# -p (prompt): display a message to the user before reading input.
+# $'string': allows adding \n as newline in the prompt.
+# -n [amount]: ex: -n 1 reads a single character
+read -rp $'Select files/folders to copy. This will open fzf. Begin selecting files? [Y]es to continue, [N] or [Q] to quit:\n' -n 10
 
 # $REPLY is a default variable used by read when no variable is provided. The condition if [[ $REPLY =~ ^[Yy]$ ]] checks if the reply was Y or y.
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -88,9 +89,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
     # Use fd to find all files and directories FROM THE LOCATION/DIRECTORY WE LAUNCHED THE SCRIPT (LAUNCH_DIR), then let user multi-select with fzf
     # --multi (-m) allows multiple selections
+    # Note - without specifying '--height ' fzf causing issues where it will exit with error code 130 when pressing up or down.
     SELECTED_ITEMS=$(fd --type f --type d --hidden --exclude '.git' --exclude 'node_modules' . "$LAUNCH_DIR" \
         | fzf --multi --prompt 'Select files/folders to copy (TAB=select, ENTER=confirm) >' \
-            --bind 'tab:toggle+down')
+            --bind 'tab:toggle+down' --height 50%)
 
     # Check if user cancelled or selected nothing
     if [ -z "$SELECTED_ITEMS" ]; then
@@ -104,7 +106,11 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo -e "Selected Items Values:\n$SELECTED_ITEMS"
     echo ""
 
-else
+elif [[ $REPLY =~ ^[NnQq]$ ]]; then
     echo "🛑 Copy cancelled. Exiting script. ('$REPLY' key pressed)"
+    exit 1
+
+else
+    echo "🛑 Invalid input. Exiting script. ('$REPLY' key pressed)"
     exit 1
 fi
