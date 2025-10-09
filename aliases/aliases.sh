@@ -43,6 +43,10 @@ alias typeof='file'
 # Aliases to make moving around the filesystem faster and easier.
 #====================================================================
 
+# ------- IMPORTANT - 'zoxide.sh' OVERRIDES 'cd' alias -------
+# See plugins/file-management/zoxide.sh for more details.
+# ------------------------------------------------------------
+
 # Go back to the previous directory. Very fast for going back and forth.
 alias back='cd -' # Use 'back' to return to the last directory you were in.
 
