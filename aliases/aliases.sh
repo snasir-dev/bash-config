@@ -67,7 +67,8 @@ alias dirs='dirs -v'      # View the directory stack with index numbers. Useful 
 alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stack
 
 # Shorter aliases for common directory locations.
-alias {cdrive,"c:"}='cd /c/'                                     # Alias to go to the C: root directory
+alias {cdrive,"c:",".DRIVE_C"}='cd /c/' # Alias to go to the C: root directory
+
 alias temp='cd /c/temp'                                          # Alias to go to C:/temp
 alias home='cd ~'                                                # Go directly to your home directory.
 alias downloads='cd ~/Downloads'                                 # Go directly to your Downloads directory.
@@ -81,15 +82,19 @@ alias obsidian='cd $USERPROFILE/Documents/@OBSIDIAN/@MAIN_VAULT' # Go directly t
 # Prefix going to specific directories with "." Use ".." to open directories with git repositories initialized.
 # Easy navigation to directories that are not git repositories. Prefix with '.'
 WORKSPACE_DIR="$HOME/Documents/@MAIN_WORKSPACE"
-alias ".main_workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
-alias ".repos"='cd $WORKSPACE_DIR/@REPOS'
-alias ".apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
+alias ".DIR_main_workspace"='cd $WORKSPACE_DIR' # Go to my Main Workspace. Just type '.workspace' to go there.
+alias ".DIR_repos"='cd $WORKSPACE_DIR/@REPOS'
+alias ".DIR_apps"='cd $WORKSPACE_DIR/@REPOS/@APPS'
+
+# Note CURRENTLY NOT A REPO. For just normal VS Code testing and files. Later might convert to a repo.
+alias ".REPO_general_repo"='cd $WORKSPACE_DIR/@REPOS/GENERAL_REPO'
 
 # Prefix aliases opening repositories with ".."
-alias "..fullstack-react-net-app__REPO"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
-alias "..shared-resources-repo__REPO"='cd $WORKSPACE_DIR/@REPOS/@SHARED_RESOURCES_REPO'
-alias "..bash__REPO"='cd ~/.bash'
-alias "..orbz-cli__REPO"='cd $WORKSPACE_DIR/@REPOS/SHELLS_AND_CLI_TOOLS/CLI_TOOLS/orbz-cli'
+alias ".REPO_fullstack-react-net-app"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
+alias ".REPO_shared-resources-repo"='cd $WORKSPACE_DIR/@REPOS/@SHARED_RESOURCES_REPO'
+alias ".REPO_bash"='cd ~/.bash'
+alias ".REPO_orbz-cli"='cd $WORKSPACE_DIR/@REPOS/SHELLS_AND_CLI_TOOLS/CLI_TOOLS/orbz-cli'
+alias ".REPO_obsidian_main_vault"='cd $HOME/Documents/@OBSIDIAN/@MAIN_VAULT'
 
 # Visual File Directory - Tree like structure
 # Official "tree" command with git-bash.
