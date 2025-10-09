@@ -121,6 +121,7 @@ export FZF_DEFAULT_OPTS="
 --color=bg+:$BACKGROUND_COLOR_SELECTED_LINE,fg+:$SELECTED_LINE_COLOR::bold,hl:$MATCHED_TEXT_COLOR_NON_SELECTED_LINES::bold,hl+:$MATCHED_TEXT_COLOR_SELECTED_LINES::bold,query:$INPUT_TEXT_COLOR::bold,pointer:$POINTER_COLOR,marker:$MARKER_COLOR_FOR_MULTISELECTED_ITEMS
 --layout reverse-list
 --height 100%
+--cycle # This makes it so at top you can press up key to go to last record, and vice versa.
 --prompt '(FZF: Fuzzy Finder) > '
 "
 
