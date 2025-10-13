@@ -1,13 +1,15 @@
-# Bash Configuration
+# Bash Dotfiles Configuration
 
-Personal bash configuration files and scripts.
+A modular and portable Bash setup for Windows Git Bash.
+
+This repository contains all my dotfiles, scripts, functions, aliases, completions, and plugin configurations used across command-line tools like `fzf`, `fd`, `bat`, `jq`, `docker`, `.NET`, and more. It’s designed for easy setup, automatic backup, and seamless customization of my shell environment.
 
 ## Installation
 
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/snasir-dev/bash-configuration ~/.bash
+   git clone https://github.com/snasir-dev/bash-dotfiles-config ~/.bash
    ```
 
 2. Run the installation script:
@@ -22,9 +24,8 @@ Personal bash configuration files and scripts.
 
    ```bash
    source ~/.bashrc     # Load the new configuration
-   # alternatively - we can also use the following aliases we setup: 'src' or 'reload'
-   src                  # Quick reload alias
-   reload               # Alternative reload alias
+   # alternatively - we can also use any of following aliases we setup: 'src', 'reload', 'refresh', 'r', or 'R'
+   src                  # Quick example of sourcing with the 'src' alias
    ```
 
 ## Local Customization
