@@ -3,11 +3,15 @@
 # Setup script for bash configuration repository
 # - Copies .bashrc and .bash_profile from 'config/setup' into the user's home directory (~).
 # - Backs up any existing versions to a timestamped backup folder
+# - Creates symbolic links from the home directory to the files in the .bash repo
+#      (located in "./config/setup"). If you make any changes to .bashrc in this repo, it will reflect in your home directory.
 # - Creates a .bash_local override file if missing
+
+# USAGE (run from the ROOT of this REPO): ./setup_bash.sh
 
 # Define the base directory
 BASH_DIR="$HOME/.bash"
-BACKUP_DIR="$HOME/.bash/.bash_backup_$(date +%Y%m%d_%H%M%S)"
+BACKUP_DIR="$HOME/.bash/.bash_backup_$(date +%Y_%m_%d_%H%M%S)"
 echo "BASH_DIR: $BASH_DIR"
 echo "BACKUP_DIR: $BACKUP_DIR"
 
