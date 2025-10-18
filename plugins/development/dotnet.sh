@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# ~/.bash/modules/dotnet.sh
 # Configuration for the .NET CLI ecosystem
 
 # --- ENVIRONMENT VARIABLES ---
@@ -30,7 +29,7 @@ if [ -d "$HOME/.dotnet/tools" ]; then
         *)
             # We prepend the tools path to PATH so that .NET CLI tools installed globally will be usable
             export PATH="$HOME/.dotnet/tools:$PATH"
-            
+
             # End of this case clause
             ;;
     esac
@@ -45,8 +44,7 @@ if [ -d "$HOME/.dotnet/tools" ]; then
     case ":$PATH:" in
 
         # If the exact path is already in PATH, do nothing.
-        *":$HOME/.dotnet/tools:"*)
-            ;;
+        *":$HOME/.dotnet/tools:"*) ;;
 
         # If the path is not found, prepend it to the PATH variable.
         # This ensures .NET global tools can be run from the command line.
@@ -56,8 +54,6 @@ if [ -d "$HOME/.dotnet/tools" ]; then
     esac
 
 fi
-
-
 
 # --- FUNCTIONS ---
 # Create a new solution and add a minimal API project to it
@@ -81,9 +77,6 @@ fi
 #     echo "✅ Created solution '$solution_name' with Minimal API project '$project_name'."
 # }
 
-
-
-
 # --- ALIASES ---
 alias dn='dotnet'
 alias dnb='dotnet build'
@@ -91,9 +84,6 @@ alias dnr='dotnet run'
 alias dnw='dotnet watch'
 alias dnt='dotnet test'
 alias dnef='dotnet ef' # For Entity Framework
-
-
-
 
 # --- COMPLETIONS ---
 #===============================================
@@ -106,15 +96,14 @@ alias dnef='dotnet ef' # For Entity Framework
 # Completion script is built into the CLI via `dotnet complete`
 
 # bash parameter completion for the dotnet CLI - Copied directly from the link above
-function _dotnet_bash_complete()
-{
-#   local cur="${COMP_WORDS[COMP_CWORD]}" IFS=$'\n' # On Windows you may need to use use IFS=$'\r\n'
-  local cur="${COMP_WORDS[COMP_CWORD]}" IFS=$'\r\n' # On Windows you may need to use use IFS=$'\r\n'
-  local candidates
+function _dotnet_bash_complete() {
+    #   local cur="${COMP_WORDS[COMP_CWORD]}" IFS=$'\n' # On Windows you may need to use use IFS=$'\r\n'
+    local cur="${COMP_WORDS[COMP_CWORD]}" IFS=$'\r\n' # On Windows you may need to use use IFS=$'\r\n'
+    local candidates
 
-  read -d '' -ra candidates < <(dotnet complete --position "${COMP_POINT}" "${COMP_LINE}" 2>/dev/null)
+    read -d '' -ra candidates < <(dotnet complete --position "${COMP_POINT}" "${COMP_LINE}" 2> /dev/null)
 
-  read -d '' -ra COMPREPLY < <(compgen -W "${candidates[*]:-}" -- "$cur")
+    read -d '' -ra COMPREPLY < <(compgen -W "${candidates[*]:-}" -- "$cur")
 }
 
 complete -f -F _dotnet_bash_complete dotnet

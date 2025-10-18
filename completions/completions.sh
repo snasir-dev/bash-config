@@ -23,30 +23,30 @@
 # bash --version: GNU bash, version 5.2.37(1)-release (x86_64-pc-msys)
 
 # COMMAND TO GENERATE BASH COMPLETION SCRIPT (LATEST VERSION):
-# curl -Lo ~/.bash/completions/packages/.bash_completion https://raw.githubusercontent.com/scop/bash-completion/main/bash_completion
+# curl -Lo "$BASH_DIR/completions/packages/.bash_completion" https://raw.githubusercontent.com/scop/bash-completion/main/bash_completion
 
 # =====================================================
 
 # FOR REFERENCE ONLY, if you want to PULL a SPECIFIC VERSION OF BASH COMPLETION do below
 # This was a PRETTY STABLE version that worked with BASH VERSION 4.4.23(1)-release (x86_64-pc-msys)
 # Installs the 2.11 BASH_COMPLETION SCRIPT
-# curl -Lo ~/.bash/completions/packages/.bash_completion https://raw.githubusercontent.com/scop/bash-completion/2.11/bash_completion 
+# curl -Lo "$BASH_DIR/completions/packages/.bash_completion" https://raw.githubusercontent.com/scop/bash-completion/2.11/bash_completion
 
-# ABOVE 2.11 SCRIPT IS REFERENCE COMMAND ONLY, DO NOT USE. 
+# ABOVE 2.11 SCRIPT IS REFERENCE COMMAND ONLY, DO NOT USE.
 # =====================================================
 
-if [ -f ~/.bash/completions/packages/.bash_completion ]; then
-    source ~/.bash/completions/packages/.bash_completion
+if [ -f "$BASH_DIR/completions/packages/.bash_completion" ]; then
+    source "$BASH_DIR/completions/packages/.bash_completion"
 else
-    echo "Bash completion file not found. Please make sure the file is located at ~/.bash/completions/packages/.bash_completion"
+    echo "Bash completion file not found. Please make sure the file is located at $BASH_DIR/completions/packages/.bash_completion"
 fi
 
 # # Corrected script: Note the '.sh' has been removed
-# if [ -f ~/.bash/completions/packages/.bash_completion ]; then
+# if [ -f "$BASH_DIR/completions/packages/.bash_completion" ]; then
 #     echo "✅ DEBUG: Found the script. Sourcing it now..."
-#     source ~/.bash/completions/packages/.bash_completion
+#     source "$BASH_DIR/completions/packages/.bash_completion"
 # else
-#     echo "❌ DEBUG: FAILED to find ~/.bash/completions/packages/.bash_completion"
+#     echo "❌ DEBUG: FAILED to find $BASH_DIR/completions/packages/.bash_completion"
 # fi
 
 #=======================================
@@ -55,7 +55,7 @@ fi
 # Check if `kubectl` command exists by using `command -v kubectl`.
 # `command -v` checks if `kubectl` is available, and `&> /dev/null` discards output.
 # If `kubectl` is found, the following commands will be executed.
-if command -v kubectl &>/dev/null; then
+if command -v kubectl &> /dev/null; then
 
     # Load the bash completion script for `kubectl` if it exists.
     # `kubectl completion bash` outputs a completion script for bash.
@@ -98,7 +98,7 @@ source <(docker completion bash)
 # Using `source <(...)` loads and executes this script in your current shell.
 # Pre-requisite - Ensure Helm is installed on your system.
 # Can install on Windows with command: choco install kubernetes-helm
-if command -v helm &>/dev/null; then
+if command -v helm &> /dev/null; then
     source <(helm completion bash)
 fi
 
@@ -112,7 +112,7 @@ fi
 # This enables tab completion for argocd commands, subcommands, and available options.
 # Pre-requisite - Ensure Argo CD CLI is installed and available in PATH.
 # Can install on Windows with command: choco install argocd-cli
-if command -v argocd &>/dev/null; then
+if command -v argocd &> /dev/null; then
     source <(argocd completion bash)
 fi
 
@@ -126,7 +126,7 @@ fi
 # This enables tab completion for `gh` commands, subcommands, and flags like `--state`, `--label`, etc.
 # Pre-requisite - Ensure GitHub CLI is installed and available in PATH.
 # Can install on Windows with command: winget install --id GitHub.cli
-if command -v gh &>/dev/null; then
+if command -v gh &> /dev/null; then
     source <(gh completion -s bash)
     # eval "$(gh completion -s bash)"
 fi
@@ -150,7 +150,7 @@ fi
 # This enables tab completion for terraform commands, subcommands, and available options.
 # Pre-requisite - Ensure Terraform is installed and available in PATH.
 # Can install on Windows with command: choco install terraform
-if command -v terraform &>/dev/null; then
+if command -v terraform &> /dev/null; then
     # Note this path is specific to Chocolatey installation on Windows.
     complete -C /c/ProgramData/chocolatey/bin/terraform.exe terraform
 fi

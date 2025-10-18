@@ -11,7 +11,7 @@ x-script-selector() {
     echo "📝  Starting script selection using fzf..."
 
     # 1. Define the directory where this script is located
-    local scripts_dir="$HOME/.bash/scripts"
+    local scripts_dir="$BASH_DIR/scripts"
 
     # 2. Check if the script directory actually exists
     if [[ ! -d "$scripts_dir" ]]; then

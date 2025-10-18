@@ -1,10 +1,10 @@
 #!/bin/bash
 # Main BASH configuration file that will be sourced by the .bashrc file.
-# This file acts as the central point for sourcing all custom configurations from ~/.bash directory.
+# This file acts as the central point for sourcing all custom configurations from $BASH_DIR directory.
 # The .bashrc file will be very simple, it will only source this file.
 # Example of sourcing main configuration from .bash directory. Only the following lines below will be added to .bashrc file located in the home directory.
-# if [ -f ~/.bash/main.sh ]; then
-#     source ~/.bash/main.sh
+# if [ -f "$BASH_DIR/main.sh" ]; then
+# 	source "$BASH_DIR/main.sh"
 # fi
 
 # Enable debug logs (set to false to silence sourcing output)
@@ -13,7 +13,7 @@
 : "${DEBUG:=true}"
 if [[ $DEBUG == true ]]; then
     # echo "🐞🐞🐞 Debug mode enabled. Sourcing ~/.bashrc... 🐞🐞🐞"
-    echo "🐞🐞🐞 Debug mode enabled. Sourcing main bash file: ~/.bash/main.sh 🐞🐞🐞"
+    echo "🐞🐞🐞 Debug mode enabled. Sourcing main bash file: $BASH_DIR/main.sh 🐞🐞🐞"
 fi
 
 # Check if shell is running interactively
@@ -127,24 +127,24 @@ source_sh_files() {
 # ======================================================================
 # Source all scripts in config (custom keybinds, etc.)
 # ======================================================================
-source_sh_files "Config (Custom Keybinds)" ~/.bash/config
+source_sh_files "Config (Custom Keybinds)" "$BASH_DIR/config"
 echo ""
 
 # ===================================================================
 # Source scripts in order (except excluded files or directories):
 # Order: env → functions → aliases → completions → plugins
 # ===================================================================
-source_sh_files "env" ~/.bash/env
+source_sh_files "env" "$BASH_DIR/env"
 echo ""
 
 # !! IMPORTANT: FUNCTIONS MUST BE BE SOURCED BEFORE ALIASES (SOME ALIASES WILL DEPEND ON THEM) !!
-source_sh_files "functions" ~/.bash/functions
+source_sh_files "functions" "$BASH_DIR/functions"
 echo ""
 
-source_sh_files "aliases" ~/.bash/aliases
+source_sh_files "aliases" "$BASH_DIR/aliases"
 echo ""
 
-source_sh_files "completions" ~/.bash/completions
+source_sh_files "completions" "$BASH_DIR/completions"
 echo ""
 
 # Add scripts directory to PATH
@@ -153,7 +153,7 @@ echo ""
 # $HOME expands to our home directory
 # : is the path separator in PATH
 # $PATH appends the existing PATH value
-export PATH="$HOME/.bash/scripts:$PATH"
+export PATH="$BASH_DIR/scripts:$PATH"
 
 # Source local machine-specific settings
 # These settings shouldn't be in version control
@@ -167,7 +167,7 @@ fi
 # Source Theme Configuration
 # Install and Setup Oh My Posh (Custom Prompt Tool to add themes to the terminal)
 # Check if 'setup_oh_my_posh.sh' file exists. If it does, source it.
-SETUP_THEME_SCRIPT="$HOME/.bash/config/themes/oh-my-posh/setup_oh_my_posh.sh"
+SETUP_THEME_SCRIPT="$BASH_DIR/config/themes/oh-my-posh/setup_oh_my_posh.sh"
 if [ -f "$SETUP_THEME_SCRIPT" ]; then
     source "$SETUP_THEME_SCRIPT"
 else
@@ -179,7 +179,7 @@ fi
 # ======================================================================
 # Source all scripts in plugins (except excluded files or directories)
 # ======================================================================
-source_sh_files "Plugin/Tool/Module/Package" ~/.bash/plugins
+source_sh_files "Plugin/Tool/Module/Package" "$BASH_DIR/plugins"
 echo ""
 
 # Run fastfetch when a new interactive shell starts

@@ -7,7 +7,9 @@
 #========================================================
 
 # Define plugin destination path using LOCALAPPDATA
-LAZYGIT_DIR="$LOCALAPPDATA/lazygit"
+# LAZYGIT_DIR="$LOCALAPPDATA/lazygit"
+# Lazygit first checks XDG_CONFIG_HOME if we set it. I have set it to '$HOME/.config' in env.sh
+LAZYGIT_DIR="$XDG_CONFIG_HOME/lazygit"
 LAZYGIT_DIR_WINDOWS_PATH=$(cygpath -w "$LAZYGIT_DIR")
 
 echo "📂 Lazygit directory (Linux path): $LAZYGIT_DIR"

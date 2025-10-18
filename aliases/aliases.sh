@@ -16,7 +16,7 @@
 # SCRIPT ALIASES    #
 #====================
 # Specify the path to your scripts directory
-SCRIPTS_DIR="$HOME/.bash/scripts"
+SCRIPTS_DIR="$BASH_DIR/scripts"
 alias {scripts,x}='$SCRIPTS_DIR/x-script-selector.sh'
 
 #====================================================================
@@ -61,8 +61,8 @@ alias back='cd -' # Use 'back' to return to the last directory you were in.
 #    dirs       # Shows stack, e.g., 0 /var 1 /tmp ...
 #    pop        # Go back to /tmp
 #    pop        # Go back to original location before 'push /tmp'
-#alias push='pushd' # Use the push function specified in functions/core-functions.sh.
-alias pop='popd_at_index' # Return to the directory at the top of the stack (undoes 'pushd'). Calls popd_at_index function in core-functions.sh.
+#alias push='pushd' # Use the push function specified in functions/directory-traversal-functions.sh.
+alias pop='popd_at_index' # Return to the directory at the top of the stack (undoes 'pushd'). Calls popd_at_index function in directory-traversal-functions.sh.
 alias dirs='dirs -v'      # View the directory stack with index numbers. Useful to see where you've been with 'pushd'.
 alias listd='dirs -v'     # Alternative name for 'dirs -v' - list directory stack
 
@@ -92,7 +92,7 @@ alias ".REPO_general_repo"='cd $WORKSPACE_DIR/@REPOS/GENERAL_REPO'
 # Prefix aliases opening repositories with ".."
 alias ".REPO_fullstack-react-net-app"='cd $WORKSPACE_DIR/@REPOS/@APPS/fullstack/Fullstack.React.NET.App'
 alias ".REPO_shared-resources-repo"='cd $WORKSPACE_DIR/@REPOS/@SHARED_RESOURCES_REPO'
-alias ".REPO_bash"='cd ~/.bash'
+alias ".REPO_bash"='cd $BASH_DIR'
 alias ".REPO_orbz-cli"='cd $WORKSPACE_DIR/@REPOS/SHELLS_AND_CLI_TOOLS/CLI_TOOLS/orbz-cli'
 alias ".REPO_obsidian_main_vault"='cd $HOME/Documents/@OBSIDIAN/@MAIN_VAULT'
 
@@ -150,7 +150,7 @@ alias "kgns"="kubectl config view --minify | grep namespace"
 
 # Note - must have script x-k8s-kube-info.sh in the scripts directory to run this alias.
 # I have added all scripts to PATH. Can directly call the script by just stating "x-k8s-kube-info". No need for alias
-# alias x-k8s-kube-info="~/.bash/scripts/x-k8s-kube-info.sh"
+# alias x-k8s-kube-info="$BASH_DIR/scripts/x-k8s-kube-info.sh"
 
 #===========================
 # GREP + SEARCH ALIASES    #

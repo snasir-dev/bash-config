@@ -33,13 +33,13 @@ alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time
 # NO OFFICIAL eza --completions bash command available.
 # Instead eza provides a script that can be sourced to enable completions.
 # Run command:
-# curl -Lo ~/.bash/completions/packages/eza.bash https://raw.githubusercontent.com/eza-community/eza/main/completions/bash/eza
-# This downloads the eza completion script from (ROOT_EZA_REPO/completions/bash/eza) to the ~/.bash/completions/packages/eza.bash
+# curl -Lo "$BASH_DIR/completions/packages/eza.bash" https://raw.githubusercontent.com/eza-community/eza/main/completions/bash/eza
+# This downloads the eza completion script from (ROOT_EZA_REPO/completions/bash/eza) to the $BASH_DIR/completions/packages/eza.bash
 # Sourcing this output enables tab completion for eza flags and options.
 # Pre-requisite - Ensure eza is installed and available in PATH.
 # Can install on Windows with command: choco install eza -y
 
-# -f ~/.bash/completions/eza.bash checks if the file exists before sourcing it.
-if command -v eza &> /dev/null && [[ -f ~/.bash/completions/packages/eza.bash ]]; then
-    source ~/.bash/completions/packages/eza.bash
+# -f $BASH_DIR/completions/eza.bash checks if the file exists before sourcing it.
+if command -v eza &> /dev/null && [[ -f "$BASH_DIR/completions/packages/eza.bash" ]]; then
+    source "$BASH_DIR/completions/packages/eza.bash"
 fi

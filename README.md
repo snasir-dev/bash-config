@@ -9,14 +9,14 @@ This repository contains all my dotfiles, scripts, functions, aliases, completio
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/snasir-dev/bash-dotfiles-config ~/.bash
+   git clone https://github.com/snasir-dev/bash-dotfiles-config ~/.config/bash
    ```
 
 2. Run the installation script:
 
    ```bash
-   cd ~/.bash
-   chmod +x ~/.bash/setup_bash.sh  # chmod +x adds execute permissions to the setup_bash.sh file.
+   cd ~/.config/bash
+   chmod +x ~/.config/bash/setup_bash.sh  # chmod +x adds execute permissions to the setup_bash.sh file.
    ./setup_bash.sh
    ```
 
@@ -42,7 +42,7 @@ These files are ignored by Git and won't be overwritten during updates.
 To update configuration:
 
 ```bash
-cd ~/.bash
+cd ~/.config/bash
 git pull
 source ~/.bashrc
 ```
