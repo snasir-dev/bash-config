@@ -46,7 +46,11 @@ create_symlink() {
 
     # --- Read TARGET Path ---
     echo -e "LAUNCH DIRECTORY: \e[1;33m$LAUNCH_DIR\e[0m"
-    read -r -e -p "Enter the ORIGINAL path (the original file/folder where the data resides): " original_path
+
+    # shellcheck disable=SC2162
+    # read without -r will mangle backslashes. But here we WANT that behavior for path input. If we do -r, then any path with SPACES will treat is as a LITERAL backslash.
+    # File name 'Test Document 1.txt' -> with -r: 'Test\ Document\ 1.txt' (NOT DESIRED), as readlink -f or other commands WILL NOT UNDERSTAND.
+    read -e -p "Enter the ORIGINAL path (the original file/folder where the data resides): " original_path
 
     # Check if the user wants to quit.
     if [[ "$original_path" == "q" || "$original_path" == "Q" ]]; then
@@ -55,18 +59,27 @@ create_symlink() {
         return
     fi
 
+    # `readlink -f` gets the full canonical path.
+    # Ex: $original_path = "original.txt" -> $original_path_abs = "/c/Users/Syed/docs/original.txt"
+    original_path_abs=$(readlink -f "$original_path")
+
+    echo -e "\n\e[1;33mORIGINAL PATH (ABSOLUTE):\e[0m '$original_path_abs'\n"
+
     # --- VALIDATE TARGET PATH ---
     # Check if the provided target path actually exists before proceeding.
-    if [ ! -e "$original_path" ]; then
+    if [ ! -e "$original_path_abs" ]; then
         echo -e "\n\e[1;31m❌ ERROR: The specified ORIGINAL path does not exist.\e[0m"
-        echo "   Invalid Path: '$original_path'"
+        echo "   Invalid Path: '$original_path_abs'"
         echo "Please provide a valid path to an existing file or directory."
         echo -e "\e[1;33m--- Function Finished ---\e[0m\n"
         return
     fi
 
     # --- Read LINK Path ---
-    read -r -e -p "Enter the LINK path (where the symlink will be created. File/Folder will be OVERRIDDEN IF it ALREADY EXISTS): " link_path
+    # shellcheck disable=SC2162
+    # read without -r will mangle backslashes. But here we WANT that behavior for path input. If we do -r, then any path with SPACES will treat is as a LITERAL backslash.
+    # File name 'Test Document 1.txt' -> with -r: 'Test\ Document\ 1.txt' (NOT DESIRED), as readlink -f or other commands WILL NOT UNDERSTAND.
+    read -e -p "Enter the LINK path (where the symlink will be created. File/Folder will be OVERRIDDEN IF it ALREADY EXISTS): " link_path
 
     # Check if the user wants to quit.
     if [[ "$link_path" == "q" || "$link_path" == "Q" ]]; then
@@ -78,7 +91,7 @@ create_symlink() {
     # --- Resolve Relative Paths provided by user (when using FZF) to Absolute Paths ---
     # `readlink -f` gets the full canonical path.
     # Ex: $original_path = "original.txt" -> $original_path_abs = "/c/Users/Syed/docs/original.txt"
-    original_path_abs=$(readlink -f "$original_path")
+    # original_path_abs=$(readlink -f "$original_path")
 
     # For the link, we resolve the directory part and append the name.
     # Ex: $link_path = "~/links/new_link.txt"
@@ -88,8 +101,12 @@ create_symlink() {
 
     # --- Create the Symlink ---
     echo -e "\nAttempting to create link..."
-    # Use -f to force overwrite if link already exists. No longer will give 'file exists' error.
-    ln -sf "$original_path_abs" "$link_path_abs"
+    # -s for symbolic links.
+    # -f to force overwrite if link already exists. No longer will give 'file exists' error.
+    # -n to treat link name as a normal file if it is a symlink to a directory. Makes it so when link is to a directory, it will NEVER try to create symlink INSIDE that directory.
+    # -i to prompt before overwriting an existing file.
+    # -v (verbose output) - print name of each linked file.
+    ln -s -f -i -v "$original_path_abs" "$link_path_abs"
 
     # --- Provide Feedback ---
     if [ $? -eq 0 ]; then
