@@ -13,6 +13,35 @@
 #     link_path_abs="$(readlink -f "$link_dir")/$link_name" # -> "/c/Users/Syed/links/new_link.txt"
 
 #====================================
+# Get ABSOLUTE PATH from the specified directory
+# Usable in File Explorer (e.g., C:\Users\...)
+get_absolute_path_windows() {
+    local dir_path="${1:-.}" # First Parameter. This is the path to provide. If no path provided, will use current directory ('.')
+    # Convert the provided Unix-style path to an absolute Windows-style path with backslashes
+    # 	-m, --mixed           like --windows, but with regular slashes (C:/WINNT)
+    #   -u, --unix            (default) print Unix form of NAMEs (/cygdrive/c/winnt)
+    #   -w, --windows         print Windows form of NAMEs (C:\WINNT)
+    # cygpath -w "$(readlink -f "$1")"
+    cygpath -a -w "$dir_path"
+}
+
+get_absolute_path_windows_forwardslashes() {
+    #   -a, --absolute        output absolute path
+    # 	-m, --mixed           like --windows, but with regular slashes (C:/WINNT)
+    cygpath -a -m "${1:-.}"
+}
+
+get_absolute_path_unix() {
+    #   -a, --absolute        output absolute path
+    #   -u, --unix            (default) print Unix form of NAMEs (/cygdrive/c/winnt)
+    # cygpath -a -u "${1:-.}" # cygpath to get absolute unix path - cygpath only available on windows, readlink is available for all unix systems. Great for portability.
+
+    # READLINK only resolves POSIX/UNIX paths. It does NOT have ability to convert to WINDOWS PATHS. This is placed here as reference. Same result as -> cygpath -a -u "${1:-.}"
+    readlink -f "${1:-.}"
+}
+#====================================
+
+#====================================
 # Convert Unix path to Windows path with backslashes
 # Usable in File Explorer (e.g., C:\Users\...)
 pwdw() {
