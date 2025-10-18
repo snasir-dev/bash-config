@@ -155,9 +155,6 @@ echo ""
 # $PATH appends the existing PATH value
 export PATH="$HOME/.bash/scripts:$PATH"
 
-# All XDG Compliant Tools will set the following directory as their home. (Lazygit, Thef***, etc.)
-export XDG_CONFIG_HOME="$HOME/.config"
-
 # Source local machine-specific settings
 # These settings shouldn't be in version control
 # if [ -f file ]: tests if the file exists and is a regular file
