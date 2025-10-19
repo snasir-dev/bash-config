@@ -2,6 +2,11 @@
 
 # ======= SYMLINKS - FUNCTIONS =======
 
+# SOURCE DEPENDENCIES
+# 1. Source the file containing your helper functions
+#    Make sure the path is correct relative to this script's location.
+source "$BASH_DIR/functions/filepaths.sh" # Used in create_symlink to get absolute path.
+
 # create_symlink() {
 #     local target="$1"
 #     local link_path="$2"
@@ -22,35 +27,28 @@ create_symlink() {
     echo -e "\n\e[1;33m--- Executing Function (create_symlink) ---\e[0m"
 
     echo -e "\nThis script will create a native Windows symbolic link (a pointer)."
-    echo "You can use either:"
-    echo "  • RELATIVE PATHS (from FZF)"
-    echo "  • ABSOLUTE PATHS (/c/Users/...)"
-    echo "Both will work."
 
     echo -e "\nInput order:"
     echo "  1️⃣  ORIGINAL file/FOLDER → the target the link will point to."
     echo "  2️⃣  LINK LOCATION → where the link itself will be created."
-    echo "      ⚠️ This file/FOLDER will be OVERRIDDEN IF it ALREADY EXISTS."
-
-    echo -e "\nTips:"
-    echo -e "  • Use \e[1;32mTAB\e[0m for path completion."
-    echo -e "  • Use \e[1;32mCTRL+T\e[0m to launch FZF for searching."
-    echo -e "    (FZF only shows dirs/files from your CURRENT directory:"
-    echo -e "     \e[1;31m$LAUNCH_DIR\e[0m)"
-    echo "    If that’s not the directory you want, press [Q or q] to exit,"
-    echo "    then navigate to your desired directory and rerun this function."
-
-    echo -e "\nTo EXIT anytime, press \e[1;31mq\e[0m or \e[1;31mQ\e[0m."
+    echo "      ⚠️  FILES will be OVERRIDDEN if they exists, DIRECTORIES if they EXIST, LINK we placed INSIDE of that DIRECTORY."
 
     echo "" # Blank line before input prompt
 
     # --- Read TARGET Path ---
     echo -e "LAUNCH DIRECTORY: \e[1;33m$LAUNCH_DIR\e[0m"
 
+    echo -e "Enter the ORIGINAL path (To EXIT, press \e[1;31mq\e[0m or \e[1;31mQ\e[0m):"
+    echo "  • The original file/folder where the data resides"
+    echo "  • Can use RELATIVE PATHS (from FZF) or ABSOLUTE PATHS (/c/Users/...)"
+    echo -e "  • Use \e[1;32mTAB\e[0m for path completion."
+    echo -e "  • Use \e[1;32mCTRL+T\e[0m to launch FZF for searching. (FZF only shows dirs/files from your CURRENT directory). Relaunch function after navigating to correct directory if needed."
+
     # shellcheck disable=SC2162
     # read without -r will mangle backslashes. But here we WANT that behavior for path input. If we do -r, then any path with SPACES will treat is as a LITERAL backslash.
     # File name 'Test Document 1.txt' -> with -r: 'Test\ Document\ 1.txt' (NOT DESIRED), as readlink -f or other commands WILL NOT UNDERSTAND.
-    read -e -p "Enter the ORIGINAL path (the original file/folder where the data resides): " original_path
+    # Without the '-e' flag, CTRL+T from fzf will not work allowing us to select paths.
+    read -e -p "ORIGINAL PATH:> " original_path
 
     # Check if the user wants to quit.
     if [[ "$original_path" == "q" || "$original_path" == "Q" ]]; then
@@ -61,9 +59,10 @@ create_symlink() {
 
     # `readlink -f` gets the full canonical path.
     # Ex: $original_path = "original.txt" -> $original_path_abs = "/c/Users/Syed/docs/original.txt"
-    original_path_abs=$(readlink -f "$original_path")
+    # original_path_abs=$(readlink -f "$original_path")
+    original_path_abs=$(get_absolute_path_unix "$original_path")
 
-    echo -e "\n\e[1;33mORIGINAL PATH (ABSOLUTE):\e[0m '$original_path_abs'\n"
+    # echo -e "\n\e[1;33m(DEBUGGING) ORIGINAL PATH (ABSOLUTE):\e[0m '$original_path_abs'\n"
 
     # --- VALIDATE TARGET PATH ---
     # Check if the provided target path actually exists before proceeding.
@@ -76,10 +75,15 @@ create_symlink() {
     fi
 
     # --- Read LINK Path ---
+    echo -e "Enter the LINK path (where the symlink will be created - To EXIT, press \e[1;31mq\e[0m or \e[1;31mQ\e[0m):"
+    echo "  • If FILE already exists, you will be PROMPTED to OVERWRITE it (DELETING the existing file)"
+    echo -e "  • If DIRECTORY already exists, it will place link INSIDE DIRECTORY. \e[1;31mIT WILL NEVER OVERRIDE DIRECTORIES\e[0m"
+
     # shellcheck disable=SC2162
     # read without -r will mangle backslashes. But here we WANT that behavior for path input. If we do -r, then any path with SPACES will treat is as a LITERAL backslash.
     # File name 'Test Document 1.txt' -> with -r: 'Test\ Document\ 1.txt' (NOT DESIRED), as readlink -f or other commands WILL NOT UNDERSTAND.
-    read -e -p "Enter the LINK path (where the symlink will be created. File/Folder will be OVERRIDDEN IF it ALREADY EXISTS): " link_path
+    # Without the '-e' flag, CTRL+T from fzf will not work allowing us to select paths.
+    read -e -p "LINK PATH:> " link_path
 
     # Check if the user wants to quit.
     if [[ "$link_path" == "q" || "$link_path" == "Q" ]]; then
@@ -95,15 +99,16 @@ create_symlink() {
 
     # For the link, we resolve the directory part and append the name.
     # Ex: $link_path = "~/links/new_link.txt"
-    link_dir=$(dirname "$link_path")                      # -> "~/links"
-    link_name=$(basename "$link_path")                    # -> "new_link.txt"
-    link_path_abs="$(readlink -f "$link_dir")/$link_name" # -> "/c/Users/Syed/links/new_link.txt"
+    link_dir=$(dirname "$link_path")   # -> "~/links"
+    link_name=$(basename "$link_path") # -> "new_link.txt"
+    # link_path_abs="$(readlink -f "$link_dir")/$link_name"
+    link_path_abs="$(get_absolute_path_unix "$link_dir")/$link_name" # -> "/c/Users/Syed/links/new_link.txt"
 
     # --- Create the Symlink ---
     echo -e "\nAttempting to create link..."
     # -s for symbolic links.
     # -f to force overwrite if link already exists. No longer will give 'file exists' error.
-    # -n to treat link name as a normal file if it is a symlink to a directory. Makes it so when link is to a directory, it will NEVER try to create symlink INSIDE that directory.
+    # -n to treat link name as a normal file if it is ALREADY a symlink to a directory. Note that this does NOT prevent placing link INSIDE an existing directory. It only prevents treating the link itself as a directory when it is already a symlink to a directory.
     # -i to prompt before overwriting an existing file.
     # -v (verbose output) - print name of each linked file.
     ln -s -f -i -v "$original_path_abs" "$link_path_abs"
