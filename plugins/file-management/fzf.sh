@@ -107,7 +107,7 @@ export FZF_DEFAULT_OPTS="
 --preview-window '~4,wrap' # Number of lines that will always show, will not scroll down.
 --bind 'ctrl-o:execute(code {})+abort'
 --bind 'ctrl-a:execute-silent(echo -n {} | clip)'
---bind 'ctrl-x:execute-silent(readlink -f {} | cygpath -m -f - | clip)'
+--bind 'ctrl-x:execute-silent(cygpath -a -m {} | clip)'
 --bind 'shift-up:preview-up+preview-up+preview-up'
 --bind 'shift-down:preview-down+preview-down+preview-down'
 # ctrl-t comments: # \" escape quotes Also \$FZF_PROMPT passes LITERAL STRING not VALUE as prior to sourcing will always be EMPTY.
