@@ -35,3 +35,7 @@ print_command_output() {
     eval "$1"                                            # eval executes the command passed as an argument ($1). Example: If we call print_command_output "kubectl config get-contexts", it runs kubectl config get-contexts.
     echo -e "\n----------------------------------------" # Divider. Using echo -e allows us to interpret escape sequences like \n for a new line.
 }
+
+# Export specific functions so child bash processes inherit them
+# Note this only works for scripts with "/bin/bash" shebang. Other shells like "/bin/sh" will not have access to these functions.
+export -f largest oldfiles dirsummary print_command_output
