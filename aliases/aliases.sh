@@ -17,7 +17,7 @@
 #====================
 # Specify the path to your scripts directory
 SCRIPTS_DIR="$BASH_DIR/scripts"
-alias {scripts,x}='$SCRIPTS_DIR/x-script-selector.sh'
+alias {scripts,x,X}='$SCRIPTS_DIR/x-script-selector.sh'
 
 #====================================================================
 # FILE INFORMATION & LISTING & DIRECTORY NAVIGATION ALIASES         #
