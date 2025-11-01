@@ -7,18 +7,25 @@
 #    Make sure the path is correct relative to this script's location.
 source "$BASH_DIR/functions/filepaths.sh" # Used in create_symlink to get absolute path.
 
-# create_symlink() {
-#     local target="$1"
-#     local link_path="$2"
-#     ln -s "$target" "$link_path"
-# }
+# Clean short command to create symlink
+# NOTE DEVELOPER MODE MUST BE ENABLED IN WINDOWS FOR NON-ADMIN USERS TO CREATE SYMLINKS
+create_symlink() {
+    local original_path="$1"
+    local link_path="$2"
+    # -s for symbolic links.
+    # -f to force overwrite if link already exists. No longer will give 'file exists' error.
+    # -n to treat link name as a normal file if it is ALREADY a symlink to a directory. Note that this does NOT prevent placing link INSIDE an existing directory. It only prevents treating the link itself as a directory when it is already a symlink to a directory.
+    # -i to prompt before overwriting an existing file.
+    # -v (verbose output) - print name of each linked file.
+    ln -s -f -i -v "$original_path" "$link_path"
+}
 
 # -----------------------------------------------------------------------------
-# Function: create_symlink
+# Function: create_symlink_interactively_with_fzf
 # Description: Interactively creates a native Windows symbolic link.
-# Usage: Type `create_symlink` in the terminal and follow the prompts.
+# Usage: Type `create_symlink_interactively_with_fzf` in the terminal and follow the prompts.
 # -----------------------------------------------------------------------------
-create_symlink() {
+create_symlink_interactively_with_fzf() {
     # --- Function Start & Description ---
 
     # Store the directory where this script was launched from
